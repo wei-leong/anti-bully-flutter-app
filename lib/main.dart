@@ -1,3 +1,6 @@
+import 'package:apu_assignment/core/theme/theme.dart';
+import 'package:apu_assignment/core/theme/util.dart';
+import 'package:apu_assignment/features/home/ui/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,8 +12,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = createTextTheme(context, "Roboto", "Roboto");
+    MaterialTheme theme = MaterialTheme(textTheme);
     return MaterialApp(
-      home: Scaffold(body: const Center(child: Text("Initialize code"))),
+      debugShowCheckedModeBanner: false,
+      theme: theme.light(),
+      darkTheme: theme.dark(),
+      themeMode: ThemeMode.light,
+      home: HomeScreen(),
     );
   }
 }
