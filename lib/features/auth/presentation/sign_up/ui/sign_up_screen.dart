@@ -1,4 +1,5 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
+import 'package:apu_assignment/features/auth/presentation/sign_up/ui/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -138,7 +139,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         children: [
                           const Text("Already have an account?"),
                           TextButton(
-                            onPressed: (){}, // TODO : Add LoginPage Here
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LoginScreen(),
+                                ),
+                              );
+                            },
                             child: const Text("Login"),
                           ),
                         ],
