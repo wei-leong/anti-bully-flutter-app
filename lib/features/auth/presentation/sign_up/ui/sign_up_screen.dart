@@ -1,5 +1,5 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
-import 'package:apu_assignment/features/auth/presentation/sign_up/ui/login_screen.dart';
+import 'package:apu_assignment/features/auth/presentation/login/ui/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -13,6 +13,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isPasswordVisible = false;
   final _passwordController = TextEditingController();
+  String selectedRole = "Student";
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +39,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       kGap8,
                       Text("Sign up to get started"),
+                      kGap16,
+                      SegmentedButton<String>(
+                        segments: const <ButtonSegment<String>>[
+                          ButtonSegment(
+                            value: "Student",
+                            label: Text("Student"),
+                          ),
+                          ButtonSegment(
+                            value: "Lecturer",
+                            label: Text("Lecturer"),
+                          ),
+                        ],
+                        style: ButtonStyle(
+                          side: WidgetStatePropertyAll(
+                            BorderSide(
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
+                          ),
+                        ),
+                        selected: <String>{selectedRole},
+                        onSelectionChanged: (Set<String> newSelection) {
+                          setState(() {
+                            selectedRole = newSelection.first;
+                          });
+                        },
+                      ),
                       kGap16,
                       TextFormField(
                         decoration: InputDecoration(
