@@ -12,6 +12,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isPasswordVisible = false;
+  bool _isConfirmPasswordVisible = false;
   final _passwordController = TextEditingController();
   String selectedRole = "Student";
 
@@ -115,14 +116,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       kGap16,
                       TextFormField(
                         obscuringCharacter: "*",
-                        obscureText: !_isPasswordVisible,
+                        obscureText: !_isConfirmPasswordVisible,
                         decoration: InputDecoration(
                           labelText: "Confirm Password",
                           border: OutlineInputBorder(),
                           suffixIcon: IconButton(
                             onPressed: () {
                               setState(() {
-                                _isPasswordVisible = !_isPasswordVisible;
+                                _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
                               });
                             },
                             icon: Icon(
