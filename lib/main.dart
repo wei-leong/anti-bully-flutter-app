@@ -1,4 +1,4 @@
-import 'package:apu_assignment/core/theme/theme.dart';
+import 'package:apu_assignment/core/theme/theme_black_white.dart';
 import 'package:apu_assignment/core/theme/util.dart';
 import 'package:apu_assignment/features/auth/presentation/sign_up/ui/sign_up_screen.dart';
 import 'package:flutter/material.dart';
