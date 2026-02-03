@@ -1,3 +1,4 @@
+import 'package:apu_assignment/features/chat/presentation/screens/chat_list_screens.dart';
 import 'package:apu_assignment/features/profile/presentation/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class _MainWrapperUserState extends State<MainWrapperUser> {
   final List<Widget> _screens = [
     const Center(child: Text("Home")), // TODO: Home Page
     const Center(child: Text("Resources")), // TODO: Resources Page
-    const Center(child: Text("Chat")), // TODO : Chat Page
+    const ChatListScreens(), // TODO : Chat Page
     const ProfileScreen(), // TODO : Profile Page
   ];
 
