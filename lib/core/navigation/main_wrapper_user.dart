@@ -1,3 +1,4 @@
+import 'package:apu_assignment/features/profile/presentation/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainWrapperUser extends StatefulWidget {
@@ -14,7 +15,7 @@ class _MainWrapperUserState extends State<MainWrapperUser> {
     const Center(child: Text("Home")), // TODO: Home Page
     const Center(child: Text("Resources")), // TODO: Resources Page
     const Center(child: Text("Chat")), // TODO : Chat Page
-    const Center(child: Text("Profile")), // TODO : Profile Page
+    const ProfileScreen(), // TODO : Profile Page
   ];
 
   @override
