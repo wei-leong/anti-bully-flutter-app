@@ -1,3 +1,4 @@
+import 'package:apu_assignment/core/navigation/main_wrapper_user.dart';
 import 'package:apu_assignment/core/theme/theme_black_white.dart';
 import 'package:apu_assignment/core/theme/util.dart';
 import 'package:apu_assignment/features/auth/presentation/sign_up/ui/sign_up_screen.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: theme.light(),
       darkTheme: theme.dark(),
       themeMode: ThemeMode.light,
-      home: SignUpScreen(),
+      home: MainWrapperUser(),
     );
   }
 }
