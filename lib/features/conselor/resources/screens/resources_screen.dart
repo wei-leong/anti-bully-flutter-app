@@ -13,7 +13,7 @@ class ResourceScreen extends StatefulWidget {
 
 class _ResourceScreenState extends State<ResourceScreen> {
   String _selectedFilters = "All";
-  final List<String> _filters = ["All", "Articles", "Videos", "New"];
+  final List<String> _filters = ["All", "Articles", "Videos", "New", "+"];
 
   // Mock Data
   // TODO : Remove after finishing Part 1
@@ -120,7 +120,7 @@ class _ResourceScreenState extends State<ResourceScreen> {
                   // Choose widget based on type
                   if (item.type == "video") {
                     return Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
+                      padding: const EdgeInsets.only(bottom: 6.0),
                       child: VideoCard(resourceItem: item),
                     );
                   } else {

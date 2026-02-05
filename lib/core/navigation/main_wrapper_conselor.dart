@@ -1,6 +1,7 @@
 import 'package:apu_assignment/features/chat/presentation/screens/chat_list_screens.dart';
 import 'package:apu_assignment/features/profile/presentation/screens/profile_screen.dart';
 import 'package:apu_assignment/features/conselor/resources/screens/resources_screen.dart';
+import 'package:apu_assignment/features/post/screens/post_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainWrapperConselor extends StatefulWidget {
@@ -16,6 +17,7 @@ class _MainWrapperUserState extends State<MainWrapperConselor> {
   final List<Widget> _screens = [
     const Center(child: Text("Home")), // TODO: Home Page
     const ResourceScreen(), // Resources Page
+    const PostScreen(),
     const ChatListScreens(), // Chat Page
     const ProfileScreen(), // Profile Page
   ];
@@ -50,9 +52,14 @@ class _MainWrapperUserState extends State<MainWrapperConselor> {
             label: "Resources",
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.add_circle_outline),
+            activeIcon: Icon(Icons.add_circle),
+            label: "Post",
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.chat_bubble_outline),
             activeIcon: Icon(Icons.chat),
-            label: "Chat",
+            label: "Chat"
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),

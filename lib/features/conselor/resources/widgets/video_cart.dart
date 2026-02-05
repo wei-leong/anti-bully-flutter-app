@@ -13,73 +13,82 @@ class VideoCard extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return Container(
       // width: 200,
-      decoration: BoxDecoration(
+        decoration: BoxDecoration(
         color: colorScheme.surface,
         borderRadius: BorderRadius.circular(kDefaultRadius),
       ),
       clipBehavior: Clip.antiAlias,
-      child: Column(
+      padding: const EdgeInsets.all(kDefaultPadding),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Thumbnail & Duration
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
-                height: 140,
-                width: double.infinity,
-                color: Colors.black87,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white70,
-                  shape: BoxShape.circle,
-                ),
-                padding: const EdgeInsets.all(kDefaultPadding),
-                child: Icon(
-                  Icons.play_arrow,
-                  color: Colors.black,
-                  size: 32,
-                ),
-              ),
-              Positioned(
-                bottom: 8,
-                right: 8,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 4),
-                  decoration: BoxDecoration(
-                    color: colorScheme.onPrimaryContainer,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Text(resourceItem.durationOrSize),
-                ),
-              ),
-            ],
+          CircleAvatar(
+            radius: 20, 
+            child: Text(resourceItem.source[0]),
           ),
-          // Text Area
-          Padding(
-            padding: const EdgeInsets.all(kDefaultPadding),
+          const SizedBox(width: 12),
+
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  resourceItem.title,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: colorScheme.onSurface
+              Text(
+                resourceItem.source,
+                style: textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: colorScheme.onSurface,
+                ),
+              ),
+              const SizedBox(height: 4),
+
+              Text(
+                resourceItem.title,
+                style: textTheme.bodyLarge?.copyWith(
+                  color: colorScheme.onSurface,
+                ),
+              ),
+              const SizedBox(height: 12),
+
+            ClipRRect(
+              borderRadius: BorderRadiusGeometry.circular(5),
+              child:Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  height: 140,
+                  width: double.infinity,
+                  color: Colors.black87,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white70,
+                    shape: BoxShape.circle,
+                  ),
+                  padding: const EdgeInsets.all(kDefaultPadding),
+                  child: Icon(
+                    Icons.play_arrow,
+                    color: Colors.black,
+                    size: 32,
                   ),
                 ),
-                Text(
-                  resourceItem.source,
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: colorScheme.onSurfaceVariant
+                Positioned(
+                  bottom: 8,
+                  right: 8,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 4),
+                    decoration: BoxDecoration(
+                      color: colorScheme.onPrimaryContainer,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(resourceItem.durationOrSize),
                   ),
                 ),
               ],
             ),
-          ),
+            )
+            // Thumbnail & Duration
+              ],
+          ),)
         ],
       ),
     );
