@@ -1,5 +1,5 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
-import 'package:apu_assignment/features/users/data/resource_item.dart';
+import 'package:apu_assignment/features/users/resources/data/resource_item.dart';
 import 'package:apu_assignment/features/users/resources/presentation/widgets/article_tile.dart';
 import 'package:apu_assignment/features/users/resources/presentation/widgets/video_card.dart';
 import 'package:flutter/material.dart';
@@ -67,17 +67,6 @@ class _ResourceScreenState extends State<ResourceScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Search Bar
-            // TextField(
-            //   decoration: InputDecoration(
-            //     hintText: "Search Resources",
-            //     prefixIcon: Icon(Icons.search),
-            //     border: OutlineInputBorder(
-            //       borderRadius: BorderRadius.circular(kDefaultRadius),
-            //     ),
-            //     // filled: true, //TODO: Add back later (Now just Wireframe)
-            //   ),
-            // ),
             // Filter Chips
             // Single Child Scroll View
             Padding(

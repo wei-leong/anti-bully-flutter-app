@@ -1,5 +1,5 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
-import 'package:apu_assignment/features/users/data/resource_item.dart';
+import 'package:apu_assignment/features/users/resources/data/resource_item.dart';
 import 'package:flutter/material.dart';
 
 class VideoCard extends StatelessWidget {
