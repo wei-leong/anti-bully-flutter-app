@@ -1,6 +1,7 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/conselor/data/resource_item.dart';
 import 'package:apu_assignment/features/conselor/resources/widgets/artical_tile.dart';
+import 'package:apu_assignment/features/conselor/resources/widgets/event_poster.dart';
 import 'package:apu_assignment/features/conselor/resources/widgets/video_cart.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class ResourceScreen extends StatefulWidget {
 
 class _ResourceScreenState extends State<ResourceScreen> {
   String _selectedFilters = "All";
-  final List<String> _filters = ["All", "Articles", "Videos", "New", "+"];
+  final List<String> _filters = ["All", "Articles", "Videos", "New", "Event"];
 
   // Mock Data
   // TODO : Remove after finishing Part 1
@@ -31,6 +32,13 @@ class _ResourceScreenState extends State<ResourceScreen> {
       durationOrSize: "3 min",
     ),
     ResourceItem(
+      title: "Youth Mental Health Awareness Talk",
+      source: "APU Counseling Unit",
+      type: "event", // 新增一个类型 "event"
+      durationOrSize: "2024-06-15, 10 AM", // 可以是日期时间
+      imageUrl: "https://example.com/youth_talk_poster.jpg", // 假设有一个图片链接
+    ),
+    ResourceItem(
       title: "Be a Buddy, Not a Bully",
       source: "Edu Series",
       type: "video",
@@ -41,7 +49,7 @@ class _ResourceScreenState extends State<ResourceScreen> {
       source: "TedTalk",
       type: "video",
       durationOrSize: "22:10",
-    ),
+    )
   ];
 
   @override
@@ -123,7 +131,12 @@ class _ResourceScreenState extends State<ResourceScreen> {
                       padding: const EdgeInsets.only(bottom: 6.0),
                       child: VideoCard(resourceItem: item),
                     );
-                  } else {
+                  } else if (item.type == "event"){
+                      return Padding(
+                        padding: const  EdgeInsets.only(bottom: 6.0),
+                        child: EventPosterCard(resourceItem:  item),
+                    );
+                  }else {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 12.0),
                       child: ArticleTile(resourceItem: item),
