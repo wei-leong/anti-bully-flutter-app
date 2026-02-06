@@ -1,5 +1,5 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
-import 'package:apu_assignment/features/auth/presentation/login/ui/login_screen.dart';
+import 'package:apu_assignment/features/auth/presentation/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
