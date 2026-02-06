@@ -1,7 +1,5 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
-import 'package:apu_assignment/features/profile/presentation/widgets/profile_menu_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({super.key});
@@ -11,7 +9,14 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
-  bool _notificationsEnabled = true;
+  // 用于获取输入框的内容
+  final TextEditingController _textController = TextEditingController();
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,21 +24,49 @@ class _PostScreenState extends State<PostScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Profile",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        // 1. 左上角放一个 X 按钮
+        leading: IconButton(
+        icon: const Icon(Icons.close),
+        onPressed: () {
+          // 逻辑：跳转回第一个 Tab（首页）
+          // 假设你的 MainScreen 维护了一个 _selectedIndex
+          // 这里建议使用通知、Provider 或者简单的逻辑来切换 Tab
+          _textController.clear(); // 只是清空内容
+        },
+      ),
         centerTitle: true,
-        // elevation: 0,
+        // 2. 右上角放 Post 按钮
         actions: [
-          TextButton(
-            onPressed: () {},
-            child: const Text(
-              "Edit Profile",
-              style: TextStyle(fontWeight: FontWeight.bold),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: FilledButton(
+              onPressed: () {
+                // 执行发布逻辑
+                print("Posting: ${_textController.text}");
+              },
+              style: FilledButton.styleFrom(
+                visualDensity: VisualDensity.compact, // 让按钮紧凑一点
+              ),
+              child: const Text("Post"),
             ),
           ),
         ],
+      ),
+      // 3. 下面空白部分放输入框
+      body: Padding(
+        padding: const EdgeInsets.all(kDefaultPadding),
+        child: TextField(
+          controller: _textController,
+          // 使输入框充满剩余空间并从顶部开始
+          maxLines: null, // 设置为 null 则根据内容自动换行
+          expands: true,  // 配合 maxLines: null 使用，撑开整个父组件
+          textAlignVertical: TextAlignVertical.top, // 文字从顶部开始
+          decoration: InputDecoration(
+            hintText: "Text Somethings.....",
+            border: InputBorder.none, // 去掉输入框边框，看起来更像空白页
+          ),
+          style: const TextStyle(fontSize: 16),
+        ),
       ),
     );
   }

@@ -1,5 +1,5 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
-import 'package:apu_assignment/features/conselor/data/resource_item.dart';
+import 'package:apu_assignment/features/conselor/resources/data/resource_item.dart';
 import 'package:flutter/material.dart';
 
 class VideoCard extends StatelessWidget {
@@ -12,7 +12,6 @@ class VideoCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     return Container(
-      // width: 200,
         decoration: BoxDecoration(
         color: colorScheme.surface,
         borderRadius: BorderRadius.circular(kDefaultRadius),
