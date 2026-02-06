@@ -2,8 +2,8 @@ import 'package:apu_assignment/features/users/resources/data/resource_item.dart'
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-class ArticleTile extends StatelessWidget {
-  const ArticleTile({super.key, required this.resourceItem});
+class NewsOrEventTile extends StatelessWidget {
+  const NewsOrEventTile({super.key, required this.resourceItem});
 
   final ResourceItem resourceItem;
 
@@ -50,6 +50,17 @@ class ArticleTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment
                   .center, // Center vertically relative to image
               children: [
+                // Tag
+                Text(
+                  resourceItem.type.toUpperCase(),
+                  style: textTheme.labelSmall?.copyWith(
+                    letterSpacing: 0.5,
+                    color: colorScheme.primary
+                  ),
+                ),
+
+                const Gap(8),
+
                 // Title
                 Text(
                   resourceItem.title,
@@ -66,7 +77,7 @@ class ArticleTile extends StatelessWidget {
 
                 // Source / Date (Subtitle)
                 Text(
-                  "${resourceItem.source} • ${resourceItem.durationOrSize}",
+                  resourceItem.subtitle ?? "${resourceItem.source} • ${resourceItem.durationOrSize}",
                   style: textTheme.bodySmall?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                     fontSize: 12,

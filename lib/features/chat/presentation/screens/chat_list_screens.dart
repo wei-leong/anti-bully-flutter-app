@@ -10,7 +10,7 @@ class ChatListScreens extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Messages", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text("Chat", style: TextStyle(fontWeight: FontWeight.bold)),
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.notifications_rounded)),
           Padding(
