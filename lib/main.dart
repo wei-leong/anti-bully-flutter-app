@@ -1,5 +1,5 @@
 import 'package:apu_assignment/core/navigation/main_wrapper_user.dart';
-import 'package:apu_assignment/core/theme/theme_new.dart';
+import 'package:apu_assignment/core/theme/theme_black_white.dart';
 import 'package:apu_assignment/core/theme/util.dart';
 import 'package:apu_assignment/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: theme.light(),
       darkTheme: theme.dark(),
       themeMode: ThemeMode.system,
-      home: SignUpScreen(),
+      home: MainWrapperUser(),
     );
   }
 }
