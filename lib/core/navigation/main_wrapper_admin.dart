@@ -1,5 +1,5 @@
+import 'package:apu_assignment/features/admin/admin_dashboard/ui/screens/admin_dashboard_screen.dart';
 import 'package:apu_assignment/features/profile/presentation/screens/profile_screen.dart';
-import 'package:apu_assignment/features/users/dashboard/presentation/screens/dashboard_screen.dart';
 // TODO: Import your specific Admin screens here when ready
 import 'package:flutter/material.dart';
 
@@ -14,7 +14,7 @@ class _MainWrapperAdminState extends State<MainWrapperAdmin> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    const DashboardScreen(),             // Home (Admin Dashboard)
+    const AdminDashboardScreen(),             // Home (Admin Dashboard)
     const Center(child: Text("Manage Reports")),    // TODO : Report (Placeholder)
     const Center(child: Text("Manage Community")),  // TODO : Community (Placeholder)
     const Center(child: Text("Manage Staff")),      // TODO : Staff (Placeholder)
