@@ -1,3 +1,4 @@
+import 'package:apu_assignment/core/navigation/main_wrapper_admin.dart';
 import 'package:apu_assignment/core/navigation/main_wrapper_user.dart';
 import 'package:apu_assignment/core/theme/theme_black_white.dart';
 import 'package:apu_assignment/core/theme/util.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: theme.light(),
       darkTheme: theme.dark(),
       themeMode: ThemeMode.system,
-      home: MainWrapperUser(),
+      home: MainWrapperAdmin(),
     );
   }
 }
