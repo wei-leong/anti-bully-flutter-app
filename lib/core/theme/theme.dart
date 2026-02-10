@@ -1,3 +1,4 @@
+import "package:apu_assignment/core/theme/sizes.dart";
 import "package:flutter/material.dart";
 
 class MaterialTheme {
@@ -335,22 +336,38 @@ class MaterialTheme {
     return theme(darkHighContrastScheme());
   }
 
-
   ThemeData theme(ColorScheme colorScheme) => ThemeData(
-     useMaterial3: true,
-     brightness: colorScheme.brightness,
-     colorScheme: colorScheme,
-     textTheme: textTheme.apply(
-       bodyColor: colorScheme.onSurface,
-       displayColor: colorScheme.onSurface,
-     ),
-     scaffoldBackgroundColor: colorScheme.background,
-     canvasColor: colorScheme.surface,
+    useMaterial3: true,
+    brightness: colorScheme.brightness,
+    colorScheme: colorScheme,
+    textTheme: textTheme.apply(
+      bodyColor: colorScheme.onSurface,
+      displayColor: colorScheme.onSurface,
+    ),
+    scaffoldBackgroundColor: colorScheme.background,
+    canvasColor: colorScheme.surface,
+    // inputDecorationTheme: InputDecorationTheme(
+    //   border: OutlineInputBorder(
+    //     borderRadius: BorderRadius.circular(8), // Matches your button radius
+    //     borderSide: BorderSide(color: colorScheme.outline),
+    //   ),
+    //   enabledBorder: OutlineInputBorder(
+    //     borderRadius: BorderRadius.circular(12),
+    //     borderSide: BorderSide(color: colorScheme.outline),
+    //   ),
+    //   focusedBorder: OutlineInputBorder(
+    //     borderRadius: BorderRadius.circular(12),
+    //     borderSide: BorderSide(color: colorScheme.primary, width: 2),
+    //   ),
+    // ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        padding: EdgeInsets.symmetric(vertical: kDefaultPadding),
+      ),
+    ),
   );
 
-
-  List<ExtendedColor> get extendedColors => [
-  ];
+  List<ExtendedColor> get extendedColors => [];
 }
 
 class ExtendedColor {
