@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: theme.light(),
       darkTheme: theme.dark(),
       themeMode: ThemeMode.system,
-      home: MainWrapperAdmin(),
+      home: MainWrapperUser(),
     );
   }
 }

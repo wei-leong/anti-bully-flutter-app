@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1008556669080",
+    "project_id": "apu-assignment",
+    "storage_bucket": "apu-assignment.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1008556669080:android:c861b08d4c7043b54e38ed",
+        "android_client_info": {
+          "package_name": "com.example.apu_assignment"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDD_GG2p0lRWyg4az_z-sel92iXG1np5Ic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
