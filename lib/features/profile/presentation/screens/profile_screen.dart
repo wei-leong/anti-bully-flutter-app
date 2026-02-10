@@ -1,5 +1,6 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/profile/presentation/widgets/profile_menu_tile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -72,7 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 const Gap(12),
                 Text(
-                  "Tan Jie Jia",
+                  "Tan Jia Jie",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -84,7 +85,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: TextStyle(color: colorScheme.onSurfaceVariant),
                 ),
                 Text(
-                  "tjj@gmail.com",
+                  FirebaseAuth.instance.currentUser?.email ?? 'Error', // TODO : Modify it to Use Email Address in Users Table
                   style: TextStyle(color: colorScheme.onSurfaceVariant),
                 ),
               ],
@@ -119,9 +120,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(
               width: double.infinity,
               child: OutlinedButton.icon(
-                onPressed: () {
-                  // Handle Logout
-                },
+                onPressed: () => FirebaseAuth.instance.signOut(),
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   side: BorderSide(color: colorScheme.errorContainer),
