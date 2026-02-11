@@ -34,7 +34,7 @@ class ReportStatusTile extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: statusColor.withOpacity(0.15),
+              color: statusColor.withAlpha(30),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(

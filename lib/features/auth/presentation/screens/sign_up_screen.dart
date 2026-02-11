@@ -1,5 +1,5 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
-import 'package:apu_assignment/features/auth/presentation/login/ui/login_screen.dart';
+import 'package:apu_assignment/features/auth/presentation/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -14,7 +14,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
   final _passwordController = TextEditingController();
-  String selectedRole = "Student";
+  String selectedRole = "User";
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +44,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       SegmentedButton<String>(
                         segments: const <ButtonSegment<String>>[
                           ButtonSegment(
-                            value: "Student",
-                            label: Text("Student"),
+                            value: "User",
+                            label: Text("User"),
                           ),
                           ButtonSegment(
-                            value: "Lecturer",
-                            label: Text("Lecturer"),
+                            value: "Counselor",
+                            label: Text("Counselor"),
                           ),
                         ],
                         style: ButtonStyle(
