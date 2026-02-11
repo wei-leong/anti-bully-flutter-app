@@ -1,5 +1,5 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
-import 'package:apu_assignment/features/conselor/data/resource_item.dart';
+import 'package:apu_assignment/features/conselor/resources/data/resource_item.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
