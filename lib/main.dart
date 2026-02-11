@@ -1,28 +1,13 @@
-import 'package:apu_assignment/core/navigation/main_wrapper_admin.dart';
-import 'package:apu_assignment/core/navigation/main_wrapper_user.dart';
-import 'package:apu_assignment/core/navigation/main_wrapper_conselor.dart';
-import 'package:apu_assignment/core/theme/theme_black_white.dart';
-import 'package:apu_assignment/core/theme/util.dart';
-import 'package:apu_assignment/features/auth/presentation/screens/sign_up_screen.dart';
+import 'package:apu_assignment/app.dart';
+import 'package:apu_assignment/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    TextTheme textTheme = createTextTheme(context, "Roboto", "Roboto");
-    MaterialTheme theme = MaterialTheme(textTheme);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: theme.light(),
-      darkTheme: theme.dark(),
-      themeMode: ThemeMode.system,
-      home: MainWrapperConselor(),
-    );
-  }
+  runApp(const App());
 }
