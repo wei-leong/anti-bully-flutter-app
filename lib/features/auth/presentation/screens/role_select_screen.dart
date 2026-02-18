@@ -16,7 +16,7 @@ class RoleSelectScreen extends ConsumerStatefulWidget {
 // CHANGE 2: Use ConsumerState
 class _RoleSelectScreenState extends ConsumerState<RoleSelectScreen> {
   final TextEditingController _nameController = TextEditingController();
-  UserRole selectedRole = UserRole.student;
+  UserRole selectedRole = UserRole.user;
 
   @override
   void dispose() {
@@ -102,9 +102,9 @@ class _RoleSelectScreenState extends ConsumerState<RoleSelectScreen> {
                     child: RoleSelectionCards(
                       label: "User",
                       icon: Icons.person,
-                      isSelected: selectedRole == UserRole.student,
+                      isSelected: selectedRole == UserRole.user,
                       onTap: () =>
-                          setState(() => selectedRole = UserRole.student),
+                          setState(() => selectedRole = UserRole.user),
                     ),
                   ),
                   kGap8,

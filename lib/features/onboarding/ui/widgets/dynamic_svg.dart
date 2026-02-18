@@ -19,6 +19,8 @@ class DynamicSvg extends StatelessWidget {
     return FutureBuilder(
       future: DefaultAssetBundle.of(context).loadString(path),
       builder: (context, snapshot) {
+        if (!snapshot.hasData) return const SizedBox();
+
         final svgString = snapshot.data!.replaceAll(
           RegExp(replaceColorHex, caseSensitive: false),
           newHex,

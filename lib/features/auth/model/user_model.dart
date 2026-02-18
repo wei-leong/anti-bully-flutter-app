@@ -1,4 +1,4 @@
-enum UserRole { student, counselor, admin, unknown }
+enum UserRole { user, counselor, admin, unknown }
 
 class UserModel {
   final String uid;
@@ -18,7 +18,7 @@ class UserModel {
   static UserRole _firebaseToRole(String role) {
     switch (role) {
       case 'student':
-        return UserRole.student;
+        return UserRole.user;
       case 'counselor':
         return UserRole.counselor;
       case 'admin':

@@ -16,4 +16,16 @@ class UserRepository {
     DocumentSnapshot doc = await _db.collection('user').doc(uid).get();
     return doc.exists;
   }
+
+  Future<UserModel?> getUser(String uid) async {
+    try{
+      DocumentSnapshot doc = await _db.collection('user').doc(uid).get();
+      if(doc.exists) return null;
+
+      return UserModel.fromMap(doc.data() as Map<String,dynamic>, uid);
+    } catch (e){
+      print("Error fetching user : $e");
+      return null;
+    }
+  }
 }
