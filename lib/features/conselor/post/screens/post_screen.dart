@@ -43,7 +43,10 @@ class _PostScreenState extends State<PostScreen> {
             padding: const EdgeInsets.only(right: 8.0),
             child: FilledButton(
               onPressed: () {
-                print("Posting: ${_textController.text}");
+                final text = _textController.text; // 先把值取出来，防止组件销毁后取不到
+                debugPrint("--- 准备发布内容 ---"); // 使用 debugPrint 更稳定
+                debugPrint("Posting: $text");
+
                 Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => const MainWrapperConselor()),

@@ -2,6 +2,7 @@ import 'package:apu_assignment/features/conselor/dashboard/quick_access/quick_ac
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import "package:apu_assignment/features/conselor/dashboard/report/widget/report.dart";
+import "package:apu_assignment/features/conselor/dashboard/report/screens/view_details.dart";
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
@@ -24,9 +25,9 @@ class Dashboard extends StatelessWidget {
       "Level": 2
     },
     {
-      "location": "Cafeteria aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "location": "Cafeteria aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "date": "Jan 11, 2026",
-      "description": "Anonymity case: Victim fears retaliation after a group incident sssssssssssssssssssssssssssssssssssssssssssssssssssssssss.",
+      "description": "Anonymity case: Victim fears retaliation after a group incident ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss.",
       "status": "End",
       "Level": 1
     },
@@ -109,6 +110,15 @@ class Dashboard extends StatelessWidget {
               status: data['status']!,
               urgentlevel: data['Level'],
               onTap: () {
+                showModalBottomSheet(
+                context: context,
+                isScrollControlled: true, // 关键：允许自定义高度
+                backgroundColor: Colors.transparent, // 关键：背景透明以显示 Container 的圆角
+                builder: (context) => FractionallySizedBox(
+                  heightFactor: 0.85, // 关键：控制在 85% 屏幕高度
+                  child: ViewDetails(data: data), // 传入当前点击的数据
+                ),
+              );
               },
             )).toList(),
           ],
