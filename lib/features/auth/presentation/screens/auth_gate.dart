@@ -1,4 +1,5 @@
 import 'package:apu_assignment/core/navigation/main_wrapper_user.dart';
+import 'package:apu_assignment/core/navigation/main_wrapper_conselor.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class AuthGate extends StatelessWidget {
         }
 
         if (snapshot.hasData) {
-          return const MainWrapperUser();
+          return const MainWrapperConselor();
         } else {
           return SignInScreen(providers: [EmailAuthProvider()]);
         }

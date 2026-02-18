@@ -1,54 +1,98 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import "package:apu_assignment/features/conselor/dashboard/report/report.dart";
 
-class ReportModel {
-  final String caseId;
-  final String date;
-  final ReportStatus status;
+class Dashboard extends StatelessWidget {
+  const Dashboard({super.key});
+  @override
+  Widget build(BuildContext context) {
+    // --- MOCK DATA : REPORTS ---
+  final List<Map<String, dynamic>> mockReports = [
+    {
+      "location": "Library Hall A",
+      "date": "Jan 12, 2026",
+      "description": "Student reported verbal harassment near the entrance.",
+      "status": "In-progress",
+      "Level": 3
+    },
+    {
+      "location": "Cafeteria",
+      "date": "Jan 11, 2026",
+      "description": "Anonymity case: Victim fears retaliation after a group incident.",
+      "status": "Pending",
+      "Level": 3
+    },
+  ];
 
-  ReportModel({
-    required this.caseId,
-    required this.date,
-    required this.status,
-  });
-}
-
-enum ReportStatus {
-  received, 
-  inProgress,
-  resolved;
-
-  String get displayName {
-    switch(this){
-      case ReportStatus.received:
-        return "Received";
-      case ReportStatus.inProgress:
-        return "In Progress";
-      case ReportStatus.resolved: 
-        return "Resolved";
-    }
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            CircleAvatar(child: Icon(Icons.person)),
+            const Gap(12),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Welcome back",
+                  style: textTheme.bodySmall?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                ),
+                Text(
+                  "Alex Johnson",
+                  style: textTheme.titleMedium?.copyWith(
+                    color: colorScheme.onSurface,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.notifications_outlined),
+          ),
+          IconButton(
+            onPressed: () {},
+            style: IconButton.styleFrom(
+              backgroundColor: colorScheme.errorContainer,
+              foregroundColor: colorScheme.error,
+            ),
+            icon: Icon(Icons.sos_rounded),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Assigned Reports", // Heading
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const Gap(16),
+            ...mockReports.map((data) => ReportCard(
+              location: data['location']!,
+              date: data['date']!,
+              description: data['description']!,
+              status: data['status']!,
+              urgentlevel: data['level'],
+              onTap: () {
+              },
+            )).toList(),
+          ],
+        ),
+      ),
+    );
   }
-
-  // Helper Function to Get Background Color
-  Color get color{
-    switch(this){
-      case ReportStatus.received:
-        return Colors.orange.shade700;
-      case ReportStatus.inProgress:
-        return Colors.blue.shade700;
-      case ReportStatus.resolved: 
-        return Colors.green.shade700;
-    }
   }
-  // Helper Function to Get Related Icon
-  IconData get icon{
-    switch(this){
-      case ReportStatus.received:
-        return Icons.inbox_rounded;
-      case ReportStatus.inProgress:
-        return Icons.pending_actions_rounded;
-      case ReportStatus.resolved: 
-        return Icons.check_circle_outline_rounded;
-    }
-  }
-
-}
