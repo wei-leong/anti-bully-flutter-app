@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 const double kSmallPadding = 8;
 const double kDefaultPadding = 16;
+const double kOnboardContentPadding = 32;
+
 const double kDefaultRadius = 16;
 const double kMainIconSize = 75;
 
