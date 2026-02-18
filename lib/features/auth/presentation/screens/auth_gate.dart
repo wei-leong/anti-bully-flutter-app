@@ -40,9 +40,9 @@ class AuthGate extends StatelessWidget {
                       return const Scaffold(
                         body: Center(child: CircularProgressIndicator()),
                       );
-                    } 
-                    
-                    if(snapshot.hasData){
+                    }
+
+                    if (snapshot.hasData) {
                       final userModel = snapshot.data!;
 
                       // Navigate based on Role
@@ -50,15 +50,25 @@ class AuthGate extends StatelessWidget {
                         case UserRole.user:
                           return const MainWrapperUser();
                         case UserRole.counselor:
-                          // Assuming ProfileScreen doesn't take arguments
-                          return const ProfileScreen(); 
+                          // TODO : Remove This Later
+                          return Scaffold(
+                            appBar: AppBar(
+                              actions: [
+                                IconButton(
+                                  onPressed: () =>
+                                      FirebaseAuth.instance.signOut(),
+                                  icon: Icon(Icons.logout),
+                                ),
+                              ],
+                            ),
+                            body: const Center(child: Text("Counselor Page")),
+                          );
                         case UserRole.admin:
                           return const MainWrapperAdmin();
                         default:
                           return const RoleSelectScreen();
                       }
-                    }
-                    else {
+                    } else {
                       return const RoleSelectScreen();
                     }
                   },
