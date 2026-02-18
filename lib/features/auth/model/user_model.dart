@@ -17,7 +17,7 @@ class UserModel {
 
   static UserRole _firebaseToRole(String role) {
     switch (role) {
-      case 'student':
+      case 'user':
         return UserRole.user;
       case 'counselor':
         return UserRole.counselor;

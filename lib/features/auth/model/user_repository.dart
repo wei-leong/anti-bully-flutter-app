@@ -20,7 +20,7 @@ class UserRepository {
   Future<UserModel?> getUser(String uid) async {
     try{
       DocumentSnapshot doc = await _db.collection('user').doc(uid).get();
-      if(doc.exists) return null;
+      if(!doc.exists) return null;
 
       return UserModel.fromMap(doc.data() as Map<String,dynamic>, uid);
     } catch (e){
