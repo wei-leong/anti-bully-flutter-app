@@ -1,6 +1,7 @@
+import 'package:apu_assignment/features/conselor/dashboard/quick_access/quick_access.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import "package:apu_assignment/features/conselor/dashboard/report/report.dart";
+import "package:apu_assignment/features/conselor/dashboard/report/widget/report.dart";
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
@@ -20,7 +21,14 @@ class Dashboard extends StatelessWidget {
       "date": "Jan 11, 2026",
       "description": "Anonymity case: Victim fears retaliation after a group incident.",
       "status": "Pending",
-      "Level": 3
+      "Level": 2
+    },
+    {
+      "location": "Cafeteria aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "date": "Jan 11, 2026",
+      "description": "Anonymity case: Victim fears retaliation after a group incident sssssssssssssssssssssssssssssssssssssssssssssssssssssssss.",
+      "status": "End",
+      "Level": 1
     },
   ];
 
@@ -44,7 +52,7 @@ class Dashboard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Alex Johnson",
+                  "Iris",
                   style: textTheme.titleMedium?.copyWith(
                     color: colorScheme.onSurface,
                     fontWeight: FontWeight.bold,
@@ -75,9 +83,22 @@ class Dashboard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Assigned Reports", // Heading
+              "Quick Access",
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
+                fontSize: 25,
+              )
+            ),
+            const Gap(16),
+            
+            QuickAccess(),
+
+            const Gap(16),
+            Text(
+              "Cases Reports", // Heading
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
               ),
             ),
             const Gap(16),
@@ -86,7 +107,7 @@ class Dashboard extends StatelessWidget {
               date: data['date']!,
               description: data['description']!,
               status: data['status']!,
-              urgentlevel: data['level'],
+              urgentlevel: data['Level'],
               onTap: () {
               },
             )).toList(),

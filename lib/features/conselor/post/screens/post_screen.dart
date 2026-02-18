@@ -1,4 +1,6 @@
+import 'package:apu_assignment/core/navigation/main_wrapper_conselor.dart';
 import 'package:apu_assignment/core/theme/sizes.dart';
+import 'package:apu_assignment/features/conselor/resources/screens/resources_screen.dart';
 import 'package:flutter/material.dart';
 
 class PostScreen extends StatefulWidget {
@@ -9,7 +11,6 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
-  // 用于获取输入框的内容
   final TextEditingController _textController = TextEditingController();
 
   @override
@@ -28,21 +29,26 @@ class _PostScreenState extends State<PostScreen> {
         leading: IconButton(
         icon: const Icon(Icons.close),
         onPressed: () {
-          // 逻辑：跳转回第一个 Tab（首页）
-          // 假设你的 MainScreen 维护了一个 _selectedIndex
-          // 这里建议使用通知、Provider 或者简单的逻辑来切换 Tab
-          _textController.clear(); // 只是清空内容
+          _textController.clear(); 
+          Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const MainWrapperConselor()),
+          (route) => false, 
+        );
         },
       ),
         centerTitle: true,
-        // 2. 右上角放 Post 按钮
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: FilledButton(
               onPressed: () {
-                // 执行发布逻辑
                 print("Posting: ${_textController.text}");
+                Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const MainWrapperConselor()),
+                (route) => false, 
+              );
               },
               style: FilledButton.styleFrom(
                 visualDensity: VisualDensity.compact, // 让按钮紧凑一点

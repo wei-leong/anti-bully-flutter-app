@@ -3,6 +3,7 @@ import 'package:apu_assignment/features/conselor/resources/data/resource_item.da
 import 'package:apu_assignment/features/conselor/resources/widgets/artical_tile.dart';
 import 'package:apu_assignment/features/conselor/resources/widgets/event_poster.dart';
 import 'package:apu_assignment/features/conselor/resources/widgets/video_cart.dart';
+import 'package:apu_assignment/features/conselor/resources/widgets/new.dart';
 import 'package:flutter/material.dart';
 
 class ResourceScreen extends StatefulWidget {
@@ -53,6 +54,20 @@ class _ResourceScreenState extends State<ResourceScreen> {
       title: "Walk Throught Life of Bullying",
       source: "APU Counseling Unit",
       type: "events", // 新增一个类型 "event"
+      durationOrSize: "2024-07-31, 10 AM", // 可以是日期时间
+      imageUrl: "https://example.com/youth_talk_poster.jpg", // 假设有一个图片链接
+    ),
+    ResourceItem(
+      title: "Walk Throught Life of Bullying",
+      source: "APU Counseling Unit",
+      type: "new", // 新增一个类型 "event"
+      durationOrSize: "2024-07-31, 10 AM", // 可以是日期时间
+      imageUrl: "https://example.com/youth_talk_poster.jpg", // 假设有一个图片链接
+    ),
+    ResourceItem(
+      title: "Walk Throught Life of Bullying",
+      source: "APU Counseling Unit",
+      type: "new", // 新增一个类型 "event"
       durationOrSize: "2024-07-31, 10 AM", // 可以是日期时间
       imageUrl: "https://example.com/youth_talk_poster.jpg", // 假设有一个图片链接
     ),
@@ -116,7 +131,7 @@ class _ResourceScreenState extends State<ResourceScreen> {
                   // Choose widget based on type
                   if (item.type == "videos") {
                     return Padding(
-                      padding: const EdgeInsets.only(bottom: 6.0),
+                      padding: const EdgeInsets.only(bottom: 4.0),
                       child: VideoCard(resourceItem: item),
                     );
                   } else if (item.type == "events"){
@@ -124,6 +139,11 @@ class _ResourceScreenState extends State<ResourceScreen> {
                         padding: const  EdgeInsets.only(bottom: 6.0),
                         child: EventPosterCard(resourceItem:  item),
                     );
+                  }else if (item.type == "new"){
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 6.0),
+                        child: NewsOrEventTile(resourceItem:  item),
+                      );
                   }else {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 6.0),
