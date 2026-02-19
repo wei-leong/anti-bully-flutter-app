@@ -4,7 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserRepository {
 
-  UserServices userServices = UserServices();
+  final UserServices userServices;
+
+  UserRepository(this.userServices);
 
   Future<void> saveUserData(UserModel user) async {
     try{
