@@ -1,6 +1,6 @@
 import 'package:apu_assignment/app.dart';
+import 'package:apu_assignment/core/data/shared_pref_provider.dart';
 import 'package:apu_assignment/features/auth/presentation/screens/auth_gate.dart';
-import 'package:apu_assignment/features/auth/presentation/screens/role_select_screen.dart';
 import 'package:apu_assignment/features/onboarding/ui/screens/onboarding_screen.dart';
 import 'package:apu_assignment/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,7 +17,8 @@ void main() async {
 
   runApp(
     ProviderScope(
-     child: App(
+      overrides: [sharedPrefsProvider.overrideWithValue(prefs)],
+      child: App(
         screens: seenOnboarding ? const AuthGate() : const OnboardingScreen(),
       ),
     ),

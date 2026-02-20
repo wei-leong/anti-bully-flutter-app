@@ -26,7 +26,7 @@ class ProfileMenuTile extends StatelessWidget {
     final iconBgColor = isDestructive
         ? colorScheme.errorContainer
         : colorScheme.primaryContainer;
-    final iconColor = isDestructive ? colorScheme.error : colorScheme.onPrimary;
+    final iconColor = isDestructive ? colorScheme.error : colorScheme.onPrimaryContainer;
 
     return Material(
       child: InkWell(

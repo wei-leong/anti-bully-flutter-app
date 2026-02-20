@@ -1,6 +1,6 @@
-import 'package:apu_assignment/core/navigation/main_wrapper_user.dart';
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/auth/model/user_model.dart';
+import 'package:apu_assignment/features/auth/presentation/viewmodels/auth_viewmodel.dart';
 import 'package:apu_assignment/features/auth/presentation/viewmodels/role_selection_viewmodel.dart';
 import 'package:apu_assignment/features/auth/presentation/widgets/role_selection_cards.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,6 @@ class RoleSelectScreen extends ConsumerStatefulWidget {
   ConsumerState<RoleSelectScreen> createState() => _RoleSelectScreenState();
 }
 
-// CHANGE 2: Use ConsumerState
 class _RoleSelectScreenState extends ConsumerState<RoleSelectScreen> {
   final TextEditingController _nameController = TextEditingController();
   UserRole selectedRole = UserRole.user;
@@ -35,7 +34,7 @@ class _RoleSelectScreenState extends ConsumerState<RoleSelectScreen> {
       return;
     }
 
-    ref.read(roleSelectionVideModelProvider.notifier).selectRole(role, name);
+    ref.read(roleSelectionViewModelProvider.notifier).selectRole(role, name);
   }
 
   @override
@@ -43,22 +42,18 @@ class _RoleSelectScreenState extends ConsumerState<RoleSelectScreen> {
     // final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    ref.listen(roleSelectionVideModelProvider, (previous, next) {
-      next.whenOrNull(
-        data: (_) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const MainWrapperUser()),
-          );
-        },
-        error: (error, stack) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(error.toString())));
-        },
-      );
+    ref.listen(roleSelectionViewModelProvider, (previous, next) {
+      if(!next.isLoading && next.hasError){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.error.toString())));
+      }
+
+      else if (!next.isLoading && previous?.isLoading == true && !next.hasError) {
+        // Just tell the AuthGate to refresh. It will automatically route you to MainWrapperUser.
+        ref.invalidate(userModelProvider); 
+      }
     });
 
-    final isLoading = ref.watch(roleSelectionVideModelProvider).isLoading;
+    final isLoading = ref.watch(roleSelectionViewModelProvider).isLoading;
 
     return Scaffold(
       body: SafeArea(

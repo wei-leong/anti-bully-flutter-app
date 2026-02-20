@@ -1,5 +1,6 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/profile/presentation/widgets/profile_menu_tile.dart';
+import 'package:apu_assignment/features/profile/presentation/widgets/theme_selector_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -93,6 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const Gap(24),
             _buildSectionHeader("GENERAL"),
             _buildMenuContainer([
+              ThemeSelectorCard(),
               ProfileMenuTile(
                 title: "Notifications",
                 icon: Icons.notifications,
