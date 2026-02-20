@@ -1,0 +1,17 @@
+import 'package:apu_assignment/features/auth/model/user_repository.dart';
+import 'package:apu_assignment/features/auth/model/user_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final firebaseAuthProvider = Provider<FirebaseAuth>((ref){
+  return FirebaseAuth.instance;
+});
+
+final userServiceProvider = Provider<UserServices>((ref){
+  return UserServices();
+});
+
+final userRepositoryProvider = Provider<UserRepository>((ref){
+  final service = ref.watch(userServiceProvider);
+  return UserRepository(service);
+});

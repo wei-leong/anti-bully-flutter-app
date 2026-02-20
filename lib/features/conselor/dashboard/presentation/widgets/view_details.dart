@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:apu_assignment/features/conselor/dashboard/model/report_model.dart';
 
 class ViewDetails extends StatelessWidget {
-  final Map<String, dynamic> data; // 接收传进来的 report 数据
-
-  const ViewDetails({super.key, required this.data});
+  final ReportModel report;
+  const ViewDetails({super.key, required this.report});
 
   @override
   Widget build(BuildContext context) {
     // 这里的颜色逻辑可以复用你 ReportCard 里的逻辑
-    final Color statusColor = data['status'] == "In-progress" ? Colors.blue : 
-                             data['status'] == "End" ? Colors.green : Colors.orange;
+    final Color statusColor = report.status == "In-progress" ? Colors.blue : 
+                              report.status == "End" ? Colors.green : report.status == "Pending" ? Colors.orange:Colors.white;
 
     return Container(
       // 这里的 decoration 确保了弹窗的圆角
@@ -57,11 +57,11 @@ class ViewDetails extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildInfoSection("Location", data['location'], Icons.location_on, Colors.redAccent),
+                  _buildInfoSection("Location", report.location, Icons.location_on, Colors.redAccent),
                   const Gap(20),
-                  _buildInfoSection("Date Reported", data['date'], Icons.calendar_today, Colors.blue),
+                  _buildInfoSection("Date Reported", report.date, Icons.calendar_today, Colors.blue),
                   const Gap(20),
-                  _buildInfoSection("Current Status", data['status'], Icons.hourglass_bottom, statusColor),
+                  _buildInfoSection("Current Status", report.status, Icons.hourglass_bottom, statusColor),
                   const Gap(24),
                   const Text(
                     "Description",
@@ -69,7 +69,7 @@ class ViewDetails extends StatelessWidget {
                   ),
                   const Gap(8),
                   Text(
-                    data['description'],
+                    report.description,
                     style: const TextStyle(fontSize: 16, height: 1.5),
                   ),
                   const Gap(40),
