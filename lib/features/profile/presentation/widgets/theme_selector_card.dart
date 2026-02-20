@@ -1,5 +1,5 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
-import 'package:apu_assignment/features/profile/presentation/provider/theme_provider.dart';
+import 'package:apu_assignment/features/profile/presentation/viewmodels/theme_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,7 +9,7 @@ class ThemeSelectorCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colorScheme = Theme.of(context).colorScheme;
-    final currentTheme = ref.watch(themeProvider);
+    final currentTheme = ref.watch(themeViewModelProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -60,21 +60,7 @@ class ThemeSelectorCard extends ConsumerWidget {
             selected: {currentTheme},
             onSelectionChanged: (Set<ThemeMode> newSelection) async {
               ThemeMode selectedTheme = newSelection.first;
-              String saveTheme = "";
-    
-              switch (selectedTheme) {
-                case ThemeMode.system:
-                  saveTheme = "System";
-                  break;
-                case ThemeMode.light:
-                  saveTheme = "Light";
-                  break;
-                case ThemeMode.dark:
-                  saveTheme = "Dark";
-                  break;
-              }
-    
-              ref.read(themeProvider.notifier).changeTheme(selectedTheme);
+              ref.read(themeViewModelProvider.notifier).changeTheme(selectedTheme);
             },
           ),
         ),
