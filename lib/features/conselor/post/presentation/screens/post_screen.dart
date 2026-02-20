@@ -2,15 +2,19 @@ import 'package:apu_assignment/core/navigation/main_wrapper_conselor.dart';
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/conselor/resources/screens/resources_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:apu_assignment/features/conselor/post/data/post_provider.dart';
+import 'package:apu_assignment/features/conselor/post/model/post_model.dart';
+import 'package:apu_assignment/features/conselor/post/presentation/viewmodel/post_viewmodel.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PostScreen extends StatefulWidget {
+class PostScreen extends ConsumerStatefulWidget {
   const PostScreen({super.key});
 
   @override
-  State<PostScreen> createState() => _PostScreenState();
+  ConsumerState<PostScreen> createState() => _PostScreenState();
 }
-
-class _PostScreenState extends State<PostScreen> {
+ 
+class _PostScreenState extends ConsumerState<PostScreen> {
   final TextEditingController _textController = TextEditingController();
 
   @override
@@ -66,7 +70,6 @@ class _PostScreenState extends State<PostScreen> {
         padding: const EdgeInsets.all(kDefaultPadding),
         child: TextField(
           controller: _textController,
-          // 使输入框充满剩余空间并从顶部开始
           maxLines: null, // 设置为 null 则根据内容自动换行
           expands: true,  // 配合 maxLines: null 使用，撑开整个父组件
           textAlignVertical: TextAlignVertical.top, // 文字从顶部开始

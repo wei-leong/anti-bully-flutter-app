@@ -1,9 +1,9 @@
-import 'package:apu_assignment/features/conselor/dashboard/quick_access/quick_access.dart';
+import 'package:apu_assignment/features/conselor/dashboard/presentation/widgets/quick_access.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import "package:apu_assignment/features/conselor/dashboard/report/widget/report.dart";
-import "package:apu_assignment/features/conselor/dashboard/report/screens/view_details.dart";
+import "package:apu_assignment/features/conselor/dashboard/presentation/widgets/report.dart";
+import "package:apu_assignment/features/conselor/dashboard/presentation/widgets/view_details.dart";
 import 'package:apu_assignment/features/conselor/dashboard/presentation/viewmodels/report_viewmodel.dart';
 
 class Dashboard extends ConsumerWidget {

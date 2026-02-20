@@ -16,60 +16,10 @@ class AuthGate extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authStateProvider);
 
-<<<<<<< HEAD
-        if (authSnapshot.hasData) {
-          final firebaseUser = authSnapshot.data!;
-
-          return FutureBuilder<bool>(
-            future: UserRepository().isUserExist(firebaseUser.uid),
-            builder: (context, existSnapshot) {
-              if (existSnapshot.connectionState == ConnectionState.waiting) {
-                return Scaffold(
-                  body: Center(child: CircularProgressIndicator()),
-                );
-              }
-
-              if (existSnapshot.hasData && existSnapshot.data == true) {
-                return FutureBuilder<UserModel?>(
-                  future: UserRepository().getUser(firebaseUser.uid),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Scaffold(
-                        body: Center(child: CircularProgressIndicator()),
-                      );
-                    }
-
-                    if (snapshot.hasData) {
-                      final userModel = snapshot.data!;
-
-                      // Navigate based on Role
-                      switch (userModel.role) {
-                        case UserRole.user:
-                          return const MainWrapperUser();
-                        case UserRole.counselor:
-                          return const MainWrapperConselor();
-                        case UserRole.admin:
-                          return const MainWrapperAdmin();
-                        default:
-                          return const RoleSelectScreen();
-                      }
-                    } else {
-                      return const RoleSelectScreen();
-                    }
-                  },
-                );
-              } else {
-                return const RoleSelectScreen();
-              }
-            },
-          );
-        } else {
-=======
     return authState.when(
       data: (firebaseUser) {
         // Case 1 : Not logged in to Firebase
         if (firebaseUser == null) {
->>>>>>> a07935e3821e175f4172b910fa4621abc478bc32
           return SignInScreen(providers: [EmailAuthProvider()]);
         }
 
@@ -89,17 +39,7 @@ class AuthGate extends ConsumerWidget {
                 return const MainWrapperUser();
               case UserRole.counselor:
                 // TODO: Remove This Later
-                return Scaffold(
-                  appBar: AppBar(
-                    actions: [
-                      IconButton(
-                        onPressed: () => FirebaseAuth.instance.signOut(),
-                        icon: Icon(Icons.logout),
-                      ),
-                    ],
-                  ),
-                  body: const Center(child: Text("Counselor Page")),
-                );
+                return MainWrapperConselor();
               case UserRole.admin:
                 return const MainWrapperAdmin();
               default:
