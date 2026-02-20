@@ -1,4 +1,6 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
+import 'package:apu_assignment/features/profile/presentation/screens/edit_profile_screen.dart';
+import 'package:apu_assignment/features/profile/presentation/widgets/edit_profile_img.dart';
 import 'package:apu_assignment/features/profile/presentation/widgets/profile_menu_tile.dart';
 import 'package:apu_assignment/features/profile/presentation/widgets/theme_selector_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,7 +31,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         // elevation: 0,
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => EditProfileScreen()),
+            ),
             child: const Text(
               "Edit Profile",
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -43,35 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             Column(
               children: [
-                Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundColor: colorScheme.surfaceContainerHighest,
-                      backgroundImage: NetworkImage(
-                        'https://i.pravatar.cc/300',
-                      ), // TODO: Change the Background Image
-                    ),
-                    // Change Profile Picture Icon
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                        padding: const EdgeInsets.all(6),
-                        decoration: BoxDecoration(
-                          color: colorScheme.primary,
-                          shape: BoxShape.circle,
-                          border: Border.all(color: colorScheme.primary),
-                        ),
-                        child: Icon(
-                          Icons.camera_alt,
-                          color: colorScheme.onPrimary,
-                          size: 16,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                EditProfileImg(),
                 const Gap(12),
                 Text(
                   "Tan Jia Jie",
@@ -86,7 +63,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: TextStyle(color: colorScheme.onSurfaceVariant),
                 ),
                 Text(
-                  FirebaseAuth.instance.currentUser?.email ?? 'Error', // TODO : Modify it to Use Email Address in Users Table
+                  FirebaseAuth.instance.currentUser?.email ??
+                      'Error', // TODO : Modify it to Use Email Address in Users Table
                   style: TextStyle(color: colorScheme.onSurfaceVariant),
                 ),
               ],
