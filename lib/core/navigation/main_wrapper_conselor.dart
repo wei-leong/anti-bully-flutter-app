@@ -1,7 +1,8 @@
 import 'package:apu_assignment/features/chat/presentation/screens/chat_list_screens.dart';
+import 'package:apu_assignment/features/conselor/dashboard/presentation/screens/dashboard.dart';
 import 'package:apu_assignment/features/profile/presentation/screens/profile_screen.dart';
 import 'package:apu_assignment/features/conselor/resources/screens/resources_screen.dart';
-import 'package:apu_assignment/features/conselor/post/screens/post_screen.dart';
+import 'package:apu_assignment/features/conselor/post/presentation/screens/post_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainWrapperConselor extends StatefulWidget {
@@ -15,7 +16,7 @@ class _MainWrapperUserState extends State<MainWrapperConselor> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    const Center(child: Text("Home")), // TODO: Home Page
+    const Dashboard(), // TODO: Home Page
     const ResourceScreen(), // Resources Page
     const PostScreen(),
     const ChatListScreens(), // Chat Page

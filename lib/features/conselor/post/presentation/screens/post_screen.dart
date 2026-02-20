@@ -1,15 +1,20 @@
+import 'package:apu_assignment/core/navigation/main_wrapper_conselor.dart';
 import 'package:apu_assignment/core/theme/sizes.dart';
+import 'package:apu_assignment/features/conselor/resources/screens/resources_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:apu_assignment/features/conselor/post/data/post_provider.dart';
+import 'package:apu_assignment/features/conselor/post/model/post_model.dart';
+import 'package:apu_assignment/features/conselor/post/presentation/viewmodel/post_viewmodel.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PostScreen extends StatefulWidget {
+class PostScreen extends ConsumerStatefulWidget {
   const PostScreen({super.key});
 
   @override
-  State<PostScreen> createState() => _PostScreenState();
+  ConsumerState<PostScreen> createState() => _PostScreenState();
 }
-
-class _PostScreenState extends State<PostScreen> {
-  // 用于获取输入框的内容
+ 
+class _PostScreenState extends ConsumerState<PostScreen> {
   final TextEditingController _textController = TextEditingController();
 
   @override
@@ -28,21 +33,29 @@ class _PostScreenState extends State<PostScreen> {
         leading: IconButton(
         icon: const Icon(Icons.close),
         onPressed: () {
-          // 逻辑：跳转回第一个 Tab（首页）
-          // 假设你的 MainScreen 维护了一个 _selectedIndex
-          // 这里建议使用通知、Provider 或者简单的逻辑来切换 Tab
-          _textController.clear(); // 只是清空内容
+          _textController.clear(); 
+          Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const MainWrapperConselor()),
+          (route) => false, 
+        );
         },
       ),
         centerTitle: true,
-        // 2. 右上角放 Post 按钮
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: FilledButton(
               onPressed: () {
-                // 执行发布逻辑
-                print("Posting: ${_textController.text}");
+                final text = _textController.text; // 先把值取出来，防止组件销毁后取不到
+                debugPrint("--- 准备发布内容 ---"); // 使用 debugPrint 更稳定
+                debugPrint("Posting: $text");
+
+                Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const MainWrapperConselor()),
+                (route) => false, 
+              );
               },
               style: FilledButton.styleFrom(
                 visualDensity: VisualDensity.compact, // 让按钮紧凑一点
@@ -57,7 +70,6 @@ class _PostScreenState extends State<PostScreen> {
         padding: const EdgeInsets.all(kDefaultPadding),
         child: TextField(
           controller: _textController,
-          // 使输入框充满剩余空间并从顶部开始
           maxLines: null, // 设置为 null 则根据内容自动换行
           expands: true,  // 配合 maxLines: null 使用，撑开整个父组件
           textAlignVertical: TextAlignVertical.top, // 文字从顶部开始
