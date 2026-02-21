@@ -29,7 +29,7 @@ class _PostScreenState extends ConsumerState<PostScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        // 1. 左上角放一个 X 按钮
+        // Quick Button
         leading: IconButton(
         icon: const Icon(Icons.close),
         onPressed: () {
@@ -47,8 +47,7 @@ class _PostScreenState extends ConsumerState<PostScreen> {
             padding: const EdgeInsets.only(right: 8.0),
             child: FilledButton(
               onPressed: () {
-                final text = _textController.text; // 先把值取出来，防止组件销毁后取不到
-                debugPrint("--- 准备发布内容 ---"); // 使用 debugPrint 更稳定
+                final text = _textController.text; 
                 debugPrint("Posting: $text");
 
                 Navigator.pushAndRemoveUntil(
