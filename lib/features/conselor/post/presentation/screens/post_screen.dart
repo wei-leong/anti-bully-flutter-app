@@ -1,6 +1,6 @@
 import 'package:apu_assignment/core/navigation/main_wrapper_conselor.dart';
 import 'package:apu_assignment/core/theme/sizes.dart';
-import 'package:apu_assignment/features/conselor/resources/screens/resources_screen.dart';
+import 'package:apu_assignment/features/conselor/resources/presentation/screens/resources_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:apu_assignment/features/conselor/post/data/post_provider.dart';
 import 'package:apu_assignment/features/conselor/post/model/post_model.dart';

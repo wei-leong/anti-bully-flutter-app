@@ -1,7 +1,7 @@
 import 'package:apu_assignment/features/chat/presentation/screens/chat_list_screens.dart';
 import 'package:apu_assignment/features/conselor/dashboard/presentation/screens/dashboard.dart';
 import 'package:apu_assignment/features/profile/presentation/screens/profile_screen.dart';
-import 'package:apu_assignment/features/conselor/resources/screens/resources_screen.dart';
+import 'package:apu_assignment/features/conselor/resources/presentation/screens/resources_screen.dart';
 import 'package:apu_assignment/features/conselor/post/presentation/screens/post_screen.dart';
 import 'package:flutter/material.dart';
 
