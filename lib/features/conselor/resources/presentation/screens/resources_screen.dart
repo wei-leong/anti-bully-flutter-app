@@ -44,7 +44,7 @@ class ResourceScreen extends ConsumerWidget {
                         selected: isSelected, // 之前这里漏掉了变量名
                         onSelected: (bool selected) {
                           // 更新 Riverpod 中的状态
-                          ref.read(resourceFilterProvider.notifier).state = filter;
+                          ref.read(resourceFilterProvider.notifier).updateFilter(filter);
                         },
                         showCheckmark: false,
                       ),
