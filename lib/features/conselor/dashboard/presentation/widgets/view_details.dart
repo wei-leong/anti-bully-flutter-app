@@ -8,19 +8,17 @@ class ViewDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 这里的颜色逻辑可以复用你 ReportCard 里的逻辑
+    // Status color
     final Color statusColor = report.status == "In-progress" ? Colors.blue : 
                               report.status == "End" ? Colors.green : report.status == "Pending" ? Colors.orange:Colors.white;
 
     return Container(
-      // 这里的 decoration 确保了弹窗的圆角
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
       ),
       child: Column(
         children: [
-          // 顶部的控制条
           const Gap(12),
           Container(
             width: 40,
@@ -31,7 +29,7 @@ class ViewDetails extends StatelessWidget {
             ),
           ),
           
-          // 顶部标题栏
+          // Title
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
@@ -50,7 +48,7 @@ class ViewDetails extends StatelessWidget {
           ),
           const Divider(height: 1),
 
-          // 详细内容区域
+          // Description
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(20.0),
@@ -74,7 +72,7 @@ class ViewDetails extends StatelessWidget {
                   ),
                   const Gap(40),
                   
-                  // 底部操作按钮
+                  // Updated status button
                   SizedBox(
                     width: double.infinity,
                     height: 50,
@@ -95,14 +93,13 @@ class ViewDetails extends StatelessWidget {
     );
   }
 
-  // 辅助方法：构建信息板块
+  // Text Helper
   Widget _buildInfoSection(String title, String content, IconData icon, Color iconColor) {
   return Row(
-    crossAxisAlignment: CrossAxisAlignment.start, // 关键：如果文字换行，图标对齐顶部
+    crossAxisAlignment: CrossAxisAlignment.start, 
     children: [
       Icon(icon, color: iconColor, size: 20),
       const Gap(12),
-      // 使用 Expanded 让 Column 占据剩余的所有横向空间
       Expanded( 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,12 +110,8 @@ class ViewDetails extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 16, 
                 fontWeight: FontWeight.w600,
-                height: 1.3, // 增加行高，防止文字挤在一起
+                height: 1.3, 
               ),
-              // 如果你希望地点太长时自动换行，不要设置 maxLines
-              // 如果你只想显示两行，多了省略，可以解除下面两行的注释：
-              // maxLines: 2,
-              // overflow: TextOverflow.ellipsis,
             ),
           ],
         ),

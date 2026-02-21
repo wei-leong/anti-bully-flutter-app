@@ -83,7 +83,6 @@ class Dashboard extends ConsumerWidget {
             const Gap(16),
 
             reportAsync.when(
-              // 数据加载成功
               data: (reports) => Column(
                 children: reports.map((report) => ReportCard(
                   location: report.location,
@@ -98,21 +97,21 @@ class Dashboard extends ConsumerWidget {
                       backgroundColor: Colors.transparent,
                       builder: (context) => FractionallySizedBox(
                         heightFactor: 0.85,
-                        // 这里传入 report 对象，ViewDetails 内部也要改成接收 ReportModel
+                        // Get report
                         child: ViewDetails(report: report), 
                       ),
                     );
                   },
                 )).toList(),
               ),
-              // 加载中显示的 UI
+              // UI
               loading: () => const Center(
                 child: Padding(
                   padding: EdgeInsets.all(20.0),
                   child: CircularProgressIndicator(),
                 ),
               ),
-              // 出错时显示的 UI
+              // Failed
               error: (err, stack) => Center(
                 child: Text("Failed to load reports: $err"),
               ),

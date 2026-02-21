@@ -2,7 +2,7 @@ import 'package:apu_assignment/features/conselor/resources/model/resources_model
 
 class ResourcesProvider {
   Future<List<ResourceItem>> fetchResources() async {
-    // 模拟从文件或网络读取
+    // Mock Data
     return [
       ResourceItem(
         title: "How to Prevent Bullying",
@@ -32,30 +32,30 @@ class ResourcesProvider {
       ResourceItem(
         title: "Youth Mental Health Awareness Talk",
         source: "APU Counseling Unit",
-        type: "events", // 新增一个类型 "event"
-        durationOrSize: "2024-06-15, 10 AM", // 可以是日期时间
-        imageUrl: "https://example.com/youth_talk_poster.jpg", // 假设有一个图片链接
+        type: "events", 
+        durationOrSize: "2024-06-15, 10 AM", 
+        imageUrl: "https://example.com/youth_talk_poster.jpg", 
       ),
       ResourceItem(
         title: "Walk Throught Life of Bullying",
         source: "APU Counseling Unit",
-        type: "events", // 新增一个类型 "event"
-        durationOrSize: "2024-07-31, 10 AM", // 可以是日期时间
-        imageUrl: "https://example.com/youth_talk_poster.jpg", // 假设有一个图片链接
+        type: "events", 
+        durationOrSize: "2024-07-31, 10 AM", 
+        imageUrl: "https://example.com/youth_talk_poster.jpg", 
       ),
       ResourceItem(
         title: "Walk Throught Life of Bullying",
         source: "APU Counseling Unit",
-        type: "new", // 新增一个类型 "event"
-        durationOrSize: "2024-07-31, 10 AM", // 可以是日期时间
-        imageUrl: "https://example.com/youth_talk_poster.jpg", // 假设有一个图片链接
+        type: "new", 
+        durationOrSize: "2024-07-31, 10 AM", 
+        imageUrl: "https://example.com/youth_talk_poster.jpg", 
       ),
       ResourceItem(
         title: "Walk Throught Life of Bullying",
         source: "APU Counseling Unit",
-        type: "new", // 新增一个类型 "event"
-        durationOrSize: "2024-07-31, 10 AM", // 可以是日期时间
-        imageUrl: "https://example.com/youth_talk_poster.jpg", // 假设有一个图片链接
+        type: "new", 
+        durationOrSize: "2024-07-31, 10 AM", 
+        imageUrl: "https://example.com/youth_talk_poster.jpg", 
       ),
     ];
   }
