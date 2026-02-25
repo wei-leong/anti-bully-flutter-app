@@ -1,6 +1,7 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/users/dashboard/data/report_model.dart';
 import 'package:apu_assignment/features/users/dashboard/presentation/widgets/report_status_tile.dart';
+import 'package:apu_assignment/features/users/report/presentation/screens/report_incident_screen.dart';
 import 'package:apu_assignment/features/users/resources/data/resource_item.dart';
 import 'package:apu_assignment/features/users/resources/presentation/widgets/news_or_event_tile.dart';
 import 'package:flutter/material.dart';
@@ -121,7 +122,12 @@ class DashboardScreen extends StatelessWidget {
                       ),
                       child: InkWell(
                         onTap: () {
-                          // TODO : Add backend logic
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ReportIncidentScreen(),
+                            ),
+                          );
                         },
                         borderRadius: BorderRadius.circular(kDefaultRadius),
                         child: Padding(
@@ -229,9 +235,7 @@ class DashboardScreen extends StatelessWidget {
       children: [
         Text(
           title,
-          style: textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+          style: textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
         ),
         if (isSeeAllEnabled)
           TextButton(

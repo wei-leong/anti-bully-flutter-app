@@ -23,10 +23,10 @@ class IncidentTypeChip extends StatelessWidget {
 
     Color? finalBackgroundColor = isSelected
         ? colorScheme.surfaceContainerHighest
-        : Colors.transparent;
+        : colorScheme.surface;
 
     Color finalForegroundColor = isSelected
-        ? colorScheme.onSurface
+        ? colorScheme.primary
         : colorScheme.outlineVariant;
 
     double finalWidth = isSelected ? 1.5 : 1.0;
