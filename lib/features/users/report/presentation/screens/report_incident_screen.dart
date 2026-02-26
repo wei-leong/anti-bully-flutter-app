@@ -1,18 +1,22 @@
+import 'package:apu_assignment/features/users/report/model/report_model.dart';
+import 'package:apu_assignment/features/users/report/presentation/viewmodel/report_incident_viewmodel.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/users/report/presentation/widgets/incident_type_chip.dart';
 import 'package:apu_assignment/features/users/report/presentation/widgets/section_label.dart';
 import 'package:flutter/material.dart';
 
-class ReportIncidentScreen extends StatefulWidget {
+class ReportIncidentScreen extends ConsumerStatefulWidget {
   const ReportIncidentScreen({super.key});
 
   @override
-  State<ReportIncidentScreen> createState() => _ReportIncidentScreenState();
+  ConsumerState<ReportIncidentScreen> createState() =>
+      _ReportIncidentScreenState();
 }
 
-class _ReportIncidentScreenState extends State<ReportIncidentScreen> {
-  final _formKey = GlobalKey();
+class _ReportIncidentScreenState extends ConsumerState<ReportIncidentScreen> {
+  final _formKey = GlobalKey<FormState>();
   final _locationController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _dateController = TextEditingController();
@@ -50,7 +54,30 @@ class _ReportIncidentScreenState extends State<ReportIncidentScreen> {
   }
 
   void _submitReport() {
-    print("Submit report pressed");
+    if (_formKey.currentState!.validate()) {
+      if (_selectedIncidentType.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Please select an incident type")),
+        );
+        return;
+      }
+
+      ReportType selectedType = ReportType.values.firstWhere(
+        (e) => e.name.toLowerCase() == _selectedIncidentType.toLowerCase(),
+        orElse: () => ReportType.unknown,
+      );
+
+      ref
+          .read(reportIncidentViewModelProvider.notifier)
+          .submitReport(
+            location: _locationController.text,
+            description: _descriptionController.text,
+            reportType: selectedType,
+            incidentDate: _selectedDate!,
+          );
+
+      Navigator.pop(context);
+    }
   }
 
   @override
@@ -127,6 +154,9 @@ class _ReportIncidentScreenState extends State<ReportIncidentScreen> {
                     borderRadius: BorderRadius.circular(kDefaultRadius),
                   ),
                 ),
+                validator: (value) => value == null || value.isEmpty
+                    ? "Please select a location"
+                    : null,
               ),
               kGap16,
               SectionLabel(sectionText: "Description"),
