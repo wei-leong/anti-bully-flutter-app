@@ -20,9 +20,11 @@ class _ReportIncidentScreenState extends ConsumerState<ReportIncidentScreen> {
   final _locationController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _dateController = TextEditingController();
+  final _timeController = TextEditingController();
 
   String _selectedIncidentType = 'Physical';
   DateTime? _selectedDate;
+  TimeOfDay? _selectedTime;
 
   final List<Map<String, dynamic>> _incidentTypes = [
     {'label': "Physical", 'icon': Icons.back_hand_outlined},
@@ -36,6 +38,7 @@ class _ReportIncidentScreenState extends ConsumerState<ReportIncidentScreen> {
     _locationController.dispose();
     _descriptionController.dispose();
     _dateController.dispose();
+    _timeController.dispose();
     super.dispose();
   }
 
@@ -49,6 +52,20 @@ class _ReportIncidentScreenState extends ConsumerState<ReportIncidentScreen> {
       setState(() {
         _selectedDate = picked;
         _dateController.text = DateFormat('MM/dd/yyyy').format(picked);
+      });
+    }
+  }
+
+  Future<void> pickTime() async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: _selectedTime ?? TimeOfDay.now(),
+    );
+    if (picked != null && picked != _selectedTime) {
+      setState(() {
+        _selectedTime = picked;
+        // This formats it nicely based on the phone's settings (e.g. 10:30 AM)
+        _timeController.text = picked.format(context);
       });
     }
   }
@@ -67,13 +84,21 @@ class _ReportIncidentScreenState extends ConsumerState<ReportIncidentScreen> {
         orElse: () => ReportType.unknown,
       );
 
+      final DateTime finalIncidentDateTime = DateTime(
+        _selectedDate!.year,
+        _selectedDate!.month,
+        _selectedDate!.day,
+        _selectedTime!.hour,
+        _selectedTime!.minute,
+      );
+
       ref
           .read(reportIncidentViewModelProvider.notifier)
           .submitReport(
             location: _locationController.text,
             description: _descriptionController.text,
             reportType: selectedType,
-            incidentDate: _selectedDate!,
+            incidentDate: finalIncidentDateTime,
           );
 
       Navigator.pop(context);
@@ -128,21 +153,45 @@ class _ReportIncidentScreenState extends ConsumerState<ReportIncidentScreen> {
               kGap16,
               SectionLabel(sectionText: "When did it Happen?"),
               kGap8,
-              TextFormField(
-                controller: _dateController,
-                readOnly: true,
-                onTap: pickDate,
-                decoration: InputDecoration(
-                  hintText: "mm/dd/yyyy",
-                  prefixIcon: const Icon(Icons.calendar_today_outlined),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(kDefaultRadius),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _dateController,
+                      readOnly: true,
+                      onTap: pickDate,
+                      decoration: InputDecoration(
+                        hintText: "mm/dd/yyyy",
+                        prefixIcon: const Icon(Icons.calendar_today_outlined),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(kDefaultRadius),
+                        ),
+                      ),
+                      validator: (value) => value == null || value.isEmpty
+                          ? "Required"
+                          : null,
+                    ),
                   ),
-                ),
-                validator: (value) => value == null || value.isEmpty
-                    ? "Please select a date"
-                    : null,
+                  kGap8,
+                  Expanded(
+                    child: TextFormField(
+                      controller: _timeController,
+                      onTap: pickTime,
+                      decoration: InputDecoration(
+                        hintText: "--:-- --",
+                        prefixIcon: const Icon(Icons.timelapse_rounded),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(kDefaultRadius),
+                        ),
+                      ),
+                      validator: (value) => value == null || value.isEmpty
+                            ? "Required"
+                            : null,
+                    ),
+                  ),
+                ],
               ),
+
               kGap16,
               SectionLabel(sectionText: "Where did it Happen?"),
               kGap8,
