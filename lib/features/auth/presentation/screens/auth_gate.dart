@@ -1,4 +1,5 @@
 import 'package:apu_assignment/core/navigation/main_wrapper_admin.dart';
+import 'package:apu_assignment/core/navigation/main_wrapper_conselor.dart';
 import 'package:apu_assignment/core/navigation/main_wrapper_user.dart';
 import 'package:apu_assignment/features/auth/model/user_model.dart';
 import 'package:apu_assignment/features/auth/presentation/screens/role_select_screen.dart';
@@ -38,17 +39,7 @@ class AuthGate extends ConsumerWidget {
                 return const MainWrapperUser();
               case UserRole.counselor:
                 // TODO: Remove This Later
-                return Scaffold(
-                  appBar: AppBar(
-                    actions: [
-                      IconButton(
-                        onPressed: () => FirebaseAuth.instance.signOut(),
-                        icon: Icon(Icons.logout),
-                      ),
-                    ],
-                  ),
-                  body: const Center(child: Text("Counselor Page")),
-                );
+                return MainWrapperConselor();
               case UserRole.admin:
                 return const MainWrapperAdmin();
               default:
