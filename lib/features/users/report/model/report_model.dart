@@ -8,6 +8,7 @@ enum ReportStatus { pending, inProgress, complete }
 
 class ReportModel {
   final String? id;
+  final String uid;
   final String location;
   final String description;
   final ReportType reportType;
@@ -18,6 +19,7 @@ class ReportModel {
 
   ReportModel({
     this.id,
+    required this.uid,
     required this.location,
     required this.description,
     required this.reportType,
@@ -72,6 +74,7 @@ class ReportModel {
   factory ReportModel.fromMap(Map<String, dynamic> data, String id) {
     return ReportModel(
       id: id,
+      uid: data['uid'] ?? '',
       location: data['location'] ?? '',
       description: data['description'] ?? '',
       reportType: _firebaseToType(data['reportType'] ?? ''),
@@ -86,6 +89,7 @@ class ReportModel {
   Map<String, dynamic> toMap() {
     return {
       'location': location,
+      'uid': uid,
       'description': description,
       'reportType': reportType.name,
       'reportUrgentLevel': reportUrgentLevel.name,
