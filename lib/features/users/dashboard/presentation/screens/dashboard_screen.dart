@@ -1,33 +1,18 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
-import 'package:apu_assignment/features/users/dashboard/data/report_model.dart';
 import 'package:apu_assignment/features/users/dashboard/presentation/widgets/report_status_tile.dart';
+import 'package:apu_assignment/features/users/report/data/report_providers.dart';
+import 'package:apu_assignment/features/users/report/presentation/screens/report_incident_screen.dart';
 import 'package:apu_assignment/features/users/resources/data/resource_item.dart';
 import 'package:apu_assignment/features/users/resources/presentation/widgets/news_or_event_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
   @override
-  Widget build(BuildContext context) {
-    // --- MOCK DATA : REPORTS ---
-    final List<ReportModel> recentReports = [
-      ReportModel(
-        caseId: "Case #2024-001",
-        date: "2 hours ago",
-        status: ReportStatus.received, // Using Enum
-      ),
-      ReportModel(
-        caseId: "Case #2024-055",
-        date: "Jan 28, 2026",
-        status: ReportStatus.inProgress, // Using Enum
-      ),
-      ReportModel(
-        caseId: "Case #2024-015",
-        date: "Jan 8, 2026",
-        status: ReportStatus.resolved, // Using Enum
-      ),
-    ];
+  Widget build(BuildContext context, WidgetRef ref) {
+    final reportsAsyncValue = ref.watch(userReportsProvider);
 
     // --- MOCK DATA: NEWS ---
     final List<ResourceItem> communityNews = [
@@ -121,7 +106,12 @@ class DashboardScreen extends StatelessWidget {
                       ),
                       child: InkWell(
                         onTap: () {
-                          // TODO : Add backend logic
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ReportIncidentScreen(),
+                            ),
+                          );
                         },
                         borderRadius: BorderRadius.circular(kDefaultRadius),
                         child: Padding(
@@ -196,10 +186,45 @@ class DashboardScreen extends StatelessWidget {
                 ],
               ),
               _buildSectionHeader(context, "My Reports", true, () {}),
-              ...recentReports.map(
-                (reportItem) => Padding(
-                  padding: const EdgeInsets.only(bottom: 12.0),
-                  child: ReportStatusTile(report: reportItem),
+              reportsAsyncValue.when(
+                data: (reports) {
+                  if (reports.isEmpty) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: kDefaultPadding,
+                      ),
+                      child: Center(
+                        child: Text(
+                          "You haven't submitted any reports yet.",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    );
+                  }
+
+                  final recentReports = reports.take(3).toList();
+
+                  return ListView.builder(
+                    shrinkWrap:
+                        true, // Crucial when inside a SingleChildScrollView
+                    physics:
+                        const NeverScrollableScrollPhysics(), // Disables inner scrolling
+                    itemCount: recentReports.length,
+                    itemBuilder: (context, index) {
+                      // Pass the fetched model into your beautifully styled widget!
+                      return ReportStatusTile(report: recentReports[index]);
+                    },
+                  );
+                },
+                error: (error, stack) => Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: kDefaultPadding,
+                  ),
+                  child: Center(child: Text('Error loading reports: $error')),
+                ),
+                loading: () => const Padding(
+                  padding: EdgeInsets.symmetric(vertical: kDefaultPadding),
+                  child: Center(child: CircularProgressIndicator()),
                 ),
               ),
               _buildSectionHeader(context, "Community News", true, () {}),
@@ -229,9 +254,7 @@ class DashboardScreen extends StatelessWidget {
       children: [
         Text(
           title,
-          style: textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+          style: textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
         ),
         if (isSeeAllEnabled)
           TextButton(

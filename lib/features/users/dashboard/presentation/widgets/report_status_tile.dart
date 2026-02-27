@@ -1,4 +1,5 @@
-import 'package:apu_assignment/features/users/dashboard/data/report_model.dart';
+import 'package:intl/intl.dart';
+import 'package:apu_assignment/features/users/report/model/report_model.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -16,9 +17,31 @@ class ReportStatusTile extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     // Access style data directly from the Enum in the model
-    final statusColor = report.status.color;
-    final statusIcon = report.status.icon;
-    final statusText = report.status.displayName;
+    Color statusColor;
+    IconData statusIcon;
+    String statusText;
+
+    switch(report.reportStatus){
+      case ReportStatus.pending:
+        statusColor = Colors.orange;
+        statusIcon = Icons.inbox_outlined;
+        statusText = "Pending";
+        break;
+      case ReportStatus.inProgress:
+        statusColor = Colors.blue;
+        statusIcon = Icons.sync; 
+        statusText = "In Progress";
+        break;
+      case ReportStatus.complete:
+      statusColor = Colors.green;
+        statusIcon = Icons.check_circle_outline; 
+        statusText = "Completed";
+        break;
+    }
+
+    final String reportTypeString = report.reportType.name;
+    final String displayType = "${reportTypeString[0].toUpperCase()}${reportTypeString.substring(1)} Incident";
+    final String displayDate = DateFormat('MMM dd, yyyy').format(report.createdAt);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -52,7 +75,7 @@ class ReportStatusTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  report.caseId,
+                  displayType,
                   style: textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: colorScheme.onSurface,
@@ -60,7 +83,7 @@ class ReportStatusTile extends StatelessWidget {
                 ),
                 const Gap(4),
                 Text(
-                  report.date,
+                  displayDate,
                   style: textTheme.bodySmall?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                   ),
