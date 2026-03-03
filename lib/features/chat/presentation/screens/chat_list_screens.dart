@@ -136,7 +136,7 @@ class ChatListScreens extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ChatDetailScreens()),
+          MaterialPageRoute(builder: (context) => ChatDetailScreens(receiverName: "Counselor (Mock Name)", receiverUid: "",)),
         );
       },
     );
