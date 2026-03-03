@@ -1,9 +1,24 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
+import 'package:apu_assignment/features/chat/presentation/widgets/message_bubble.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-class ChatDetailScreens extends StatelessWidget {
+class ChatDetailScreens extends ConsumerStatefulWidget {
   const ChatDetailScreens({super.key});
+
+  @override
+  ConsumerState<ChatDetailScreens> createState() => _ChatDetailScreensState();
+}
+
+class _ChatDetailScreensState extends ConsumerState<ChatDetailScreens> {
+  final _messageController = TextEditingController();
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +34,7 @@ class ChatDetailScreens extends StatelessWidget {
               child: Icon(Icons.person, color: colorScheme.onSurfaceVariant),
             ),
             Gap(8),
+            // TODO : Create methods for getting receiver name
             Text("Counselor Support", style: TextStyle(fontSize: 20)),
           ],
         ),
@@ -51,8 +67,7 @@ class ChatDetailScreens extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                _messageBubble(
-                  context,
+                MessageBubble(
                   message:
                       "Hi there. I noticed you requested a chat session. I'm here to listen. How are you feeling today?",
                   time: "10:00 AM",
@@ -60,8 +75,7 @@ class ChatDetailScreens extends StatelessWidget {
                 ),
 
                 // Sent Message
-                _messageBubble(
-                  context,
+                MessageBubble(
                   message:
                       "Hi Dr. Emily. I've been having a really hard time at school lately.",
                   time: "10:02 AM",
@@ -69,8 +83,7 @@ class ChatDetailScreens extends StatelessWidget {
                 ),
 
                 // Received Message
-                _messageBubble(
-                  context,
+                MessageBubble(
                   message:
                       "I'm sorry to hear that. You've taken a brave step by reaching out. Do you want to tell me more?",
                   time: "10:03 AM",
@@ -78,8 +91,7 @@ class ChatDetailScreens extends StatelessWidget {
                 ),
 
                 // Sent Message
-                _messageBubble(
-                  context,
+                MessageBubble(
                   message:
                       "It's a group of students in my history class. They keep posting mean comments...",
                   time: "10:05 AM",
@@ -126,63 +138,6 @@ class ChatDetailScreens extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _messageBubble(
-    BuildContext context, {
-    required String message,
-    required String time,
-    required bool isMe,
-  }) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return Align(
-      alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        margin: const EdgeInsets.all(kDefaultPadding),
-        padding: const EdgeInsets.all(kDefaultPadding),
-        constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.75,
-        ),
-        decoration: BoxDecoration(
-          color: isMe ? colorScheme.primary : colorScheme.secondaryContainer,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(kDefaultPadding),
-            topRight: Radius.circular(kDefaultPadding),
-            bottomLeft: isMe
-                ? Radius.circular(kDefaultPadding)
-                : Radius.circular(0),
-            bottomRight: isMe
-                ? Radius.circular(0)
-                : Radius.circular(kDefaultPadding),
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              message,
-              style: TextStyle(
-                fontSize: 16,
-                color: isMe
-                    ? colorScheme.onPrimary
-                    : colorScheme.onSecondaryContainer,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              time,
-              style: TextStyle(
-                fontSize: 10,
-                color: isMe
-                    ? colorScheme.onPrimary
-                    : colorScheme.onSecondaryContainer,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
