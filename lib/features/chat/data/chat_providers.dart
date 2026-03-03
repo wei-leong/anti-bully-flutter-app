@@ -1,3 +1,5 @@
+import 'package:apu_assignment/features/auth/data/auth_providers.dart';
+import 'package:apu_assignment/features/chat/domain/chat_model.dart';
 import 'package:apu_assignment/features/chat/domain/chat_repository.dart';
 import 'package:apu_assignment/features/chat/domain/chat_services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,17 +13,15 @@ final chatRepositoryProvider = Provider<ChatRepository>((ref){
   return ChatRepository(service);
 });
 
-// final chatStreamProvider = StreamProvider.autoDispose.family<List<MessageModel>, String>((ref, receiverUid) {
-//   final auth = ref.watch(firebaseAuthProvider);
-//   final currentUser = auth.currentUser;
+final chatStreamProvider = StreamProvider.autoDispose.family<List<ChatModel>, String>((ref,receiverUid) {
+  final auth = ref.watch(firebaseAuthProvider);
+  final currentUser = auth.currentUser;
 
-//   // If no one is logged in, safely return an empty stream
-//   if (currentUser == null) {
-//     return Stream.value([]);
-//   }
+  if(currentUser == null){
+    return Stream.value([]);
+  }
 
-//   final repository = ref.watch(chatRepositoryProvider);
-  
-//   // Ask the repository for the live stream between the current user and the contact
-//   return repository.getMessagesStream(currentUser.uid, receiverUid);
-// });
+  final repository = ref.watch(chatRepositoryProvider);
+
+  return repository.getMessages(currentUser.uid, receiverUid);
+});
