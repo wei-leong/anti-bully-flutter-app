@@ -1,0 +1,18 @@
+import 'package:apu_assignment/features/auth/model/user_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class CounselorListServices {
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  Stream<List<UserModel>> getCounselorList() {
+    return _db
+        .collection('user')
+        .where('role', isEqualTo: 'counselor')
+        .snapshots()
+        .map((snapshot) {
+          return snapshot.docs.map((doc) {
+            return UserModel.fromMap(doc.data(), doc.id);
+          }).toList();
+        });
+  }
+}

@@ -1,4 +1,5 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
+import 'package:apu_assignment/features/users/counselor_list/presentation/screens/counselor_list_screen.dart';
 import 'package:apu_assignment/features/users/dashboard/presentation/widgets/report_status_tile.dart';
 import 'package:apu_assignment/features/users/report/data/report_providers.dart';
 import 'package:apu_assignment/features/users/report/presentation/screens/report_incident_screen.dart';
@@ -106,6 +107,7 @@ class DashboardScreen extends ConsumerWidget {
                       ),
                       child: InkWell(
                         onTap: () {
+                          // ? Navigate to Report Incident page
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -149,8 +151,14 @@ class DashboardScreen extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(kDefaultRadius),
                       ),
                       child: InkWell(
+                        // ? Navigate to Counselor List Page for Chat
                         onTap: () {
-                          // TODO : Add backend logic
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CounselorListScreen(),
+                            ),
+                          );
                         },
                         borderRadius: BorderRadius.circular(kDefaultRadius),
                         child: Padding(
