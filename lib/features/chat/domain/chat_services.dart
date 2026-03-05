@@ -16,11 +16,28 @@ class ChatServices {
   ) async {
     String chatRoomId = getChatRoomId(senderUid, receiverUid);
 
+    // Update Parent Room Document
+    await _db.collection('chats').doc(chatRoomId).set({
+      'participants': [senderUid, receiverUid],
+      'lastMessage': rawData['message'],
+      'lastMessageTime': rawData['timeStamp'],
+    }, SetOptions(merge: true));
+
+    // Save Message in Sub-collection
     await _db
         .collection('chats')
         .doc(chatRoomId)
         .collection('messages')
         .add(rawData);
+  }
+
+  // Get Active Chat for the ChatListScreen()
+  Stream<QuerySnapshot<Map<String, dynamic>>> getChatRooms(String uid) {
+    return _db
+        .collection('chats')
+        .where('participants', arrayContains: uid)
+        .orderBy('lastMessageTime', descending: true)
+        .snapshots();
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getMessages(
@@ -33,7 +50,7 @@ class ChatServices {
         .collection('chats')
         .doc(chatRoomId)
         .collection('messages')
-        .orderBy('timestamp', descending: false)
+        .orderBy('timeStamp', descending: false)
         .snapshots();
   }
 }
