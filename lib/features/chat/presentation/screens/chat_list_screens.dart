@@ -1,13 +1,19 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
+import 'package:apu_assignment/features/chat/data/chat_providers.dart';
 import 'package:apu_assignment/features/chat/presentation/screens/chat_detail_screens.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-class ChatListScreens extends StatelessWidget {
-  const ChatListScreens({super.key});
+class ChatListScreens extends ConsumerWidget {
+  final String userUid;
+
+  const ChatListScreens({super.key, required this.userUid});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final chatListStream = ref.watch(chatRoomsStreamProvider(userUid));
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Chat", style: TextStyle(fontWeight: FontWeight.bold)),
@@ -22,56 +28,47 @@ class ChatListScreens extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsetsGeometry.all(kDefaultPadding),
-          child: Column(
-            children: [
-              TextField(
-                decoration: InputDecoration(
-                  hintText: "Search Counselors",
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(kDefaultRadius),
-                  ),
-                  // filled: true, //TODO: Add back later (Now just Wireframe)
-                ),
-              ),
-
-              const Gap(20),
-              // Pinned Section
-              _buildSectionHeader(context, "PINNED"),
-              _buildChatTile(
-                context,
-                name: "Counselor Support",
-                message: "Hi, how may I help you",
-                time: "2 min ago",
-                isOnline: true,
-              ),
-
-              // Recent Section
-              _buildSectionHeader(context, "RECENT"),
-              _buildChatTile(
-                context,
-                name: "Peer Support Group",
-                message: "KH: Has anyone tried the new...",
-                time: "Yesterday",
-              ),
-              _buildChatTile(
-                context,
-                name: "Siwa Kumaran",
-                message: "Let's schedule a meeting to discuss...",
-                time: "Last Week",
-              ),
-              _buildChatTile(
-                context,
-                name: "Student Council Rep",
-                message: "Thanks for reaching out about the...",
-                time: "Last Week",
-              ),
-            ],
+      body: Column(
+        children: [
+          Expanded(
+            child: chatListStream.when(
+              data: (lists) {
+                if (lists.isEmpty) {
+                  return const Center(child: Text("No Active Chats"));
+                }
+                return Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: lists.length,
+                        itemBuilder: (context, index) {
+                          final listDetails = lists[index];
+                          final receiverId = listDetails.participants
+                              .firstWhere(
+                                (id) => id != userUid,
+                                orElse: () => "Unknown User",
+                              );
+                          return _buildChatTile(
+                            context,
+                            name: receiverId,
+                            message: listDetails.lastMessage,
+                            time: listDetails.lastMessageTime.toString(),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              },
+              error: (error, stackTrace) {
+                return Center(child: Text("Error occurred : $error"));
+              },
+              loading: () {
+                return Center(child: CircularProgressIndicator());
+              },
+            ),
           ),
-        ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
@@ -136,7 +133,12 @@ class ChatListScreens extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ChatDetailScreens(receiverName: "Counselor (Mock Name)", receiverUid: "",)),
+          MaterialPageRoute(
+            builder: (context) => ChatDetailScreens(
+              receiverName: "Counselor (Mock Name)",
+              receiverUid: "",
+            ),
+          ),
         );
       },
     );
