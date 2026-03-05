@@ -1,3 +1,4 @@
+import 'package:apu_assignment/features/chat/presentation/screens/chat_detail_screens.dart';
 import 'package:apu_assignment/features/users/counselor_list/data/counselor_list_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,7 +32,7 @@ class CounselorListScreen extends ConsumerWidget {
                 subtitle: Text(counselor.email),
                 trailing: IconButton(
                   onPressed: () {
-                    // TODO : Add message feature here
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ChatDetailScreens(receiverUid: counselor.uid, receiverName: counselor.name)));
                   },
                   icon: Icon(Icons.chat_bubble_outline),
                 ),

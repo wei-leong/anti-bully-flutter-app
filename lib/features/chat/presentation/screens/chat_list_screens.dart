@@ -43,7 +43,7 @@ class ChatListScreens extends ConsumerWidget {
                         itemCount: lists.length,
                         itemBuilder: (context, index) {
                           final listDetails = lists[index];
-                          final receiverId = listDetails.participants
+                          final receiverId = listDetails.participants // TODO : Change this to Receiver Name
                               .firstWhere(
                                 (id) => id != userUid,
                                 orElse: () => "Unknown User",
@@ -52,6 +52,7 @@ class ChatListScreens extends ConsumerWidget {
                             context,
                             name: receiverId,
                             message: listDetails.lastMessage,
+                            receiverUid: receiverId,
                             time: listDetails.lastMessageTime.toString(),
                           );
                         },
@@ -99,6 +100,7 @@ class ChatListScreens extends ConsumerWidget {
     BuildContext context, {
     required String name,
     required String message,
+    required String receiverUid,
     required String time,
     bool isOnline = false,
     bool isPinned = false,
@@ -135,8 +137,8 @@ class ChatListScreens extends ConsumerWidget {
           context,
           MaterialPageRoute(
             builder: (context) => ChatDetailScreens(
-              receiverName: "Counselor (Mock Name)",
-              receiverUid: "",
+              receiverName: name,
+              receiverUid: receiverUid,
             ),
           ),
         );
