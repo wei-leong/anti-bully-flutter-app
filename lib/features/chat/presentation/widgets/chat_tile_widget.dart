@@ -1,3 +1,4 @@
+import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/auth/data/auth_providers.dart';
 import 'package:apu_assignment/features/chat/presentation/screens/chat_detail_screens.dart';
 import 'package:flutter/material.dart';
@@ -22,31 +23,34 @@ class ChatTileWidget extends ConsumerWidget {
     final receiverAsyncValue = ref.watch(userNameProvider(receiverUid));
     final String name = receiverAsyncValue.when(data: (user) => user?.name ?? '', error: (error,stack) => "User", loading: () => "User");
 
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: Stack(
-        children: [
-          CircleAvatar(
-            radius: 24,
-            backgroundColor: Colors.grey.shade600,
-            child: Icon(Icons.person, color: Colors.white),
-          ),
-        ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+      child: ListTile(
+        contentPadding: EdgeInsets.zero,
+        leading: Stack(
+          children: [
+            CircleAvatar(
+              radius: 24,
+              backgroundColor: Colors.grey.shade600,
+              child: Icon(Icons.person, color: Colors.white),
+            ),
+          ],
+        ),
+        title: Text(
+          name,
+        ),
+        subtitle: Text(message),
+        trailing: Text(time),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  ChatDetailScreens(receiverName: name, receiverUid: receiverUid),
+            ),
+          );
+        },
       ),
-      title: Text(
-        name,
-      ),
-      subtitle: Text(message),
-      trailing: Text(time),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                ChatDetailScreens(receiverName: name, receiverUid: receiverUid),
-          ),
-        );
-      },
     );
   }
 }
