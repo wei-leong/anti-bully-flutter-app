@@ -41,6 +41,7 @@ class ReportIncidentViewModel extends AsyncNotifier<void> {
       );
 
       await repository.saveReport(newReport);
+      ref.invalidate(userReportsProvider);
     });
   }
 }
