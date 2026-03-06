@@ -39,7 +39,7 @@ class ChatTileWidget extends ConsumerWidget {
         title: Text(
           name,
         ),
-        subtitle: Text(message),
+        subtitle: Text(message,maxLines: 2,overflow: TextOverflow.ellipsis,),
         trailing: Text(time),
         onTap: () {
           Navigator.push(
