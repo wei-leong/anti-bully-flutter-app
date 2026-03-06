@@ -20,8 +20,8 @@ class MessageBubble extends StatelessWidget {
     return Align(
       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        margin: const EdgeInsets.all(kDefaultPadding),
-        padding: const EdgeInsets.all(kDefaultPadding),
+        margin: const EdgeInsets.symmetric(vertical: 4, horizontal: kDefaultPadding),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         constraints: BoxConstraints(
           maxWidth: MediaQuery.of(context).size.width * 0.75,
         ),
