@@ -1,4 +1,5 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
+import 'package:apu_assignment/features/auth/data/auth_providers.dart';
 import 'package:apu_assignment/features/users/counselor_list/presentation/screens/counselor_list_screen.dart';
 import 'package:apu_assignment/features/users/dashboard/presentation/widgets/report_status_tile.dart';
 import 'package:apu_assignment/features/users/report/data/report_providers.dart';
@@ -9,11 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-class DashboardScreen extends ConsumerWidget {
+class DashboardScreen extends ConsumerWidget{
   const DashboardScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final reportsAsyncValue = ref.watch(userReportsProvider);
+    
+    final auth = ref.read(firebaseAuthProvider);
+    final currentUser = auth.currentUser;
+    final userNameAsyncValue = ref.watch(userNameProvider(currentUser!.uid));
 
     // --- MOCK DATA: NEWS ---
     final List<ResourceItem> communityNews = [
@@ -63,7 +68,7 @@ class DashboardScreen extends ConsumerWidget {
                   ),
                 ),
                 Text(
-                  "Alex Johnson",
+                  userNameAsyncValue.when(data: (user) => user?.name ?? '', error: (error,stack) => "User", loading: () => "User"),
                   style: textTheme.titleMedium?.copyWith(
                     color: colorScheme.onSurface,
                     fontWeight: FontWeight.bold,
