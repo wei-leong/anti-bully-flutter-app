@@ -1,9 +1,9 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/chat/data/chat_providers.dart';
-import 'package:apu_assignment/features/chat/presentation/screens/chat_detail_screens.dart';
+import 'package:apu_assignment/features/chat/presentation/widgets/chat_tile_widget.dart';
+import 'package:apu_assignment/features/users/counselor_list/presentation/screens/counselor_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gap/gap.dart';
 
 class ChatListScreens extends ConsumerWidget {
   final String userUid;
@@ -43,14 +43,13 @@ class ChatListScreens extends ConsumerWidget {
                         itemCount: lists.length,
                         itemBuilder: (context, index) {
                           final listDetails = lists[index];
-                          final receiverId = listDetails.participants // TODO : Change this to Receiver Name
+                          final receiverId = listDetails
+                              .participants // TODO : Change this to Receiver Name
                               .firstWhere(
                                 (id) => id != userUid,
                                 orElse: () => "Unknown User",
                               );
-                          return _buildChatTile(
-                            context,
-                            name: receiverId,
+                          return ChatTileWidget(
                             message: listDetails.lastMessage,
                             receiverUid: receiverId,
                             time: listDetails.lastMessageTime.toString(),
@@ -72,77 +71,80 @@ class ChatListScreens extends ConsumerWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CounselorListScreen()),
+          );
+        },
         child: Icon(Icons.add_comment),
       ),
     );
   }
 
-  Widget _buildSectionHeader(BuildContext context, String title) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 4, bottom: 8),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          title,
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
-            fontWeight: FontWeight.bold,
-            fontSize: 12,
-            letterSpacing: 1.0,
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _buildSectionHeader(BuildContext context, String title) {
+  //   return Padding(
+  //     padding: const EdgeInsets.only(left: 4, bottom: 8),
+  //     child: Align(
+  //       alignment: Alignment.centerLeft,
+  //       child: Text(
+  //         title,
+  //         style: TextStyle(
+  //           color: Theme.of(context).colorScheme.onSurfaceVariant,
+  //           fontWeight: FontWeight.bold,
+  //           fontSize: 12,
+  //           letterSpacing: 1.0,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  Widget _buildChatTile(
-    BuildContext context, {
-    required String name,
-    required String message,
-    required String receiverUid,
-    required String time,
-    bool isOnline = false,
-    bool isPinned = false,
-  }) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: Stack(
-        children: [
-          CircleAvatar(
-            radius: 24,
-            backgroundColor: Colors.grey.shade600,
-            child: Icon(Icons.person, color: Colors.white),
-          ),
-          if (isOnline)
-            Positioned(
-              top: 0,
-              right: 0,
-              child: Container(
-                width: 12,
-                height: 12,
-                decoration: BoxDecoration(
-                  color: Colors.lightGreen,
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
-        ],
-      ),
-      title: Text(name),
-      subtitle: Text(message),
-      trailing: Text(time),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ChatDetailScreens(
-              receiverName: name,
-              receiverUid: receiverUid,
-            ),
-          ),
-        );
-      },
-    );
-  }
+  // Widget _buildChatTile(
+  //   BuildContext context, {
+  //   required String name,
+  //   required String message,
+  //   required String receiverUid,
+  //   required String time,
+  //   bool isOnline = false,
+  //   bool isPinned = false,
+  // }) {
+  //   return ListTile(
+  //     contentPadding: EdgeInsets.zero,
+  //     leading: Stack(
+  //       children: [
+  //         CircleAvatar(
+  //           radius: 24,
+  //           backgroundColor: Colors.grey.shade600,
+  //           child: Icon(Icons.person, color: Colors.white),
+  //         ),
+  //         if (isOnline)
+  //           Positioned(
+  //             top: 0,
+  //             right: 0,
+  //             child: Container(
+  //               width: 12,
+  //               height: 12,
+  //               decoration: BoxDecoration(
+  //                 color: Colors.lightGreen,
+  //                 shape: BoxShape.circle,
+  //               ),
+  //             ),
+  //           ),
+  //       ],
+  //     ),
+  //     title: Text(name),
+  //     subtitle: Text(message),
+  //     trailing: Text(time),
+  //     onTap: () {
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(
+  //           builder: (context) =>
+  //               ChatDetailScreens(receiverName: name, receiverUid: receiverUid),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 }

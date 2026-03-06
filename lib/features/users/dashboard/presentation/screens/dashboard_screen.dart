@@ -15,7 +15,7 @@ class DashboardScreen extends ConsumerWidget{
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final reportsAsyncValue = ref.watch(userReportsProvider);
-    
+
     final auth = ref.read(firebaseAuthProvider);
     final currentUser = auth.currentUser;
     final userNameAsyncValue = ref.watch(userNameProvider(currentUser!.uid));
