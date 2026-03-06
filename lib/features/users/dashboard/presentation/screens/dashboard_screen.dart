@@ -3,6 +3,7 @@ import 'package:apu_assignment/features/auth/data/auth_providers.dart';
 import 'package:apu_assignment/features/users/counselor_list/presentation/screens/counselor_list_screen.dart';
 import 'package:apu_assignment/features/users/dashboard/presentation/widgets/report_status_tile.dart';
 import 'package:apu_assignment/features/users/report/data/report_providers.dart';
+import 'package:apu_assignment/features/users/report/presentation/screens/report_history_screen.dart';
 import 'package:apu_assignment/features/users/report/presentation/screens/report_incident_screen.dart';
 import 'package:apu_assignment/features/users/resources/data/resource_item.dart';
 import 'package:apu_assignment/features/users/resources/presentation/widgets/news_or_event_tile.dart';
@@ -10,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-class DashboardScreen extends ConsumerWidget{
+class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -68,7 +69,11 @@ class DashboardScreen extends ConsumerWidget{
                   ),
                 ),
                 Text(
-                  userNameAsyncValue.when(data: (user) => user?.name ?? '', error: (error,stack) => "User", loading: () => "User"),
+                  userNameAsyncValue.when(
+                    data: (user) => user?.name ?? '',
+                    error: (error, stack) => "User",
+                    loading: () => "User",
+                  ),
                   style: textTheme.titleMedium?.copyWith(
                     color: colorScheme.onSurface,
                     fontWeight: FontWeight.bold,
@@ -198,7 +203,17 @@ class DashboardScreen extends ConsumerWidget{
                   ),
                 ],
               ),
-              _buildSectionHeader(context, "My Reports", true, () {}),
+              _buildSectionHeader(
+                context,
+                "My Reports",
+                true,
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ReportHistoryScreen(), // ? Navigate to Report History page
+                  ),
+                ),
+              ),
               reportsAsyncValue.when(
                 data: (reports) {
                   if (reports.isEmpty) {
