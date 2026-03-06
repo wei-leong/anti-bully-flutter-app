@@ -44,4 +44,14 @@ class ReportIncidentViewModel extends AsyncNotifier<void> {
       ref.invalidate(userReportsProvider);
     });
   }
+
+  Future<void> deleteReport({required String reportId}) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      final repository = ref.read(reportRepositoryProvider);
+
+      await repository.deleteReport(reportId);
+      ref.invalidate(userReportsProvider);
+    });
+  }
 }

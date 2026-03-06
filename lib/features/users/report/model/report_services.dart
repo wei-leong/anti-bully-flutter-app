@@ -14,4 +14,8 @@ class ReportServices {
         .orderBy('createdAt', descending: true)
         .get();
   }
+
+  Future<void> deleteReport(String reportId) async {
+    await _db.collection('reports').doc(reportId).delete();
+  }
 }
