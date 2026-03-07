@@ -52,7 +52,7 @@ class ChatListScreens extends ConsumerWidget {
                           return ChatTileWidget(
                             message: listDetails.lastMessage,
                             receiverUid: receiverId,
-                            time: listDetails.lastMessageTime.toString(),
+                            time: listDetails.lastMessageTime,
                           );
                         },
                       ),

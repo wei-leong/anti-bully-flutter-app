@@ -3,11 +3,12 @@ import 'package:apu_assignment/features/auth/data/auth_providers.dart';
 import 'package:apu_assignment/features/chat/presentation/screens/chat_detail_screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 class ChatTileWidget extends ConsumerWidget {
   final String message;
   final String receiverUid;
-  final String time;
+  final DateTime time;
   // bool isOnline = false;
   // bool isPinned = false;
 
@@ -23,6 +24,11 @@ class ChatTileWidget extends ConsumerWidget {
     final receiverAsyncValue = ref.watch(userNameProvider(receiverUid));
     final String name = receiverAsyncValue.when(data: (user) => user?.name ?? '', error: (error,stack) => "User", loading: () => "User");
 
+    final now = DateTime.now();
+    final isToday = time.year == now.year && time.month == now.month && time.day == now.day;
+
+    final displayTime = isToday ? DateFormat.jm().format(time) : DateFormat('dd/MM/yyyy').format(time);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
       child: ListTile(
@@ -31,8 +37,7 @@ class ChatTileWidget extends ConsumerWidget {
           children: [
             CircleAvatar(
               radius: 24,
-              backgroundColor: Colors.grey.shade600,
-              child: Icon(Icons.person, color: Colors.white),
+              child: Icon(Icons.person),
             ),
           ],
         ),
@@ -40,7 +45,7 @@ class ChatTileWidget extends ConsumerWidget {
           name,
         ),
         subtitle: Text(message,maxLines: 2,overflow: TextOverflow.ellipsis,),
-        trailing: Text(time),
+        trailing: Text(displayTime),
         onTap: () {
           Navigator.push(
             context,
