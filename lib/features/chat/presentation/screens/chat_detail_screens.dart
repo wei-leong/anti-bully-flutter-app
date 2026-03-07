@@ -61,12 +61,9 @@ class _ChatDetailScreensState extends ConsumerState<ChatDetailScreens> {
                         itemBuilder: (context, index) {
                           final currentUserId = ref.read(firebaseAuthProvider).currentUser?.uid;
                           final bool isMe = messages[index].senderUid == currentUserId;
-                          final formatDate = DateFormat( // TODO : Change this with a method to show HH:MM for today, dd/MM/yyyy for day before
-                            'dd/MM/yyyy', 
-                          ).format(messages[index].timeStamp);
                           return MessageBubble(
                             message: messages[index].message,
-                            time: formatDate,
+                            time: messages[index].timeStamp,
                             isMe: isMe,
                           );
                         },

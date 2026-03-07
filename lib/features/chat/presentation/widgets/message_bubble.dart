@@ -1,9 +1,10 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MessageBubble extends StatelessWidget {
   final String message;
-  final String time;
+  final DateTime time;
   final bool isMe;
 
   const MessageBubble({
@@ -16,6 +17,11 @@ class MessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+
+    final now = DateTime.now();
+    final isToday = time.year == now.year && time.month == now.month && time.day == now.day;
+
+    final displayTime = isToday ? DateFormat.jm().format(time) : DateFormat('dd/MM/yyyy').format(time);
 
     return Align(
       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
@@ -52,7 +58,7 @@ class MessageBubble extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              time,
+              displayTime,
               style: TextStyle(
                 fontSize: 10,
                 color: isMe
