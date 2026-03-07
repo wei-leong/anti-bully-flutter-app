@@ -1,3 +1,4 @@
+import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/users/report/presentation/viewmodel/report_incident_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -43,7 +44,7 @@ class ReportStatusTile extends ConsumerWidget {
         "${reportTypeString[0].toUpperCase()}${reportTypeString.substring(1)} Incident";
     final String displayDate = DateFormat(
       'MMM dd, yyyy',
-    ).format(report.createdAt);
+    ).format(report.incidentDate); // TODO : Check if Show Created At or Incident Date
 
     // 1. WRAP IN PADDING (Moves the gap OUTSIDE the Slidable)
     return Padding(
@@ -73,10 +74,11 @@ class ReportStatusTile extends ConsumerWidget {
               backgroundColor: Theme.of(context).colorScheme.error,
               foregroundColor: Theme.of(context).colorScheme.onError,
               icon: Icons.delete_outline_rounded,
-              borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(16),
-                bottomRight: Radius.circular(16),
-              ),
+              borderRadius: BorderRadius.circular(kDefaultRadius),
+              // borderRadius: const BorderRadius.only(
+              //   topRight: Radius.circular(16),
+              //   bottomRight: Radius.circular(16),
+              // ),
             ),
           ],
         ),
