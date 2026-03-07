@@ -11,7 +11,7 @@ class ReportServices {
     return await _db
         .collection('reports')
         .where('uid', isEqualTo: uid)
-        .orderBy('createdAt', descending: true)
+        .orderBy('incidentDate', descending: true)
         .get();
   }
 
