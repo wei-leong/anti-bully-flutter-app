@@ -1,29 +1,34 @@
+import 'package:apu_assignment/features/auth/data/auth_providers.dart';
 import 'package:apu_assignment/features/chat/presentation/screens/chat_list_screens.dart';
 import 'package:apu_assignment/features/profile/presentation/screens/profile_screen.dart';
 import 'package:apu_assignment/features/users/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:apu_assignment/features/users/resources/presentation/screens/resource_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MainWrapperUser extends StatefulWidget {
+class MainWrapperUser extends ConsumerStatefulWidget {
   const MainWrapperUser({super.key});
 
   @override
-  State<MainWrapperUser> createState() => _MainWrapperUserState();
+  ConsumerState<MainWrapperUser> createState() => _MainWrapperUserState();
 }
 
-class _MainWrapperUserState extends State<MainWrapperUser> {
+class _MainWrapperUserState extends ConsumerState<MainWrapperUser> {
   int _currentIndex = 0;
-
-  final List<Widget> _screens = [
-    const DashboardScreen(), // Home Page
-    const ResourceScreen(), // Resources Page
-    const ChatListScreens(), // Chat Page
-    const ProfileScreen(), // Profile Page
-  ];
 
   @override
   Widget build(BuildContext context) {
     final double textFontSize = 14;
+    final firebaseAuth = ref.watch(firebaseAuthProvider);
+    final currentUserUid = firebaseAuth.currentUser?.uid ?? '';
+
+    final List<Widget> _screens = [
+      const DashboardScreen(), // Home Page
+      const ResourceScreen(), // Resources Page
+      ChatListScreens(userUid: currentUserUid), // Chat Page
+      const ProfileScreen(), // Profile Page
+    ];
 
     return Scaffold(
       body: _screens[_currentIndex],
@@ -67,5 +72,5 @@ class _MainWrapperUserState extends State<MainWrapperUser> {
 }
 
 // data - repository
-// domain - 
+// domain -
 // presentation - controller, screens, widgets

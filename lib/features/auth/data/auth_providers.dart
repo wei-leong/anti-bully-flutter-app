@@ -1,3 +1,4 @@
+import 'package:apu_assignment/features/auth/model/user_model.dart';
 import 'package:apu_assignment/features/auth/model/user_repository.dart';
 import 'package:apu_assignment/features/auth/model/user_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,4 +15,9 @@ final userServiceProvider = Provider<UserServices>((ref){
 final userRepositoryProvider = Provider<UserRepository>((ref){
   final service = ref.watch(userServiceProvider);
   return UserRepository(service);
+});
+
+final userNameProvider = FutureProvider.family<UserModel?, String>((ref,uid){
+  final repo = ref.watch(userRepositoryProvider);
+  return repo.getUser(uid);
 });

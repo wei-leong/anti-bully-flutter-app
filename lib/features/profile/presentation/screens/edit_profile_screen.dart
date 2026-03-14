@@ -1,21 +1,33 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
-import 'package:apu_assignment/features/profile/presentation/widgets/edit_profile_img.dart';
+import 'package:apu_assignment/features/profile/presentation/viewmodels/edit_profile_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({super.key});
+class EditProfileScreen extends ConsumerStatefulWidget {
+  final String currentName;
+  final String currentRole;
+
+  const EditProfileScreen({
+    super.key,
+    required this.currentName,
+    required this.currentRole,
+  });
 
   @override
-  State<EditProfileScreen> createState() => _EditProfileScreenState();
+  ConsumerState<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
-class _EditProfileScreenState extends State<EditProfileScreen> {
-  final _nameController = TextEditingController(
-    text: "Tan Jia Jie (Change Later)",
-  );
-  final _roleController = TextEditingController(text: "User");
+class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
+  late TextEditingController _nameController;
+  late TextEditingController _roleController;
+
+  @override
+  void initState() {
+    _nameController = TextEditingController(text: widget.currentName);
+    _roleController = TextEditingController(text: widget.currentRole);
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -35,8 +47,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
         actions: [
           TextButton(
-            onPressed: () {
-              Navigator.pop(context);
+            onPressed: () async {
+              if (_nameController.text.isNotEmpty) {
+                await ref
+                    .read(editProfileViewModelProvider.notifier)
+                    .updateName(_nameController.text);
+                if (context.mounted)
+                  Navigator.pop(context); // Go back after saving!
+              }
             },
             child: Text(
               "Save",
@@ -52,7 +70,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         padding: const EdgeInsets.all(kDefaultPadding),
         child: Column(
           children: [
-            EditProfileImg(),
+            CircleAvatar(radius: 24, child: Icon(Icons.person)),
             const Gap(12),
             TextField(
               controller: _nameController,

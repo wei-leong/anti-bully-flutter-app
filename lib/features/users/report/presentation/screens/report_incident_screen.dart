@@ -33,6 +33,19 @@ class _ReportIncidentScreenState extends ConsumerState<ReportIncidentScreen> {
     {'label': "Social", 'icon': Icons.people_alt_outlined},
   ];
 
+  @override void initState() {
+    final now = DateTime.now();
+
+    // Assign to State Variables
+    _selectedDate = now;
+    _selectedTime = TimeOfDay.fromDateTime(now);
+
+    // Assign to Controller
+    _dateController.text = DateFormat('MM/dd/yyyy').format(now);
+    _timeController.text = DateFormat.jm().format(now);
+    super.initState();
+  }
+
   @override
   void dispose() {
     _locationController.dispose();
@@ -45,6 +58,7 @@ class _ReportIncidentScreenState extends ConsumerState<ReportIncidentScreen> {
   Future<void> pickDate() async {
     final DateTime? picked = await showDatePicker(
       context: context,
+      initialDate: _selectedDate,
       firstDate: DateTime(2020),
       lastDate: DateTime.now(),
     );
@@ -107,9 +121,6 @@ class _ReportIncidentScreenState extends ConsumerState<ReportIncidentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final testTheme = Theme.of(context).textTheme;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(

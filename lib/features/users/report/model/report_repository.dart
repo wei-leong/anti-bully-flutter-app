@@ -14,6 +14,14 @@ class ReportRepository {
     }
   }
 
+  Future<void> deleteReport(String reportId) async {
+    try {
+      await reportServices.deleteReport(reportId);
+    } catch (e) {
+      throw Exception('Failed to Delete Report: $e');
+    }
+  }
+
   Future<List<ReportModel>> getUserReports(String uid) async {
     try {
       final snapshot = await reportServices.getUserReports(uid);

@@ -1,25 +1,54 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
+import 'package:apu_assignment/features/auth/data/auth_providers.dart';
 import 'package:apu_assignment/features/profile/presentation/screens/edit_profile_screen.dart';
 import 'package:apu_assignment/features/profile/presentation/widgets/edit_profile_img.dart';
 import 'package:apu_assignment/features/profile/presentation/widgets/profile_menu_tile.dart';
 import 'package:apu_assignment/features/profile/presentation/widgets/theme_selector_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   bool _notificationsEnabled = true;
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+
+    final currentUserUid = FirebaseAuth.instance.currentUser?.uid ?? '';
+    final userNameAsyncValue = ref.watch(userNameProvider(currentUserUid));
+
+    // Get Name and Role
+    final currentName = userNameAsyncValue.when(
+      data: (user) => user?.name ?? "User",
+      error: (error, stackTrace) => "User",
+      loading: () => "Loading...",
+    );
+
+    final currentRole = userNameAsyncValue.when(
+      data: (user) {
+        if (user == null) return "Unknown";
+        final roleString = user.role.name;
+        // Capitalize the first letter, keep the rest as is
+        return "${roleString[0].toUpperCase()}${roleString.substring(1)}";
+      },
+      error: (error, stackTrace) => "Unknown",
+      loading: () => "Loading...",
+    );
+
+    final currentEmail = userNameAsyncValue.when(
+      data: (user) => user?.email ?? "Unknown",
+      error: (error, stackTrace) => "Unknown",
+      loading: () => "Loading...",
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -33,7 +62,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           TextButton(
             onPressed: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => EditProfileScreen()),
+              MaterialPageRoute(
+                builder: (context) => EditProfileScreen(
+                  currentName: currentName,
+                  currentRole: currentRole,
+                ),
+              ),
             ),
             child: const Text(
               "Edit Profile",
@@ -51,7 +85,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 EditProfileImg(),
                 const Gap(12),
                 Text(
-                  "Tan Jia Jie",
+                  currentName,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -59,12 +93,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 Text(
-                  "User",
+                  currentRole,
                   style: TextStyle(color: colorScheme.onSurfaceVariant),
                 ),
                 Text(
-                  FirebaseAuth.instance.currentUser?.email ??
-                      'Error', // TODO : Modify it to Use Email Address in Users Table
+                  currentEmail,
                   style: TextStyle(color: colorScheme.onSurfaceVariant),
                 ),
               ],

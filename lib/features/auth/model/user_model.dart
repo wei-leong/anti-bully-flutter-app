@@ -33,7 +33,7 @@ class UserModel {
     return UserModel(
       uid: uid,
       name: data['name'] ?? '',
-      email: data['name'] ?? '',
+      email: data['email'] ?? '',
       role: _firebaseToRole(data['role'] ?? ''),
       createdAt: (data['createdAt'] as dynamic).toDate() ?? DateTime.now(),
     );
