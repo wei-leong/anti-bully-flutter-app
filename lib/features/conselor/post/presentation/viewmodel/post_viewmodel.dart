@@ -11,7 +11,7 @@ class PostViewModel extends Notifier<bool> {
     return false; //default set false
   }
 
-  Future<bool> createPost(String content, String type) async {
+  Future<bool> createPost(String content, String type, String authName) async {
     if (content.isEmpty) return false;
 
     state = true; 
@@ -22,7 +22,7 @@ class PostViewModel extends Notifier<bool> {
       content: content, 
       createdAt: DateTime.now(),
       type: type.toLowerCase(),
-      author: "Counselor",
+      author: authName,
       );
     
     final success = await ref.read(postRepositoryProvider).uploadPost(post);

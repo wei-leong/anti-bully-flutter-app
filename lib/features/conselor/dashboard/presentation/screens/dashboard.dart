@@ -1,3 +1,4 @@
+import 'package:apu_assignment/features/auth/data/auth_providers.dart';
 import 'package:apu_assignment/features/conselor/dashboard/presentation/widgets/quick_access.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,9 @@ class Dashboard extends ConsumerWidget {
   const Dashboard({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final auth = ref.read(firebaseAuthProvider);
+    final currentUser = auth.currentUser;
+    final userNameAsyncValue = ref.read(userNameProvider(currentUser!.uid));
     final reportAsync = ref.watch(reportProvider);
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
@@ -31,10 +35,10 @@ class Dashboard extends ConsumerWidget {
                   ),
                 ),
                 Text(
-                  "Iris",
-                  style: textTheme.titleMedium?.copyWith(
-                    color: colorScheme.onSurface,
-                    fontWeight: FontWeight.bold,
+                  userNameAsyncValue.when(
+                    data: (user) => user?.name ?? '',
+                    error: (error, stack) => "Counselor",
+                    loading: () => "Counselor",
                   ),
                 ),
               ],
