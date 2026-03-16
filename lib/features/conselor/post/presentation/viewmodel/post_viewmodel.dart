@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:apu_assignment/features/conselor/post/data/post_provider.dart';
 import 'package:apu_assignment/features/conselor/post/model/post_model.dart';
@@ -11,15 +13,29 @@ class PostViewModel extends Notifier<bool> {
     return false; //default set false
   }
 
-  Future<bool> createPost(String content, String type, String authName) async {
-    if (content.isEmpty) return false;
+  bool showResetDialog(List<String> fieldValues){
+    return fieldValues.any((Value) => Value.trim().isNotEmpty);
+  }
+
+  //Make the Date Format consistency
+  String formatDate(DateTime date) {
+    return "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
+  }
+
+  //Make the Time Format consistency
+  String formatTime(TimeOfDay time, BuildContext context) {
+    return time.format(context); 
+  }
+
+  Future<bool> createPost(Map<String, dynamic> contents, String type, String authName) async {
+    if (contents.isEmpty) return false;
 
     state = true; 
     
     // get repository from ref
     final repository = ref.read(postRepositoryProvider);
     final post = PostModel(
-      content: content, 
+      content: contents, 
       createdAt: DateTime.now(),
       type: type.toLowerCase(),
       author: authName,
