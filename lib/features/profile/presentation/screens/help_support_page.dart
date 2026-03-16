@@ -1,6 +1,5 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/profile/presentation/widgets/contact_title.dart';
-import 'package:apu_assignment/features/profile/presentation/widgets/faq_title.dart';
 import 'package:apu_assignment/features/profile/presentation/widgets/info_card.dart';
 import 'package:apu_assignment/features/profile/presentation/widgets/section_title.dart';
 import 'package:flutter/material.dart';
