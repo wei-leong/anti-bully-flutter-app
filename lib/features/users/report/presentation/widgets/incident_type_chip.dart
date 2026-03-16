@@ -21,10 +21,6 @@ class IncidentTypeChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    Color? finalBackgroundColor = isSelected
-        ? colorScheme.surfaceContainerHighest
-        : colorScheme.surface;
-
     Color finalForegroundColor = isSelected
         ? colorScheme.primary
         : colorScheme.outlineVariant;
@@ -41,7 +37,6 @@ class IncidentTypeChip extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(kDefaultRadius),
-          color: finalBackgroundColor,
           border: Border.all(width: finalWidth, color: finalForegroundColor),
         ),
         child: Row(
