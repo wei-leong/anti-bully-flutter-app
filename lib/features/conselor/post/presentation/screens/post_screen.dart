@@ -28,6 +28,7 @@ class _PostScreenState extends ConsumerState<PostScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final Loading = ref.watch(postViewModelProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -56,20 +57,35 @@ class _PostScreenState extends ConsumerState<PostScreen> {
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: FilledButton(
-              onPressed: () {
+              onPressed:  Loading ? null: () async{
                 final text = _textController.text; 
-                debugPrint("Posting: $text");
+                if (text.isEmpty){
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Text somethings......"))
+                  );
+                  return;
+                }
 
-                Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => const MainWrapperConselor()),
-                (route) => false, 
-              );
+                final success = await ref.read(postViewModelProvider.notifier).createPost(text, _selecttype);
+                if (success && mounted){
+                  _textController.clear();
+                  Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MainWrapperConselor()),
+                  (route) => false, 
+                );
+                }else if (mounted){
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Update Failed, Try Again"))
+                  );
+                }
               },
               style: FilledButton.styleFrom(
                 visualDensity: VisualDensity.compact, 
               ),
-              child: const Text("Post"),
+              child: Loading
+                    ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                    : const Text("Post"),
             ),
           ),
         ],
