@@ -13,14 +13,14 @@ class ReportModel {
     required this.urgentLevel,
   });
 
-  // 从 Map 转换为 Model，并提供安全默认值
+  // Map to data
   factory ReportModel.fromMap(Map<String, dynamic> map) {
     return ReportModel(
       location: map['location'] ?? 'Unknown',
       date: map['date'] ?? 'N/A',
       description: map['description'] ?? '',
       status: map['status'] ?? 'Pending',
-      urgentLevel: map['Level'] ?? 1, // 修正大小写，防止 Null 报错
+      urgentLevel: map['Level'] ?? 1, 
     );
   }
 }

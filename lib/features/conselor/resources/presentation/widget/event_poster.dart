@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 
 class EventPosterCard extends StatelessWidget {
   final ResourceItem resourceItem;
-  // 您可以根据需要添加一个图片的URL或Asset路径
-  final String? imageUrl; // 假设 ResourceItem 中没有图片URL，这里独立传入
+  // Image
+  final String? imageUrl; 
 
   const EventPosterCard({
     super.key,
     required this.resourceItem,
-    this.imageUrl, // 允许传入图片URL，如果没有则显示一个占位符
+    this.imageUrl, // Accepted using Image URL
   });
 
 @override
@@ -18,12 +18,12 @@ class EventPosterCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Padding(
-      // 这里的 padding 必须与 VideoCard 的整体外间距保持一致
+      // Padding follow by vido_cart
       padding: const EdgeInsets.only(bottom: kDefaultPadding), 
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start, // 顶部对齐
+        crossAxisAlignment: CrossAxisAlignment.start, 
         children: [
-          // 1. 头像：添加 Padding 使其向下偏移，对齐卡片内部内容
+          // Put user accout picture
           Padding(
             padding: const EdgeInsets.only(top: kDefaultPadding), 
             child: CircleAvatar(
@@ -38,10 +38,9 @@ class EventPosterCard extends StatelessWidget {
           
           const SizedBox(width: 12),
 
-          // 2. 右侧卡片内容
+          // Event model
           Expanded(
             child: Container(
-              // 如果想让视觉更统一，给整个右侧卡片增加顶部 margin 或 padding
               decoration: BoxDecoration(
                 color: colorScheme.surfaceVariant, 
                 borderRadius: BorderRadius.circular(kDefaultRadius),
@@ -58,7 +57,8 @@ class EventPosterCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // 图片部分
+                  
+                  //Image
                   imageUrl != null && imageUrl!.isNotEmpty
                       ? Image.network(
                           imageUrl!,
@@ -69,7 +69,7 @@ class EventPosterCard extends StatelessWidget {
                         )
                       : _buildPlaceholderImage(),
 
-                  // 文字信息部分
+                  // Text
                   Padding(
                     padding: const EdgeInsets.all(kDefaultPadding),
                     child: Column(
@@ -124,7 +124,7 @@ class EventPosterCard extends StatelessWidget {
     );
   }
 
-  // 提取出的图片占位符方法，保持代码整洁
+  // Get Image
   Widget _buildPlaceholderImage() {
     return Container(
       height: 180,

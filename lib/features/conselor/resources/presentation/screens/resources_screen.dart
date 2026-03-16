@@ -35,15 +35,15 @@ class ResourceScreen extends ConsumerWidget {
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children: _filters.map((filter) { // 注意变量名建议改为 filter
+                  children: _filters.map((filter) { 
                     final isSelected = selectedFilter == filter;
                     return Padding(
                       padding: const EdgeInsets.only(right: 8.0),
                       child: FilterChip(
                         label: Text(filter),
-                        selected: isSelected, // 之前这里漏掉了变量名
+                        selected: isSelected, 
                         onSelected: (bool selected) {
-                          // 更新 Riverpod 中的状态
+                          // Update riverpod status
                           ref.read(resourceFilterProvider.notifier).updateFilter(filter);
                         },
                         showCheckmark: false,
@@ -61,7 +61,6 @@ class ResourceScreen extends ConsumerWidget {
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   final item = items[index];
-                  // 根据类型返回对应的 Widget (逻辑与你之前一致)
                   if (item.type == "videos") return VideoCard(resourceItem: item);
                   if (item.type == "events") return EventPosterCard(resourceItem: item);
                   if (item.type == "news") return NewsOrEventTile(resourceItem: item);

@@ -1,34 +1,41 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:apu_assignment/features/conselor/post/data/post_provider.dart';
 import 'package:apu_assignment/features/conselor/post/model/post_model.dart';
+import 'package:apu_assignment/features/conselor/resources/presentation/viewmodel/resources_viewmodel.dart';
 
-// 定义 Repository 的 Provider
 final postRepositoryProvider = Provider((ref) => PostRepository());
 
-// ViewModel: 管理发布状态 (false=未发布, true=发布中)
 class PostViewModel extends Notifier<bool> {
   @override
   bool build() {
-    return false; // 初始状态为 false (未加载)
+    return false; //default set false
   }
 
-  Future<bool> createPost(String content) async {
+  Future<bool> createPost(String content, String type) async {
     if (content.isEmpty) return false;
 
-    state = true; // 开始 loading
+    state = true; 
     
-    // 从 ref 获取 repository
+    // get repository from ref
     final repository = ref.read(postRepositoryProvider);
-    final post = PostModel(content: content, createdAt: DateTime.now());
+    final post = PostModel(
+      content: content, 
+      createdAt: DateTime.now(),
+      type: type.toLowerCase(),
+      author: "Counselor",
+      );
     
-    final success = await repository.uploadPost(post);
+    final success = await ref.read(postRepositoryProvider).uploadPost(post);
+  
+  if (success) {
+    ref.invalidate(allResourcesProvider);
+  }
     
-    state = false; // 结束 loading
+    state = false; 
     return success;
   }
 }
 
-// 对应的 Provider 定义也更简单
 final postViewModelProvider = NotifierProvider<PostViewModel, bool>(() {
   return PostViewModel();
 });

@@ -6,6 +6,7 @@ import 'package:apu_assignment/features/conselor/post/data/post_provider.dart';
 import 'package:apu_assignment/features/conselor/post/model/post_model.dart';
 import 'package:apu_assignment/features/conselor/post/presentation/viewmodel/post_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:apu_assignment/features/conselor/post/presentation/widget/post_type.dart';
 
 class PostScreen extends ConsumerStatefulWidget {
   const PostScreen({super.key});
@@ -16,6 +17,7 @@ class PostScreen extends ConsumerStatefulWidget {
  
 class _PostScreenState extends ConsumerState<PostScreen> {
   final TextEditingController _textController = TextEditingController();
+  String _selecttype = "Articles";
 
   @override
   void dispose() {
@@ -26,10 +28,11 @@ class _PostScreenState extends ConsumerState<PostScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final Loading = ref.watch(postViewModelProvider);
 
     return Scaffold(
       appBar: AppBar(
-        // 1. 左上角放一个 X 按钮
+        // Quick Button
         leading: IconButton(
         icon: const Icon(Icons.close),
         onPressed: () {
@@ -42,40 +45,62 @@ class _PostScreenState extends ConsumerState<PostScreen> {
         },
       ),
         centerTitle: true,
+        title: PostType( 
+          selectedType: _selecttype,
+          onTypeChanged: (newType) {
+            setState(() {
+              _selecttype = newType;
+            });
+          },
+        ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: FilledButton(
-              onPressed: () {
-                final text = _textController.text; // 先把值取出来，防止组件销毁后取不到
-                debugPrint("--- 准备发布内容 ---"); // 使用 debugPrint 更稳定
-                debugPrint("Posting: $text");
+              onPressed:  Loading ? null: () async{
+                final text = _textController.text; 
+                if (text.isEmpty){
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Text somethings......"))
+                  );
+                  return;
+                }
 
-                Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => const MainWrapperConselor()),
-                (route) => false, 
-              );
+                final success = await ref.read(postViewModelProvider.notifier).createPost(text, _selecttype);
+                if (success && mounted){
+                  _textController.clear();
+                  Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MainWrapperConselor()),
+                  (route) => false, 
+                );
+                }else if (mounted){
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Update Failed, Try Again"))
+                  );
+                }
               },
               style: FilledButton.styleFrom(
-                visualDensity: VisualDensity.compact, // 让按钮紧凑一点
+                visualDensity: VisualDensity.compact, 
               ),
-              child: const Text("Post"),
+              child: Loading
+                    ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                    : const Text("Post"),
             ),
           ),
         ],
       ),
-      // 3. 下面空白部分放输入框
+      // Text (Get user input)
       body: Padding(
         padding: const EdgeInsets.all(kDefaultPadding),
         child: TextField(
           controller: _textController,
-          maxLines: null, // 设置为 null 则根据内容自动换行
-          expands: true,  // 配合 maxLines: null 使用，撑开整个父组件
-          textAlignVertical: TextAlignVertical.top, // 文字从顶部开始
+          maxLines: null, 
+          expands: true,  
+          textAlignVertical: TextAlignVertical.top, 
           decoration: InputDecoration(
             hintText: "Text Somethings.....",
-            border: InputBorder.none, // 去掉输入框边框，看起来更像空白页
+            border: InputBorder.none, 
           ),
           style: const TextStyle(fontSize: 16),
         ),
