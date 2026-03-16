@@ -83,7 +83,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           children: [
             Column(
               children: [
-                EditProfileImg(),
+                CircleAvatar(radius: 50, child: Icon(Icons.person, size: 40)),
                 const Gap(12),
                 Text(
                   currentName,
