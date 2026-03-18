@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:apu_assignment/features/auth/data/auth_providers.dart';
-import 'package:apu_assignment/features/users/report/data/report_providers.dart';
-import 'package:apu_assignment/features/users/report/model/report_model.dart';
+import 'package:apu_assignment/features/report/data/report_providers.dart';
+import 'package:apu_assignment/features/report/model/report_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final reportIncidentViewModelProvider =

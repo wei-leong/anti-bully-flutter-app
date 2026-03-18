@@ -1,3 +1,5 @@
+import 'package:apu_assignment/features/report/model/report_model.dart';
+import 'package:apu_assignment/features/report/presentation/viewmodel/report_incident_viewmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ReportServices {
@@ -17,5 +19,12 @@ class ReportServices {
 
   Future<void> deleteReport(String reportId) async {
     await _db.collection('reports').doc(reportId).delete();
+  }
+
+  Future<void> assignCounselor(String reportId,String counselorId) async {
+    await _db.collection('reports').doc(reportId).update({
+      'assignedCounselorId':counselorId,
+      'reportStatus': ReportStatus.inProgress.name // Update from Pending to In Progress
+    });
   }
 }
