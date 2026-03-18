@@ -20,7 +20,7 @@ class PostModel {
       case "events":
         return ["Title", "Date","Start Time", "End Time", "Location", "Register link", "Image", "Content"];
       case "videos":
-        return ["Title", "Video URL (Youtuve Only)", "Content"];
+        return ["Title", "Video URL (Youtube Only)", "Content"];
       case "news":
         return ["Title", "Date", "Source", "Image", "Content"];
       default:

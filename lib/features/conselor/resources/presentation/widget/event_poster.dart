@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:apu_assignment/core/theme/sizes.dart';
+import 'package:apu_assignment/features/Images/data/image_provider.dart';
 import 'package:apu_assignment/features/conselor/resources/model/resources_model.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +16,24 @@ class EventPosterCard extends StatelessWidget {
     this.imageUrl, // Accepted using Image URL
   });
 
+  Uint8List? get _imageBytes {
+    final content = resourceItem.content;
+    if (content == null) return null;
+
+    // 2. 仅针对 Event 类型，从 Firestore 字段 'image' 中获取 Base64 字符串
+    final String? base64String = content['image'];
+
+    // 3. 检查字符串是否有效
+    if (base64String == null || base64String.isEmpty) return null;
+
+    // 4. 使用正确的类名调用静态方法，解决 image_8722e2.png 的报错
+    return ImagesProvider.decodeBase64(base64String);
+  }
+  
 @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final bytes = _imageBytes;
 
     return Padding(
       // Padding follow by vido_cart
@@ -59,12 +77,12 @@ class EventPosterCard extends StatelessWidget {
                 children: [
                   
                   //Image
-                  imageUrl != null && imageUrl!.isNotEmpty
-                      ? Image.network(
-                          imageUrl!,
-                          height: 180,
+                  bytes != null
+                      ? Image.memory(
+                          bytes,
+                          height: 200,
                           width: double.infinity,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.cover, // 卡片通常用 cover 比较好看
                           errorBuilder: (context, error, stackTrace) => _buildPlaceholderImage(),
                         )
                       : _buildPlaceholderImage(),

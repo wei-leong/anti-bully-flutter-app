@@ -9,7 +9,7 @@ final resourceRepoProvider = Provider((ref) => ResourcesProvider());
 class ResourceFilterNotifier extends Notifier<String> {
   @override
   String build() {
-    return "Articles"; // default
+    return "articles"; // default
   }
 
   void updateFilter(String newFilter) {
@@ -22,17 +22,23 @@ final resourceFilterProvider = NotifierProvider<ResourceFilterNotifier, String>(
 });
 
 // Get data (ResourcesItem)
-final allResourcesProvider = FutureProvider<List<ResourceItem>>((ref) async {
-  return ref.watch(resourceRepoProvider).fetchResources();
+final resourceRepositoryProvider = Provider((ref) => ResourcesProvider());
+final resourcesProvider = StreamProvider<List<ResourceItem>>((ref) {
+  final repository = ref.watch(resourceRepositoryProvider);
+  
+  return repository.fetchResources(); 
 });
 
 // Fill provider
 final filteredResourcesProvider = Provider<AsyncValue<List<ResourceItem>>>((ref) {
-  final allResourcesAsync = ref.watch(allResourcesProvider);
-  final selectedFilter = ref.watch(resourceFilterProvider).toLowerCase();
+  final allResourcesAsync = ref.watch(resourcesProvider);
+  final filter = ref.watch(resourceFilterProvider);
 
-  return allResourcesAsync.whenData((list) {
-    String filterType = selectedFilter == "news" ? "new" : selectedFilter;
-    return list.where((item) => item.type.toLowerCase() == filterType).toList();
+  return allResourcesAsync.whenData((items) {
+    final selectedFilter = filter.toLowerCase();
+    if (selectedFilter == "articles") {
+      return items.where((item) => item.type.toLowerCase() == "articles").toList();
+    }
+    return items.where((item) => item.type.toLowerCase() == selectedFilter).toList();
   });
 });

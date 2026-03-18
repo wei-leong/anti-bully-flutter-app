@@ -50,6 +50,7 @@ dependencies:
   flutter_slidable: ^4.0.3
   image_picker: ^1.2.1
   flutter_image_compress: ^2.4.0
+  rxdart: ^0.28.0
 
 dev_dependencies:
   flutter_test:

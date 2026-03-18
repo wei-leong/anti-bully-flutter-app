@@ -28,28 +28,36 @@ class PostViewModel extends Notifier<bool> {
   }
 
   Future<bool> createPost(Map<String, dynamic> contents, String type, String authName) async {
-    if (contents.isEmpty) return false;
+  if (contents.isEmpty) return false;
 
+  try {
     state = true; 
     
-    // get repository from ref
-    final repository = ref.read(postRepositoryProvider);
     final post = PostModel(
       content: contents, 
       createdAt: DateTime.now(),
       type: type.toLowerCase(),
       author: authName,
-      );
+    );
     
-    final success = await ref.read(postRepositoryProvider).uploadPost(post);
+    // Get data from repository
+    final repository = ref.read(postRepositoryProvider);
+    final success = await repository.uploadPost(post);
   
-  if (success) {
-    ref.invalidate(allResourcesProvider);
-  }
+    if (success) {
+
+      ref.invalidate(resourcesProvider); 
+    }
     
-    state = false; 
     return success;
+  } catch (e) {
+    debugPrint("Post Error: $e");
+    return false;
+  } finally {
+    // Prevent system crash by always loading
+    state = false; 
   }
+}
 }
 
 final postViewModelProvider = NotifierProvider<PostViewModel, bool>(() {

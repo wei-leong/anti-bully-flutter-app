@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:apu_assignment/core/theme/sizes.dart';
+import 'package:apu_assignment/features/Images/data/image_provider.dart';
 import 'package:apu_assignment/features/conselor/resources/model/resources_model.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -8,14 +11,25 @@ class ArticleTile extends StatelessWidget {
 
   final ResourceItem resourceItem;
 
+  Uint8List? get _imageBytes {
+    final content = resourceItem.content;
+    if (content == null) return null;
+
+    final String? base64String = content['image'];
+
+    if (base64String == null || base64String.isEmpty) return null;
+    return ImagesProvider.decodeBase64(base64String);
+  }
+  
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final bytes = _imageBytes;
 
     // Check if we have an image
-    final hasImage =
-        resourceItem.imageUrl != null && resourceItem.imageUrl!.isNotEmpty;
+    final hasImage = bytes != null;
+        
 
     return Container(
       // Card Container Styling
@@ -31,19 +45,22 @@ class ArticleTile extends StatelessWidget {
           // Image Thumbnail for Article
           if (hasImage) ...[
             Container(
-              width: 100, // Fixed width for thumbnail
-              height: 70, // Fixed height
+              width: 100, 
+              height: 70, 
               decoration: BoxDecoration(
-                color: colorScheme.surfaceContainerHighest, // Placeholder bg
+                color: colorScheme.surfaceContainerHighest, 
                 borderRadius: BorderRadius.circular(8),
-                image: DecorationImage(
-                  image: NetworkImage(resourceItem.imageUrl!),
-                  fit: BoxFit.cover,
-                ),
+                image: bytes != null
+                    ? DecorationImage(
+                        image: MemoryImage(bytes),
+                        fit: BoxFit.cover,
+                      )
+                    : null, 
               ),
             ),
             const Gap(16), // Spacing between image and text
           ],
+          
           // Title
           Expanded(
             child: Column(
