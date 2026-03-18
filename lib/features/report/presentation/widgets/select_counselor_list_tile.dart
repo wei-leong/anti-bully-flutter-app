@@ -1,4 +1,3 @@
-import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/auth/model/user_model.dart';
 import 'package:flutter/material.dart';
 
@@ -17,28 +16,24 @@ class SelectCounselorListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: isSelected ? colorScheme.primary : colorScheme.outlineVariant,
-          // width: isSelected ? 2 : 1,
-        ),
-        borderRadius: BorderRadius.circular(kDefaultRadius),
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      onTap: onTap,
+      leading: CircleAvatar(
+        backgroundColor: colorScheme.primaryContainer,
+        child: Icon(Icons.person, color: colorScheme.primary),
       ),
-      child: ListTile(
-        onTap: onTap,
-        leading: CircleAvatar(
-          backgroundColor: colorScheme.primaryContainer,
-          child: Icon(Icons.person, color: colorScheme.primary),
-        ),
-        title: Text(
-          counselor.name, 
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        trailing: Icon(
-          isSelected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
-          color: isSelected ? colorScheme.primary : colorScheme.outlineVariant,
-        ),
+      title: Text(
+        counselor.name,
+        style: const TextStyle(fontWeight: FontWeight.bold),
+      ),
+      trailing: Icon(
+        isSelected
+            ? Icons.radio_button_checked
+            : Icons.radio_button_unchecked,
+        color: isSelected
+            ? colorScheme.primary
+            : colorScheme.outlineVariant,
       ),
     );
   }
