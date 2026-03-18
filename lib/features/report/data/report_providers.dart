@@ -24,3 +24,8 @@ final userReportsProvider = FutureProvider.autoDispose<List<ReportModel>>((ref) 
   final repository = ref.watch(reportRepositoryProvider);
   return await repository.getUserReports(currentUser.uid);
 });
+
+final unassignedReportProvider = FutureProvider.autoDispose<List<ReportModel>>((ref) async {
+  final repository = ref.watch(reportRepositoryProvider);
+  return await repository.getUnassignedReports();
+});
