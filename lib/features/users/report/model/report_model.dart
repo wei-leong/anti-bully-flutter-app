@@ -16,6 +16,7 @@ class ReportModel {
   final ReportStatus reportStatus;
   final DateTime incidentDate;
   final DateTime createdAt;
+  final String? assignedCounselorId;
 
   ReportModel({
     this.id,
@@ -27,6 +28,7 @@ class ReportModel {
     required this.reportStatus,
     required this.incidentDate,
     required this.createdAt,
+    this.assignedCounselorId,
   });
 
   static ReportType _firebaseToType(String reportType) {
@@ -82,6 +84,7 @@ class ReportModel {
       reportStatus: _firebaseToStatus(data['reportStatus'] ?? ''),
       incidentDate: (data['incidentDate'] as Timestamp?)?.toDate() ?? DateTime.now(),
       createdAt: (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
+      assignedCounselorId: data['assignedCounselorId'],
     );
   }
 
@@ -96,6 +99,7 @@ class ReportModel {
       'reportStatus': reportStatus.name,
       'incidentDate': Timestamp.fromDate(incidentDate),
       'createdAt': Timestamp.fromDate(createdAt),
+      'assignedCounselorId': assignedCounselorId,
     };
   }
 }
