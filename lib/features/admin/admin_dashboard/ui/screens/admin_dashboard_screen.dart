@@ -67,7 +67,8 @@ class AdminDashboardScreen extends ConsumerWidget {
                 ),
               ],
             ),
-            _buildSectionHeader(context, "Pending Reports", true, () {}),
+            kGap16,
+            _buildSectionHeader(context, "Pending Reports", false, () {}),
             kGap8,
             unassignedReportsAsync.when(
               data: (reports) {
