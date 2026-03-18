@@ -40,4 +40,15 @@ class ReportRepository {
       throw Exception('Failed to Assigned Counselor: $e');
     }
   }
+
+  Future<List<ReportModel>> getUnassignedReports() async {
+    try {
+      final snapshot = await reportServices.getUnassignedReports();
+      return snapshot.docs.map((doc){
+        return ReportModel.fromMap(doc.data(), doc.id);
+      }).toList();
+    } catch (e) {
+      throw Exception('Failed to get Unassigned Reports : $e');
+    }
+  }
 }

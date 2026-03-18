@@ -1,5 +1,4 @@
 import 'package:apu_assignment/features/report/model/report_model.dart';
-import 'package:apu_assignment/features/report/presentation/viewmodel/report_incident_viewmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ReportServices {
@@ -21,10 +20,19 @@ class ReportServices {
     await _db.collection('reports').doc(reportId).delete();
   }
 
-  Future<void> assignCounselor(String reportId,String counselorId) async {
+  Future<void> assignCounselor(String reportId, String counselorId) async {
     await _db.collection('reports').doc(reportId).update({
-      'assignedCounselorId':counselorId,
-      'reportStatus': ReportStatus.inProgress.name // Update from Pending to In Progress
+      'assignedCounselorId': counselorId,
+      'reportStatus':
+          ReportStatus.inProgress.name, // Update from Pending to In Progress
     });
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getUnassignedReports() async {
+    return await _db
+        .collection('reports')
+        .where('reportStatus', isEqualTo: ReportStatus.inProgress.name)
+        .orderBy('createdAt', descending: true)
+        .get();
   }
 }
