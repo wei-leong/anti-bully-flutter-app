@@ -1,6 +1,5 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart'; // Ensure you have gap package or use SizedBox
 
 class EscalationTile extends StatelessWidget {
   const EscalationTile({
@@ -39,10 +38,9 @@ class EscalationTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                caseId,
+                "Case #${caseId.substring(0, 8)}",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: colorScheme.onSurfaceVariant,
                   fontSize: 12,
                 ),
               ),

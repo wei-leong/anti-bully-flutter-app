@@ -1,6 +1,6 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/users/dashboard/presentation/widgets/report_status_tile.dart';
-import 'package:apu_assignment/features/users/report/data/report_providers.dart';
+import 'package:apu_assignment/features/report/data/report_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

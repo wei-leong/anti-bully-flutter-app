@@ -1,14 +1,19 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/admin/admin_dashboard/ui/widgets/escalation_tile.dart';
 import 'package:apu_assignment/features/admin/admin_dashboard/ui/widgets/stats_card.dart';
+import 'package:apu_assignment/features/report/data/report_providers.dart';
+import 'package:apu_assignment/features/report/presentation/screens/admin_report_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-class AdminDashboardScreen extends StatelessWidget {
+class AdminDashboardScreen extends ConsumerWidget {
   const AdminDashboardScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final unassignedReportsAsync = ref.watch(unassignedReportProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Dashboard", style: TextStyle(fontWeight: FontWeight.bold)),
@@ -62,10 +67,48 @@ class AdminDashboardScreen extends StatelessWidget {
                 ),
               ],
             ),
-            _buildSectionHeader(context, "Recent Escalations", true, () {}),
+            kGap16,
+            _buildSectionHeader(context, "Pending Reports", false, () {}),
             kGap8,
-            EscalationTile(caseId: "Case #2024-099", incidentType: "Physical Bullying" ,reason: "Unresolved for 48h", severity: "CRITICAL"),
-            EscalationTile(caseId: "Case #2024-199", incidentType: "Cyber Bullying ", reason: "Flagged by Counselor", severity: "HIGH"),
+            unassignedReportsAsync.when(
+              data: (reports) {
+                if (reports.isEmpty) {
+                  return const Padding(
+                    padding: EdgeInsetsGeometry.all(kOnboardContentPadding),
+                    child: Center(child: Text("No pending reports.")),
+                  );
+                }
+
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: reports.length,
+                  itemBuilder: (context, index) {
+                    final report = reports[index];
+                
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                AdminReportDetailScreen(report: report),
+                          ),
+                        );
+                      },
+                      child: EscalationTile(
+                        caseId: report.id ?? "Unknown ID",
+                        incidentType: "${report.reportType.name[0].toUpperCase()}${report.reportType.name.substring(1)} Bullying",
+                        reason: "Pending Assignment",
+                        severity: report.reportUrgentLevel.name.toUpperCase(),
+                      ),
+                    );
+                  },
+                );
+              },
+              error: (error, stack) => Center(child: Text("Error : $error")),
+              loading: () => const Center(child: CircularProgressIndicator()),
+            ),
           ],
         ),
       ),

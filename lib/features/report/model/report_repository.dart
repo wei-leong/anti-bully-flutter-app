@@ -1,5 +1,5 @@
-import 'package:apu_assignment/features/users/report/model/report_model.dart';
-import 'package:apu_assignment/features/users/report/model/report_services.dart';
+import 'package:apu_assignment/features/report/model/report_model.dart';
+import 'package:apu_assignment/features/report/model/report_services.dart';
 
 class ReportRepository {
   final ReportServices reportServices;
@@ -30,6 +30,25 @@ class ReportRepository {
       }).toList();
     } catch (e) {
       throw Exception('Failed to Get Report: $e');
+    }
+  }
+
+  Future<void> assignCounselor(String reportId, String counselorId) async {
+    try {
+      await reportServices.assignCounselor(reportId, counselorId);
+    } catch(e) {
+      throw Exception('Failed to Assigned Counselor: $e');
+    }
+  }
+
+  Future<List<ReportModel>> getUnassignedReports() async {
+    try {
+      final snapshot = await reportServices.getUnassignedReports();
+      return snapshot.docs.map((doc){
+        return ReportModel.fromMap(doc.data(), doc.id);
+      }).toList();
+    } catch (e) {
+      throw Exception('Failed to get Unassigned Reports : $e');
     }
   }
 }
