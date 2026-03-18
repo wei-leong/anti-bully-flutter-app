@@ -31,7 +31,7 @@ class ReportServices {
   Future<QuerySnapshot<Map<String, dynamic>>> getUnassignedReports() async {
     return await _db
         .collection('reports')
-        .where('reportStatus', isEqualTo: ReportStatus.inProgress.name)
+        .where('reportStatus', isEqualTo: ReportStatus.pending.name)
         .orderBy('createdAt', descending: true)
         .get();
   }

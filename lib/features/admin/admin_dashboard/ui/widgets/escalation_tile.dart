@@ -39,10 +39,9 @@ class EscalationTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                caseId,
+                "Case #${caseId.substring(0, 8)}",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: colorScheme.onSurfaceVariant,
                   fontSize: 12,
                 ),
               ),
