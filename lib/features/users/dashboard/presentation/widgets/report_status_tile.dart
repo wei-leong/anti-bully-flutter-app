@@ -1,9 +1,9 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
-import 'package:apu_assignment/features/users/report/presentation/viewmodel/report_incident_viewmodel.dart';
+import 'package:apu_assignment/features/report/presentation/viewmodel/report_incident_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
-import 'package:apu_assignment/features/users/report/model/report_model.dart';
+import 'package:apu_assignment/features/report/model/report_model.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
