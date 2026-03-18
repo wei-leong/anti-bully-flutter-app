@@ -18,7 +18,7 @@ class AdminReportIncidentViewModel extends AsyncNotifier<void> {
       final repository = ref.read(reportRepositoryProvider);
 
       await repository.assignCounselor(reportId, counselorId);
-      ref.invalidate(userReportsProvider);
+      ref.invalidate(unassignedReportProvider);
     });
   }
 }
