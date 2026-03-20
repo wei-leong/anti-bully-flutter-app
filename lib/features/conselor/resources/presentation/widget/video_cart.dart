@@ -1,18 +1,51 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/conselor/resources/model/resources_model.dart';
 import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class VideoCard extends StatelessWidget {
+class VideoCard extends StatefulWidget {
   const VideoCard({super.key, required this.resourceItem});
 
   final ResourceItem resourceItem;
 
   @override
+  State<VideoCard> createState() => _VideoCardState();
+}
+
+class _VideoCardState extends State<VideoCard> {
+  late YoutubePlayerController _controller;
+  @override
+  void initState(){
+    super.initState();
+
+    final String videoURL = widget.resourceItem.content?['video_url_(youtube_only)'] ?? "";
+
+    final String? videoId = YoutubePlayer.convertUrlToId(videoURL);
+
+    _controller = YoutubePlayerController(
+      initialVideoId: videoId ?? "",
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+        isLive: false,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.pause();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+
     return Container(
-        decoration: BoxDecoration(
+      decoration: BoxDecoration(
         color: colorScheme.surface,
         borderRadius: BorderRadius.circular(kDefaultRadius),
       ),
@@ -22,72 +55,61 @@ class VideoCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CircleAvatar(
-            radius: 20, 
-            child: Text(resourceItem.source[0]),
+            radius: 20,
+            backgroundColor: colorScheme.primaryContainer,
+            child: Text(
+              widget.resourceItem.source.isNotEmpty ? widget.resourceItem.source[0] : "?",
+              style: TextStyle(color: colorScheme.onPrimaryContainer),
+            ),
           ),
           const SizedBox(width: 12),
-
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-              Text(
-                resourceItem.source,
-                style: textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: colorScheme.onSurface,
-                ),
-              ),
-              const SizedBox(height: 4),
-
-              Text(
-                resourceItem.title,
-                style: textTheme.bodyLarge?.copyWith(
-                  color: colorScheme.onSurface,
-                ),
-              ),
-              const SizedBox(height: 12),
-
-            ClipRRect(
-              borderRadius: BorderRadiusGeometry.circular(5),
-              child:Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  height: 140,
-                  width: double.infinity,
-                  color: Colors.black87,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white70,
-                    shape: BoxShape.circle,
-                  ),
-                  padding: const EdgeInsets.all(kDefaultPadding),
-                  child: Icon(
-                    Icons.play_arrow,
-                    color: Colors.black,
-                    size: 32,
+                Text(
+                  widget.resourceItem.source,
+                  style: textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: colorScheme.onSurface,
                   ),
                 ),
-                Positioned(
-                  bottom: 8,
-                  right: 8,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 4),
-                    decoration: BoxDecoration(
-                      color: colorScheme.onPrimaryContainer,
-                      borderRadius: BorderRadius.circular(4),
+                const SizedBox(height: 4),
+                Text(
+                  widget.resourceItem.title,
+                  style: textTheme.bodyLarge?.copyWith(
+                    color: colorScheme.onSurface,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                
+                // ✨ 视频播放器展示区域
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: YoutubePlayer(
+                    controller: _controller,
+                    showVideoProgressIndicator: true,
+                    progressIndicatorColor: Colors.red,
+                    // 如果 ID 为空，显示黑色占位
+                    onReady: () {
+                      debugPrint('YouTube Player is ready.');
+                    },
+                  ),
+                ),
+                
+                const SizedBox(height: 8),
+                // 展示时长
+                if (widget.resourceItem.durationOrSize.isNotEmpty)
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      widget.resourceItem.durationOrSize,
+                      style: textTheme.labelSmall?.copyWith(color: colorScheme.primary),
                     ),
-                    child: Text(resourceItem.durationOrSize),
                   ),
-                ),
               ],
             ),
-            )
-            // Thumbnail & Duration
-              ],
-          ),)
+          )
         ],
       ),
     );

@@ -3,6 +3,7 @@ import 'package:apu_assignment/features/conselor/resources/model/resources_model
 import 'package:apu_assignment/features/conselor/resources/presentation/viewmodel/resources_viewmodel.dart';
 import 'package:apu_assignment/features/conselor/resources/presentation/widget/artical_tile.dart';
 import 'package:apu_assignment/features/conselor/resources/presentation/widget/event_poster.dart';
+import 'package:apu_assignment/features/conselor/resources/presentation/widget/resources_details_widget.dart';
 import 'package:apu_assignment/features/conselor/resources/presentation/widget/video_cart.dart';
 import 'package:apu_assignment/features/conselor/resources/presentation/widget/new.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,13 @@ class ResourceScreen extends ConsumerWidget {
     final selectedFilter = ref.watch(resourceFilterProvider);
     final colorScheme = Theme.of(context).colorScheme;
     final List<String> _filters = ["Articles", "Videos", "News", "Events"];
+
+    Widget cardbuilder(ResourceItem item){
+      if (item.type == "videos") return VideoCard(resourceItem: item);
+      if (item.type == "events") return EventPosterCard(resourceItem: item);
+      if (item.type == "news") return NewsOrEventTile(resourceItem: item);
+      return ArticleTile(resourceItem: item);
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -61,10 +69,22 @@ class ResourceScreen extends ConsumerWidget {
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   final item = items[index];
-                  if (item.type == "videos") return VideoCard(resourceItem: item);
-                  if (item.type == "events") return EventPosterCard(resourceItem: item);
-                  if (item.type == "news") return NewsOrEventTile(resourceItem: item);
-                  return ArticleTile(resourceItem: item);
+
+                  void openresourcesdetails(){
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) => FractionallySizedBox(
+                        heightFactor: 0.75,
+                        child: ResourceDetails(resourceItem: item),
+                      ),
+                    );
+                  }
+                    return InkWell(
+                      onTap: openresourcesdetails,
+                      child: cardbuilder(item), // 提取出的构建逻辑
+                    );
                 },
               ),
               loading: () => const Center(child: CircularProgressIndicator()),
