@@ -88,14 +88,6 @@ class DashboardScreen extends ConsumerWidget {
             onPressed: () {},
             icon: Icon(Icons.notifications_outlined),
           ),
-          IconButton(
-            onPressed: () {},
-            style: IconButton.styleFrom(
-              backgroundColor: colorScheme.errorContainer,
-              foregroundColor: colorScheme.error,
-            ),
-            icon: Icon(Icons.sos_rounded),
-          ),
         ],
       ),
       body: SingleChildScrollView(
