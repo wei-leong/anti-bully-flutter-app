@@ -20,7 +20,6 @@ class ResourceDetails extends StatelessWidget {
       child: Column(
         children: [
           const Gap(12),
-          // 顶部装饰条
           Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(2))),
           
           // Header
@@ -46,7 +45,7 @@ class ResourceDetails extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // 公共部分：标题和作者
+                  // Title and Author
                   Text(resourceItem.title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
                   const Gap(8),
                   _buildMetaInfo("Posted by ${resourceItem.source}", Icons.person_outline),
@@ -65,9 +64,9 @@ class ResourceDetails extends StatelessWidget {
     );
   }
 
-  // 根据类型返回不同的 Widget 列表
+
   List<Widget> buildTypeContent(BuildContext context, String type) {
-    // 统一转小写，防止匹配失败
+
     final normalizedType = type.toLowerCase();
     final Uint8List? imageBytes = ImagesProvider.decodeBase64(resourceItem.content['image']);
     
@@ -76,7 +75,6 @@ class ResourceDetails extends StatelessWidget {
         return [
           const Text("Video Link", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey)),
           const Gap(8),
-          // 使用 SelectableText 方便用户复制链接
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
@@ -97,29 +95,22 @@ class ResourceDetails extends StatelessWidget {
       case 'articles':
         return [
             if (imageBytes != null) ...[
-              // 2. 设置 Container 来限制图片展示区域
               Container(
-                width: double.infinity, // 占满屏幕宽度
+                width: double.infinity, 
                 height: 500,           
-                margin: const EdgeInsets.only(bottom: 20), // 间距
+                margin: const EdgeInsets.only(bottom: 20), 
                 decoration: BoxDecoration(
-                  color: Colors.grey[100], // 图片以外区域的背景色，方便查看效果
+                  color: Colors.grey[100], 
                   borderRadius: BorderRadius.circular(12),
                 ),
                 
-                // 3. 裁剪超出圆角的部分
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Image.memory(
                     imageBytes,
-                    // ✨ 关键属性：完整展示且不拉伸 ✨
                     fit: BoxFit.contain, 
-                    
-                    // 当 fit 为 contain 时，Image 的 width/height 属性是作为容器边界
                     width: double.infinity,
                     height: 200, 
-
-                    // 错误处理占位符
                     errorBuilder: (context, error, stackTrace) => const Center(child: Icon(Icons.broken_image)),
                   ),
                 ),
@@ -148,7 +139,6 @@ class ResourceDetails extends StatelessWidget {
 
       case 'news':
         return [
-          // News 展示内容和副标题
           if (resourceItem.subtitle != null) ...[
             Text(
               resourceItem.subtitle!, 
@@ -158,29 +148,23 @@ class ResourceDetails extends StatelessWidget {
           ],
 
           if (imageBytes != null) ...[
-            // 2. 设置 Container 来限制图片展示区域
             Container(
-              width: double.infinity, // 占满屏幕宽度
+              width: double.infinity,
               height: 500,           
-              margin: const EdgeInsets.only(bottom: 20), // 间距
+              margin: const EdgeInsets.only(bottom: 20),
               decoration: BoxDecoration(
-                color: Colors.grey[100], // 图片以外区域的背景色，方便查看效果
+                color: Colors.grey[100], 
                 borderRadius: BorderRadius.circular(12),
               ),
               
-              // 3. 裁剪超出圆角的部分
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Image.memory(
                   imageBytes,
-                  // ✨ 关键属性：完整展示且不拉伸 ✨
                   fit: BoxFit.contain, 
-                  
-                  // 当 fit 为 contain 时，Image 的 width/height 属性是作为容器边界
                   width: double.infinity,
                   height: 200, 
 
-                  // 错误处理占位符
                   errorBuilder: (context, error, stackTrace) => const Center(child: Icon(Icons.broken_image)),
                 ),
               ),
@@ -218,35 +202,28 @@ class ResourceDetails extends StatelessWidget {
         return [
 
           if (imageBytes != null) ...[
-            // 2. 设置 Container 来限制图片展示区域
             Container(
-              width: double.infinity, // 占满屏幕宽度
+              width: double.infinity, 
               height: 500,           
-              margin: const EdgeInsets.only(bottom: 20), // 间距
+              margin: const EdgeInsets.only(bottom: 20), 
               decoration: BoxDecoration(
-                color: Colors.grey[100], // 图片以外区域的背景色，方便查看效果
+                color: Colors.grey[100], 
                 borderRadius: BorderRadius.circular(12),
               ),
               
-              // 3. 裁剪超出圆角的部分
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Image.memory(
                   imageBytes,
-                  // ✨ 关键属性：完整展示且不拉伸 ✨
                   fit: BoxFit.contain, 
-                  
-                  // 当 fit 为 contain 时，Image 的 width/height 属性是作为容器边界
                   width: double.infinity,
                   height: 200, 
-
-                  // 错误处理占位符
                   errorBuilder: (context, error, stackTrace) => const Center(child: Icon(Icons.broken_image)),
                 ),
               ),
             ),
           ],
-          // 1. 活动地点展示
+
           _buildInfoRow(
             "Location", 
             resourceItem.content['location'] ?? "Venue to be announced", 
@@ -254,7 +231,6 @@ class ResourceDetails extends StatelessWidget {
           ),
           const Gap(16),
           
-          // 2. 活动日期展示
           _buildInfoRow(
             "Event Date", 
             resourceItem.content['date'] ?? "Date to be confirmed", 
@@ -292,14 +268,12 @@ class ResourceDetails extends StatelessWidget {
           ),
           const Gap(12),
 
-          // 3. 分割线或小标题
           const Text(
             "Event Details", 
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 14)
           ),
           const Gap(4),
           
-          // 4. 活动描述正文
           Text(
             resourceItem.content['content'] ?? "No additional description provided for this event.",
             style: const TextStyle(

@@ -3,9 +3,9 @@ class ResourceItem {
   final String? subtitle;
   final String source;
   final String type;
-  final String durationOrSize; // 02:00 / 2 MB
+  final String durationOrSize; 
   final String? imageUrl;
-  final Map<String, dynamic>? content; // 确保包含 content 字段存放详细信息
+  final Map<String, dynamic>? content; 
 
   ResourceItem({
     required this.title,

@@ -87,27 +87,61 @@ class Dashboard extends ConsumerWidget {
             const Gap(16),
 
             reportAsync.when(
-              data: (reports) => Column(
-                children: reports.map((report) => ReportCard(
-                  location: report.location,
-                  date: report.date,
-                  description: report.description,
-                  status: report.status,
-                  urgentlevel: report.urgentLevel,
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      builder: (context) => FractionallySizedBox(
-                        heightFactor: 0.85,
-                        // Get report
-                        child: ViewDetails(report: report), 
+              data: (reports) {
+                if (reports.isEmpty) {
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 60),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.assignment_turned_in_outlined,
+                            size: 64,
+                            color: colorScheme.outline.withOpacity(0.5),
+                          ),
+                          const Gap(16),
+                          Text(
+                            "No case reports found",
+                            style: textTheme.bodyLarge?.copyWith(
+                              color: colorScheme.onSurfaceVariant,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          const Gap(8),
+                          Text(
+                            "You are free now!",
+                            style: textTheme.bodySmall?.copyWith(
+                              color: colorScheme.outline,
+                            ),
+                          ),
+                        ],
                       ),
-                    );
-                  },
-                )).toList(),
-              ),
+                    ),
+                  );
+                }
+
+                  return Column(
+                  children: reports.map((report) => ReportCard(
+                    location: report.location,
+                    description: report.description,
+                    status: report.status,
+                    urgentlevel: report.urgentLevel,
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        builder: (context) => FractionallySizedBox(
+                          heightFactor: 0.85,
+                          child: ViewDetails(report: report), 
+                        ),
+                      );
+                    },
+                  )).toList(),
+                );
+              },
+    
               // UI
               loading: () => const Center(
                 child: Padding(

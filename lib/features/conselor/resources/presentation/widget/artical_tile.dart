@@ -1,6 +1,4 @@
 import 'dart:typed_data';
-
-import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/Images/data/image_provider.dart';
 import 'package:apu_assignment/features/conselor/resources/model/resources_model.dart';
 import 'package:flutter/material.dart';

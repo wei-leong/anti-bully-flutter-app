@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/Images/data/image_provider.dart';
 import 'package:apu_assignment/features/conselor/resources/model/resources_model.dart';
@@ -20,13 +19,13 @@ class EventPosterCard extends StatelessWidget {
     final content = resourceItem.content;
     if (content == null) return null;
 
-    // 2. 仅针对 Event 类型，从 Firestore 字段 'image' 中获取 Base64 字符串
+    // Get Images by 64 bytes
     final String? base64String = content['image'];
 
-    // 3. 检查字符串是否有效
+    // Validate the bytes
     if (base64String == null || base64String.isEmpty) return null;
 
-    // 4. 使用正确的类名调用静态方法，解决 image_8722e2.png 的报错
+    // decode the bytes to images for display
     return ImagesProvider.decodeBase64(base64String);
   }
   
@@ -82,7 +81,7 @@ class EventPosterCard extends StatelessWidget {
                           bytes,
                           height: 200,
                           width: double.infinity,
-                          fit: BoxFit.cover, // 卡片通常用 cover 比较好看
+                          fit: BoxFit.cover, 
                           errorBuilder: (context, error, stackTrace) => _buildPlaceholderImage(),
                         )
                       : _buildPlaceholderImage(),
