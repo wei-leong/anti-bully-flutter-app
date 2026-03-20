@@ -6,7 +6,7 @@ import 'package:apu_assignment/features/conselor/dashboard/model/report_model.da
 final reportRepositoryProvider = Provider((ref) => ReportRepository());
 
 // read from data/report_provider to get data
-final reportProvider = FutureProvider<List<ReportModel>>((ref) async {
+final reportProvider = StreamProvider<List<ReportModel>>((ref){
   final repository = ref.watch(reportRepositoryProvider);
-  return repository.fetchReports(); 
+  return repository.fetchReports(""); 
 });

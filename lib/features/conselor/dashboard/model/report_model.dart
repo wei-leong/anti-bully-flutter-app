@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ReportModel {
   final String location;
   final String date;
@@ -14,13 +16,14 @@ class ReportModel {
   });
 
   // Map to data
-  factory ReportModel.fromMap(Map<String, dynamic> map) {
+  factory ReportModel.fromFirestore(DocumentSnapshot doc) {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return ReportModel(
-      location: map['location'] ?? 'Unknown',
-      date: map['date'] ?? 'N/A',
-      description: map['description'] ?? '',
-      status: map['status'] ?? 'Pending',
-      urgentLevel: map['Level'] ?? 1, 
+      location: data['location'] ?? 'Unknown',
+      date: data['date'] ?? 'N/A',
+      description: data['description'] ?? '',
+      status: data['status'] ?? 'Pending',
+      urgentLevel: data['Level'] ?? 1, 
     );
   }
 }

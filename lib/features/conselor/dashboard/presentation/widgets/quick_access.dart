@@ -15,7 +15,6 @@ const QuickAccess({super.key});
               crossAxisSpacing: 10,     
               childAspectRatio: 1.5,     
               children: [
-                _buildQuickAccessBox(context, "Analytics", Icons.analytics, const Color.fromARGB(255, 243, 33, 166), const ResourceScreen()),
                 _buildQuickAccessBox(context, "Messages", Icons.message, Colors.green, const ChatListScreens(userUid: '',)), // TODO : Si Wei Change this
                 _buildQuickAccessBox(context, "Resources", Icons.book, Colors.purple, const ResourceScreen()),
                 _buildQuickAccessBox(context, "Profile", Icons.person, Colors.orange, const ProfileScreen()),

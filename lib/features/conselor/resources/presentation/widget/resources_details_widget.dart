@@ -84,14 +84,14 @@ class ResourceDetails extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: SelectableText(
-              resourceItem.content['video_url'] ?? "No Link Provided", 
+              resourceItem.content['video_url_(youtube_only)'] ?? "No Link Provided", 
               style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.w500)
             ),
           ),
           const Gap(20),
           const Text("Description", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey)),
           const Gap(8),
-          Text(resourceItem.content['description'] ?? "No description available.", style: const TextStyle(fontSize: 15)),
+          Text(resourceItem.content['content'] ?? "No description available.", style: const TextStyle(fontSize: 15)),
         ];
 
       case 'articles':
