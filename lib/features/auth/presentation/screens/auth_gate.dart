@@ -2,6 +2,7 @@ import 'package:apu_assignment/core/navigation/main_wrapper_admin.dart';
 import 'package:apu_assignment/core/navigation/main_wrapper_conselor.dart';
 import 'package:apu_assignment/core/navigation/main_wrapper_user.dart';
 import 'package:apu_assignment/features/auth/model/user_model.dart';
+import 'package:apu_assignment/features/auth/presentation/screens/pending_approve_screen.dart';
 import 'package:apu_assignment/features/auth/presentation/screens/role_select_screen.dart';
 import 'package:apu_assignment/features/auth/presentation/viewmodels/auth_viewmodel.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
@@ -33,12 +34,16 @@ class AuthGate extends ConsumerWidget {
               return const RoleSelectScreen();
             }
 
-            // Case 4: Logged in AND has a role
+            // Case 4 : Logged in, but Account Status is Pending
+            if (userModel.accountStatus == AccountStatus.pending){
+              return const PendingApproveScreen();
+            }
+
+            // Case 5: Logged in AND has a role
             switch (userModel.role) {
               case UserRole.user:
                 return const MainWrapperUser();
               case UserRole.counselor:
-                // TODO: Remove This Later
                 return MainWrapperConselor();
               case UserRole.admin:
                 return const MainWrapperAdmin();
