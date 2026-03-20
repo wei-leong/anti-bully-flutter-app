@@ -95,10 +95,6 @@ class _ChatDetailScreensState extends ConsumerState<ChatDetailScreens> {
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 20,
                       ),
-                      suffixIcon: IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.image_outlined),
-                      ),
                     ),
                   ),
                 ),
