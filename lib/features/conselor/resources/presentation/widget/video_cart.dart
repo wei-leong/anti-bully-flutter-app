@@ -34,8 +34,6 @@ class _VideoCardState extends State<VideoCard> {
 
   @override
   void dispose() {
-    _controller.pause();
-    _controller.dispose();
     super.dispose();
   }
 
@@ -82,15 +80,13 @@ class _VideoCardState extends State<VideoCard> {
                   ),
                 ),
                 const SizedBox(height: 12),
-                
-                // ✨ 视频播放器展示区域
+
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: YoutubePlayer(
                     controller: _controller,
                     showVideoProgressIndicator: true,
                     progressIndicatorColor: Colors.red,
-                    // 如果 ID 为空，显示黑色占位
                     onReady: () {
                       debugPrint('YouTube Player is ready.');
                     },
@@ -98,7 +94,7 @@ class _VideoCardState extends State<VideoCard> {
                 ),
                 
                 const SizedBox(height: 8),
-                // 展示时长
+                // Show Time
                 if (widget.resourceItem.durationOrSize.isNotEmpty)
                   Align(
                     alignment: Alignment.centerRight,

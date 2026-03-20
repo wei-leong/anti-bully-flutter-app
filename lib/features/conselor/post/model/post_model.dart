@@ -13,6 +13,7 @@ class PostModel {
     this.author = "Counselor"
   });
 
+  // The templete about which type have what item
   static List<String> getFieldsForType(String type) {
     switch (type.toLowerCase()) {
       case "articles":

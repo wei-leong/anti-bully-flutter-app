@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class ReportCard extends StatelessWidget {
   final String location;
-  final String date;
   final String description;
   final String status;
   final int urgentlevel;
@@ -11,7 +10,6 @@ class ReportCard extends StatelessWidget {
   const ReportCard({
     super.key,
     required this.location,
-    required this.date,
     required this.description,
     required this.status,
     required this.urgentlevel,
@@ -70,10 +68,9 @@ class ReportCard extends StatelessWidget {
                     style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
                   ),
                 ),
-                Text(date, style: Theme.of(context).textTheme.bodySmall),
               ],
             ),
-            const SizedBox(height: 12), // 添加间距
+            const SizedBox(height: 12), 
             //location
             Row(
               children: [

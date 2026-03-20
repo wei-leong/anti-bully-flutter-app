@@ -83,7 +83,7 @@ class ResourceScreen extends ConsumerWidget {
                   }
                     return InkWell(
                       onTap: openresourcesdetails,
-                      child: cardbuilder(item), // 提取出的构建逻辑
+                      child: cardbuilder(item), 
                     );
                 },
               ),
