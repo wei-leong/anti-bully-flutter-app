@@ -5,7 +5,9 @@ import 'package:apu_assignment/features/auth/model/user_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final roleSelectionViewModelProvider =
-    AsyncNotifierProvider<RoleSelectionViewModel, void>(RoleSelectionViewModel.new);
+    AsyncNotifierProvider<RoleSelectionViewModel, void>(
+      RoleSelectionViewModel.new,
+    );
 
 class RoleSelectionViewModel extends AsyncNotifier<void> {
   @override
@@ -14,12 +16,17 @@ class RoleSelectionViewModel extends AsyncNotifier<void> {
   Future<void> selectRole(UserRole role, String name) async {
     state = const AsyncLoading();
 
-    state = await AsyncValue.guard(() async { // Direct to MainWrapper page after selected Role and input Name
+    state = await AsyncValue.guard(() async {
+      // Direct to MainWrapper page after selected Role and input Name
       final auth = ref.read(firebaseAuthProvider);
       final repository = ref.read(userRepositoryProvider);
 
       final currentUser = auth.currentUser;
       if (currentUser == null) throw Exception("No user logged in");
+
+      final AccountStatus assignStatus = role == UserRole.counselor
+          ? AccountStatus.pending
+          : AccountStatus.approved;
 
       final newUser = UserModel(
         uid: currentUser.uid,
@@ -27,6 +34,7 @@ class RoleSelectionViewModel extends AsyncNotifier<void> {
         email: currentUser.email ?? '',
         role: role,
         createdAt: DateTime.now(),
+        accountStatus: assignStatus,
       );
 
       await repository.saveUserData(newUser);
