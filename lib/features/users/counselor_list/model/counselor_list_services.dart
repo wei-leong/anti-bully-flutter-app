@@ -8,6 +8,7 @@ class CounselorListServices {
     return _db
         .collection('user')
         .where('role', isEqualTo: 'counselor')
+        .where('accountStatus', isEqualTo: 'approved')
         .snapshots()
         .map((snapshot) {
           return snapshot.docs.map((doc) {
