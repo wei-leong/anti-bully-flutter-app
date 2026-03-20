@@ -1,30 +1,37 @@
 import 'package:apu_assignment/features/admin/admin_dashboard/ui/screens/admin_dashboard_screen.dart';
+import 'package:apu_assignment/features/auth/data/auth_providers.dart';
+import 'package:apu_assignment/features/chat/presentation/screens/chat_list_screens.dart';
 import 'package:apu_assignment/features/profile/presentation/screens/profile_screen.dart';
-// TODO: Import your specific Admin screens here when ready
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MainWrapperAdmin extends StatefulWidget { 
+class MainWrapperAdmin extends ConsumerStatefulWidget {
   const MainWrapperAdmin({super.key});
 
   @override
-  State<MainWrapperAdmin> createState() => _MainWrapperAdminState();
+  ConsumerState<MainWrapperAdmin> createState() => _MainWrapperAdminState();
 }
 
-class _MainWrapperAdminState extends State<MainWrapperAdmin> {
+class _MainWrapperAdminState extends ConsumerState<MainWrapperAdmin> {
   int _currentIndex = 0;
-
-  final List<Widget> _screens = [
-    const AdminDashboardScreen(),             // Home (Admin Dashboard)
-    const Center(child: Text("Manage Reports")),    // TODO : Report (Placeholder)
-    const Center(child: Text("Manage Community")),  // TODO : Community (Placeholder)
-    const Center(child: Text("Manage Staff")),      // TODO : Staff (Placeholder)
-    const ProfileScreen(),               // Profile (Settings)
-  ];
 
   @override
   Widget build(BuildContext context) {
+    final firebaseAuth = ref.watch(firebaseAuthProvider);
+    final currentUserUid = firebaseAuth.currentUser?.uid ?? '';
+
+    final List<Widget> _screens = [
+      const AdminDashboardScreen(), // Home (Admin Dashboard)
+      const Center(
+        child: Text("Manage Community"),
+      ), // TODO : Community (Placeholder)
+      const Center(child: Text("Manage Staff")), // TODO : Staff (Placeholder)
+      ChatListScreens(userUid: currentUserUid),
+      const ProfileScreen(), // Profile (Settings)
+    ];
+
     final colorScheme = Theme.of(context).colorScheme;
-    const double textFontSize = 12; 
+    const double textFontSize = 12;
     return Scaffold(
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -49,12 +56,6 @@ class _MainWrapperAdminState extends State<MainWrapperAdmin> {
             activeIcon: Icon(Icons.dashboard_rounded),
             label: "Home",
           ),
-          // 2. REPORT
-          BottomNavigationBarItem(
-            icon: Icon(Icons.assignment_outlined),
-            activeIcon: Icon(Icons.assignment_rounded),
-            label: "Report",
-          ),
           // 3. COMMUNITY
           BottomNavigationBarItem(
             icon: Icon(Icons.people_alt_outlined),
@@ -66,6 +67,11 @@ class _MainWrapperAdminState extends State<MainWrapperAdmin> {
             icon: Icon(Icons.badge_outlined),
             activeIcon: Icon(Icons.badge_rounded),
             label: "Staff",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat_bubble_outline),
+            activeIcon: Icon(Icons.chat),
+            label: "Chat",
           ),
           // 5. PROFILE (SETTINGS)
           BottomNavigationBarItem(
