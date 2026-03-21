@@ -1,7 +1,7 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/report/model/report_model.dart';
 import 'package:apu_assignment/features/report/presentation/viewmodel/admin_report_viewmodel.dart';
-import 'package:apu_assignment/features/report/presentation/widgets/admin_incident_list_tile.dart';
+import 'package:apu_assignment/features/report/presentation/widgets/incident_list_tile.dart';
 import 'package:apu_assignment/features/report/presentation/widgets/select_counselor_list_tile.dart';
 import 'package:apu_assignment/features/users/counselor_list/data/counselor_list_provider.dart';
 import 'package:flutter/material.dart';
@@ -43,81 +43,112 @@ class _AdminReportDetailScreenState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Text("Incident Overview"),
-            AdminIncidentListTile(
+            IncidentListTile(
               title: "Category",
               description:
                   "${widget.report.reportType.name[0].toUpperCase()}${widget.report.reportType.name.substring(1)} Bullying",
               icon: Icons.category,
             ),
-            AdminIncidentListTile(
+            IncidentListTile(
               title: "Date/Time",
               description: formattedDate,
               icon: Icons.calendar_month,
             ),
-            AdminIncidentListTile(
+            IncidentListTile(
               title: "Location",
               description: widget.report.location,
               icon: Icons.map,
             ),
-            AdminIncidentListTile(
+            IncidentListTile(
               title: "Reporter",
               description: "Anonymous (Student)",
               icon: Icons.person,
             ),
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: Icon(Icons.message, color: colorScheme.primary),
+              leading: Container(
+                padding: EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(Icons.message, color: colorScheme.primary),
+              ),
               title: Text(
                 "Description",
-                style: textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
+            kGap8,
             Text(
               widget.report.description,
-              style: textTheme.bodyMedium?.copyWith(
+              style: textTheme.bodyLarge?.copyWith(
                 color: colorScheme.onSurfaceVariant,
                 height: 1.5,
               ),
             ),
             kGap16,
+            const Divider(height: 1),
+            kGap16,
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: Icon(Icons.person_add, color: colorScheme.primary),
+              leading: Container(
+                padding: EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(Icons.person_add, color: colorScheme.primary),
+              ),
               title: Text(
                 "Assign Counselor",
-                style: textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            counselorListAsync.when(
-              data: (counselors) {
-                if (counselors.isEmpty)
-                  return const Center(child: Text("No counselors available."));
-
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: counselors.length,
-                  itemBuilder: (context, index) {
-                    final counselor = counselors[index];
-                    final isSelected = _selectedCounselorId == counselor.uid;
-
-                    return SelectCounselorListTile(
-                      counselor: counselor,
-                      isSelected: isSelected,
-                      onTap: (){
-                        setState(() {
-                          _selectedCounselorId = counselor.uid;
-                        });
-                      },
+            kGap8,
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+              decoration: BoxDecoration(
+                color: colorScheme.surface,
+                borderRadius: BorderRadius.circular(kDefaultRadius),
+                border: Border.all(
+                  color: colorScheme.outlineVariant, 
+                  width: 1.5,
+                ),
+              ),
+              child: counselorListAsync.when(
+                data: (counselors) {
+                  if (counselors.isEmpty) {
+                    return const Center(
+                      child: Text("No counselors available."),
                     );
-                  },
-                );
-              },
-              error: (error, stack) => Text("Error loading counselors: $error"),
-              loading: () => const Center(child: CircularProgressIndicator()),
+                  }
+                          
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: counselors.length,
+                    itemBuilder: (context, index) {
+                      final counselor = counselors[index];
+                      final isSelected =
+                          _selectedCounselorId == counselor.uid;
+                          
+                      return SelectCounselorListTile(
+                        counselor: counselor,
+                        isSelected: isSelected,
+                        onTap: () {
+                          setState(() {
+                            _selectedCounselorId = counselor.uid;
+                          });
+                        },
+                      );
+                    },
+                  );
+                },
+                error: (error, stack) =>
+                    Text("Error loading counselors: $error"),
+                loading: () =>
+                    const Center(child: CircularProgressIndicator()),
+              ),
             ),
           ],
         ),

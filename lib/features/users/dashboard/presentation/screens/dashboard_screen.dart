@@ -1,5 +1,6 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/auth/data/auth_providers.dart';
+import 'package:apu_assignment/features/profile/presentation/screens/profile_screen.dart';
 import 'package:apu_assignment/features/users/counselor_list/presentation/screens/counselor_list_screen.dart';
 import 'package:apu_assignment/features/users/dashboard/presentation/widgets/report_status_tile.dart';
 import 'package:apu_assignment/features/report/data/report_providers.dart';
@@ -57,8 +58,16 @@ class DashboardScreen extends ConsumerWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            CircleAvatar(child: Icon(Icons.person)),
-            const Gap(12),
+            // InkWell(
+            //   onTap: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => ProfileScreen()),
+            //     );
+            //   },
+            //   child: CircleAvatar(child: Icon(Icons.person)),
+            // ),
+            // const Gap(12),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -87,14 +96,6 @@ class DashboardScreen extends ConsumerWidget {
           IconButton(
             onPressed: () {},
             icon: Icon(Icons.notifications_outlined),
-          ),
-          IconButton(
-            onPressed: () {},
-            style: IconButton.styleFrom(
-              backgroundColor: colorScheme.errorContainer,
-              foregroundColor: colorScheme.error,
-            ),
-            icon: Icon(Icons.sos_rounded),
           ),
         ],
       ),
@@ -210,7 +211,8 @@ class DashboardScreen extends ConsumerWidget {
                 () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ReportHistoryScreen(), // ? Navigate to Report History page
+                    builder: (context) =>
+                        ReportHistoryScreen(), // ? Navigate to Report History page
                   ),
                 ),
               ),
