@@ -21,4 +21,12 @@ class ProfileRepository {
       throw Exception('Failed to Update Password: $e');
     }
   }
+
+  // Future<void> deleteAccount(String uid) async {
+  //   try {
+  //     await profileServices.deleteAccount(uid);
+  //   } catch (e) {
+  //     throw Exception('Failed to delete account: $e');
+  //   }
+  // }
 }

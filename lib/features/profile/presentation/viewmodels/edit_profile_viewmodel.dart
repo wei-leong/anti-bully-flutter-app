@@ -32,4 +32,13 @@ class EditProfileViewModel extends AsyncNotifier<void> {
       await repository.updatePassword(newPassword);
     });
   }
+
+  // Future<void> deleteAccount() async {
+  //   state = const AsyncLoading();
+  //   state = await AsyncValue.guard(() async {
+  //     final currentUid = ref.read(firebaseAuthProvider).currentUser!.uid;
+  //     final repository = ref.read(profileRepositoryProvider);
+  //     await repository.deleteAccount(currentUid);
+  //   });
+  // }
 }

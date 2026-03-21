@@ -103,6 +103,16 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               trailing: const Icon(Icons.chevron_right),
               onTap: () => _showChangePasswordDialog(context, ref),
             ),
+            // ListTile(
+            //   contentPadding: EdgeInsets.zero,
+            //   leading: Icon(Icons.lock_outline, color: colorScheme.primary),
+            //   title: const Text(
+            //     "Delete Account",
+            //     style: TextStyle(fontWeight: FontWeight.w600),
+            //   ),
+            //   trailing: const Icon(Icons.chevron_right),
+            //   onTap: () => _showDeleteAccountDialog(context, ref),
+            // ),
           ],
         ),
       ),
@@ -114,7 +124,7 @@ void _showChangePasswordDialog(BuildContext context, WidgetRef ref) {
   final passwordController = TextEditingController();
   showDialog(
     context: context,
-    builder: (context) => AlertDialog(
+    builder: (dialogContext) => AlertDialog(
       title: const Text("Change Password"),
       content: TextField(
         controller: passwordController,
@@ -132,7 +142,7 @@ void _showChangePasswordDialog(BuildContext context, WidgetRef ref) {
         FilledButton(
           onPressed: () async {
             if (passwordController.text.length >= 6) {
-              Navigator.pop(context); // 1. Closes the dialog box
+              Navigator.pop(dialogContext); // Closes the dialog box
 
               await ref
                   .read(editProfileViewModelProvider.notifier)
@@ -145,7 +155,7 @@ void _showChangePasswordDialog(BuildContext context, WidgetRef ref) {
                   ),
                 );
 
-                // 2. ADD THIS: Closes the whole "Edit Profile" screen so they don't feel stuck!
+                // Closes the whole "Edit Profile" screen so they don't feel stuck!
                 Navigator.pop(context);
               }
             } else {
@@ -162,3 +172,26 @@ void _showChangePasswordDialog(BuildContext context, WidgetRef ref) {
     ),
   );
 }
+
+// void _showDeleteAccountDialog(BuildContext context, WidgetRef ref) {
+//     showDialog(
+//       context: context,
+//       builder: (context) => AlertDialog(
+//         title: const Text("Delete Account"),
+//         content: const Text("Are you absolutely sure? This action cannot be undone and will permanently erase all your data."),
+//         actions: [
+//           TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
+//           FilledButton(
+//             style: FilledButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.error),
+//             onPressed: () async {
+//               Navigator.pop(context); // Close dialog
+//               await ref.read(editProfileViewModelProvider.notifier).deleteAccount();
+//               // Note: Because AuthGate watches your Firebase Auth state, deleting the account 
+//               // will automatically kick the user back to the LoginScreen!
+//             },
+//             child: const Text("Delete Forever"),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
