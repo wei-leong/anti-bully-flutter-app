@@ -17,16 +17,16 @@ class ChatListScreens extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Chat", style: TextStyle(fontWeight: FontWeight.bold)),
-        actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.notifications_rounded)),
-          Padding(
-            padding: const EdgeInsets.only(right: kDefaultPadding),
-            child: Container(
-              decoration: BoxDecoration(shape: BoxShape.circle),
-              child: CircleAvatar(child: Icon(Icons.person)),
-            ),
-          ),
-        ],
+        // actions: [
+        //   IconButton(onPressed: () {}, icon: Icon(Icons.notifications_rounded)),
+        //   Padding(
+        //     padding: const EdgeInsets.only(right: kDefaultPadding),
+        //     child: Container(
+        //       decoration: BoxDecoration(shape: BoxShape.circle),
+        //       child: CircleAvatar(child: Icon(Icons.person)),
+        //     ),
+        //   ),
+        // ],
       ),
       body: Column(
         children: [
