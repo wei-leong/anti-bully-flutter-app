@@ -1,4 +1,5 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
+import 'package:apu_assignment/features/admin/admin_dashboard/data/overview_provider.dart';
 import 'package:apu_assignment/features/admin/admin_dashboard/ui/widgets/escalation_tile.dart';
 import 'package:apu_assignment/features/admin/admin_dashboard/ui/widgets/stats_card.dart';
 import 'package:apu_assignment/features/report/data/report_providers.dart';
@@ -13,6 +14,11 @@ class AdminDashboardScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final unassignedReportsAsync = ref.watch(unassignedReportProvider);
+
+    final totalReportsAsync = ref.watch(totalReportCountProvider);
+    final activeCaseAsync = ref.watch(totalActiveCaseCountProvider);
+    final allArticlesAsync = ref.watch(totalAllResourcesCountProvider);
+    final pendingCounselorAsync = ref.watch(totalPendingCounselorCountProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -29,7 +35,7 @@ class AdminDashboardScreen extends ConsumerWidget {
                 Expanded(
                   child: StatsCard(
                     title: "Active Cases",
-                    value: "24",
+                    value: activeCaseAsync.when(data: (count) => count.toString(), error: (error, stack) => "Error", loading: () => "..."),
                     icon: Icons.folder_open_rounded,
                     color: Colors.orange,
                   ),
@@ -38,7 +44,7 @@ class AdminDashboardScreen extends ConsumerWidget {
                 Expanded(
                   child: StatsCard(
                     title: "Pending Staff",
-                    value: "05",
+                    value: pendingCounselorAsync.when(data: (count) => count.toString(), error: (error, stack) => "Error", loading: () => "..."),
                     icon: Icons.person_add_alt_1_rounded,
                     color: Colors.blue,
                   ),
@@ -51,7 +57,7 @@ class AdminDashboardScreen extends ConsumerWidget {
                 Expanded(
                   child: StatsCard(
                     title: "Articles",
-                    value: "108",
+                    value: allArticlesAsync.when(data: (count) => count.toString(), error: (error, stack) => "Error", loading: () => "..."),
                     icon: Icons.article_rounded,
                     color: Colors.purple,
                   ),
@@ -60,7 +66,7 @@ class AdminDashboardScreen extends ConsumerWidget {
                 Expanded(
                   child: StatsCard(
                     title: "Total Reports",
-                    value: "1.2k",
+                    value: totalReportsAsync.when(data: (count) => count.toString(), error: (error, stack) => "Error", loading: () => "..."),
                     icon: Icons.bar_chart_rounded,
                     color: Colors.teal,
                   ),
