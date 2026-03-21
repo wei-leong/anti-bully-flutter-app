@@ -35,4 +35,6 @@ class ReportServices {
         .orderBy('createdAt', descending: true)
         .get();
   }
+
+  
 }

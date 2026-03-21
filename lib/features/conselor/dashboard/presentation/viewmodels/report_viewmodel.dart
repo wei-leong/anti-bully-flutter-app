@@ -1,7 +1,7 @@
 import 'package:apu_assignment/features/auth/data/auth_providers.dart';
+import 'package:apu_assignment/features/report/model/report_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:apu_assignment/features/conselor/dashboard/data/report_provider.dart';
-import 'package:apu_assignment/features/conselor/dashboard/model/report_model.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 // report provider

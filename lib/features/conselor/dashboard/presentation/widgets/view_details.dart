@@ -1,8 +1,8 @@
 import 'package:apu_assignment/features/conselor/dashboard/presentation/viewmodels/report_viewmodel.dart';
+import 'package:apu_assignment/features/report/model/report_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:apu_assignment/features/conselor/dashboard/model/report_model.dart';
 
 class ViewDetails extends ConsumerWidget {
   final ReportModel report;
@@ -20,8 +20,8 @@ class ViewDetails extends ConsumerWidget {
     final updateState = ref.watch(reportViewModelProvider);
 
     // Status color
-    final Color statusColor = report.status == "In-progress" ? Colors.blue : 
-                              report.status == "End" ? Colors.green : report.status == "Pending" ? Colors.orange:Colors.white;
+    final Color statusColor = report.reportStatus == ReportStatus.inProgress ? Colors.blue : 
+                              report.reportStatus == ReportStatus.complete? Colors.green : report.reportStatus == ReportStatus.pending ? Colors.orange:Colors.white;
 
     return Container(
       decoration: BoxDecoration(
@@ -68,9 +68,10 @@ class ViewDetails extends ConsumerWidget {
                 children: [
                   _buildInfoSection("Location", report.location, Icons.location_on, Colors.redAccent),
                   const Gap(20),
-                  _buildInfoSection("Report Type", report.type, Icons.book, Colors.lightBlueAccent),
+                  // TODO : Remember Here
+                  _buildInfoSection("Report Type", report.reportType.toString(), Icons.book, Colors.lightBlueAccent),
                   const Gap(24),
-                  _buildInfoSection("Current Status", report.status, Icons.hourglass_bottom, statusColor),
+                  _buildInfoSection("Current Status", report.reportStatus.toString(), Icons.hourglass_bottom, statusColor),
                   const Gap(24),
                   const Text(
                     "Description",
@@ -113,7 +114,7 @@ class ViewDetails extends ConsumerWidget {
               leading: const Icon(Icons.recycling, color: Colors.blue),
               title: const Text("In-progress"),
               onTap: () {
-                ref.read(reportViewModelProvider.notifier).updateStatus(report.id, "In-progress");
+                ref.read(reportViewModelProvider.notifier).updateStatus(report.id!, "inProgress");
                 Navigator.pop(context);
               },
             ),
@@ -121,7 +122,7 @@ class ViewDetails extends ConsumerWidget {
               leading: const Icon(Icons.close, color: Colors.green),
               title: const Text("End"),
               onTap: () {
-                ref.read(reportViewModelProvider.notifier).updateStatus(report.id, "End");
+                ref.read(reportViewModelProvider.notifier).updateStatus(report.id!, "complete");
                 Navigator.pop(context);
               },
             ),

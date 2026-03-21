@@ -1,4 +1,4 @@
-import 'package:apu_assignment/features/conselor/dashboard/model/report_model.dart';
+import 'package:apu_assignment/features/report/model/report_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ReportRepository {
@@ -8,11 +8,11 @@ class ReportRepository {
     return _firestore
         .collection('reports')
         .where('assignedCounselorId', isEqualTo: userUid)
-        .where('reportStatus', whereIn: ['In-progress', 'Pending'])
+        .where('reportStatus', whereIn: ['inProgress', 'Pending'])
         .snapshots()
         .map((snapshot) {
         return snapshot.docs.map((doc) {
-          return ReportModel.fromFirestore(doc); 
+          return ReportModel.fromMap(doc.data(),doc.id); 
         }).toList();
       });
   }
