@@ -1,5 +1,6 @@
 import 'package:apu_assignment/features/auth/data/auth_providers.dart';
 import 'package:apu_assignment/features/conselor/dashboard/presentation/widgets/quick_access.dart';
+import 'package:apu_assignment/features/report/model/report_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -13,8 +14,14 @@ class Dashboard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.read(firebaseAuthProvider);
     final currentUser = auth.currentUser;
-    final userNameAsyncValue = ref.read(userNameProvider(currentUser!.uid));
+
+    if (currentUser == null) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
+    final userNameAsyncValue = ref.read(userNameProvider(currentUser.uid));
     final reportAsync = ref.watch(reportProvider);
+
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
@@ -125,8 +132,14 @@ class Dashboard extends ConsumerWidget {
                   children: reports.map((report) => ReportCard(
                     location: report.location,
                     description: report.description,
-                    status: report.status,
-                    urgentlevel: report.urgentLevel,
+                    status: report.reportStatus == ReportStatus.inProgress 
+                        ? "In-progress" 
+                        : report.reportStatus == ReportStatus.complete 
+                            ? "End" 
+                            : "Pending",
+                    urgentlevel: report.reportUrgentLevel == ReportUrgentLevel.high ? 3 
+                               : report.reportUrgentLevel == ReportUrgentLevel.med ? 2 
+                               : 1,
                     onTap: () {
                       showModalBottomSheet(
                         context: context,
