@@ -69,6 +69,8 @@ class ViewDetails extends ConsumerWidget {
                   _buildInfoSection("Location", report.location, Icons.location_on, Colors.redAccent),
                   const Gap(20),
                   // TODO : Remember Here
+                  _buildInfoSection("Date&Time", report.incidentDate.toString(), Icons.lock_clock, Colors.pinkAccent),
+                  const Gap(24),
                   _buildInfoSection("Report Type", report.reportType.toString(), Icons.book, Colors.lightBlueAccent),
                   const Gap(24),
                   _buildInfoSection("Current Status", report.reportStatus.toString(), Icons.hourglass_bottom, statusColor),
