@@ -1,5 +1,5 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
-import 'package:apu_assignment/features/conselor/resources/model/resources_model.dart';
+import 'package:apu_assignment/features/resources/model/resources_model.dart';
 import 'package:apu_assignment/features/users/resources/presentation/widgets/article_tile.dart';
 import 'package:apu_assignment/features/users/resources/presentation/widgets/video_card.dart';
 import 'package:flutter/material.dart';

@@ -1,16 +1,14 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/auth/data/auth_providers.dart';
-import 'package:apu_assignment/features/profile/presentation/screens/profile_screen.dart';
+import 'package:apu_assignment/features/resources/model/resources_model.dart';
 import 'package:apu_assignment/features/users/counselor_list/presentation/screens/counselor_list_screen.dart';
 import 'package:apu_assignment/features/users/dashboard/presentation/widgets/report_status_tile.dart';
 import 'package:apu_assignment/features/report/data/report_providers.dart';
 import 'package:apu_assignment/features/report/presentation/screens/report_history_screen.dart';
 import 'package:apu_assignment/features/report/presentation/screens/report_incident_screen.dart';
-import 'package:apu_assignment/features/users/resources/data/resource_item.dart';
 import 'package:apu_assignment/features/users/resources/presentation/widgets/news_or_event_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gap/gap.dart';
 
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});

@@ -1,4 +1,4 @@
-import 'package:apu_assignment/features/conselor/resources/model/resources_model.dart';
+import 'package:apu_assignment/features/resources/model/resources_model.dart';
 
 class PostModel {
   final Map<String, dynamic> content;

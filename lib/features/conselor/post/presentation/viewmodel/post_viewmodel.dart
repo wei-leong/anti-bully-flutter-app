@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:apu_assignment/features/conselor/post/data/post_provider.dart';
 import 'package:apu_assignment/features/conselor/post/model/post_model.dart';
-import 'package:apu_assignment/features/conselor/resources/presentation/viewmodel/resources_viewmodel.dart';
+import 'package:apu_assignment/features/resources/presentation/viewmodel/resources_viewmodel.dart';
 
 final postRepositoryProvider = Provider((ref) => PostRepository());
 

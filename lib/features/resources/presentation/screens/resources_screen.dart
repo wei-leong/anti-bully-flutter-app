@@ -1,11 +1,11 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
-import 'package:apu_assignment/features/conselor/resources/model/resources_model.dart';
-import 'package:apu_assignment/features/conselor/resources/presentation/viewmodel/resources_viewmodel.dart';
-import 'package:apu_assignment/features/conselor/resources/presentation/widget/artical_tile.dart';
-import 'package:apu_assignment/features/conselor/resources/presentation/widget/event_poster.dart';
-import 'package:apu_assignment/features/conselor/resources/presentation/widget/resources_details_widget.dart';
-import 'package:apu_assignment/features/conselor/resources/presentation/widget/video_cart.dart';
-import 'package:apu_assignment/features/conselor/resources/presentation/widget/new.dart';
+import 'package:apu_assignment/features/resources/model/resources_model.dart';
+import 'package:apu_assignment/features/resources/presentation/viewmodel/resources_viewmodel.dart';
+import 'package:apu_assignment/features/resources/presentation/widget/artical_tile.dart';
+import 'package:apu_assignment/features/resources/presentation/widget/event_poster.dart';
+import 'package:apu_assignment/features/resources/presentation/widget/resources_details_widget.dart';
+import 'package:apu_assignment/features/resources/presentation/widget/video_cart.dart';
+import 'package:apu_assignment/features/resources/presentation/widget/new.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
