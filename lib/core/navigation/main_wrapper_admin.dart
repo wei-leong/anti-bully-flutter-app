@@ -1,4 +1,6 @@
 import 'package:apu_assignment/features/admin/admin_dashboard/ui/screens/admin_dashboard_screen.dart';
+import 'package:apu_assignment/features/admin/admin_dashboard/ui/widgets/manage_resources.dart';
+import 'package:apu_assignment/features/admin/admin_dashboard/ui/widgets/manage_staff.dart';
 import 'package:apu_assignment/features/auth/data/auth_providers.dart';
 import 'package:apu_assignment/features/chat/presentation/screens/chat_list_screens.dart';
 import 'package:apu_assignment/features/profile/presentation/screens/profile_screen.dart';
@@ -22,10 +24,8 @@ class _MainWrapperAdminState extends ConsumerState<MainWrapperAdmin> {
 
     final List<Widget> _screens = [
       const AdminDashboardScreen(), // Home (Admin Dashboard)
-      const Center(
-        child: Text("Manage Community"),
-      ), // TODO : Community (Placeholder)
-      const Center(child: Text("Manage Staff")), // TODO : Staff (Placeholder)
+      const resourcesmanagement(),
+      const staffmanagement(), 
       ChatListScreens(userUid: currentUserUid),
       const ProfileScreen(), // Profile (Settings)
     ];
