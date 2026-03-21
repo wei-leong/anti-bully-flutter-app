@@ -1,3 +1,4 @@
+import 'package:apu_assignment/features/Images/presentation/widget/image_widget.dart';
 import 'package:apu_assignment/features/resources/model/resources_model.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -29,16 +30,15 @@ class ArticleTile extends StatelessWidget {
         children: [
           // Image Thumbnail for Article
           if (hasImage) ...[
-            Container(
-              width: 100, // Fixed width for thumbnail
-              height: 70, // Fixed height
-              decoration: BoxDecoration(
-                color: colorScheme.surfaceContainerHighest, // Placeholder bg
-                borderRadius: BorderRadius.circular(8),
-                image: DecorationImage(
-                  image: NetworkImage(resourceItem.imageUrl!),
-                  fit: BoxFit.cover,
-                ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(
+                8,
+              ), // Keeps the rounded corners!
+              child: SizedBox(
+                width: 100, // Fixed width for thumbnail
+                height: 70, // Fixed height
+                // Use the helper function here!
+                child: buildResourceImage(resourceItem.imageUrl!),
               ),
             ),
             const Gap(16), // Spacing between image and text
@@ -80,5 +80,13 @@ class ArticleTile extends StatelessWidget {
         ],
       ),
     );
+  }
+
+    Widget buildResourceImage(String imageUrl) {
+    if (imageUrl.startsWith('http')) {
+      return Image.network(imageUrl, fit: BoxFit.cover);
+    } else {
+      return Base64Image(base64Data: imageUrl, fit: BoxFit.cover);
+    }
   }
 }
