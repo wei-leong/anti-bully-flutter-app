@@ -59,23 +59,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         ),
         centerTitle: true,
         // elevation: 0,
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => EditProfileScreen(
-                  currentName: currentName,
-                  currentRole: currentRole,
-                ),
-              ),
-            ),
-            child: const Text(
-              "Edit Profile",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(kDefaultPadding),
@@ -108,6 +91,21 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             _buildMenuContainer([
               ThemeSelectorCard(),
               ProfileMenuTile(
+                title: "Edit Profile",
+                icon: Icons.person,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditProfileScreen(
+                        currentName: currentName,
+                        currentRole: currentRole,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ProfileMenuTile(
                 title: "Notifications",
                 icon: Icons.notifications,
                 onTap: () {}, // Switch handles the tap usually
@@ -127,11 +125,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     MaterialPageRoute(builder: (context) => HelpSupportPage()),
                   );
                 },
-              ),
-              ProfileMenuTile(
-                title: "Privacy Policy",
-                icon: Icons.lock_outline,
-                onTap: () {},
               ),
             ]),
             const Gap(32),

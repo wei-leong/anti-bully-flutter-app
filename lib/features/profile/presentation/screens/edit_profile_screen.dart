@@ -92,9 +92,73 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                 ),
               ),
             ),
+            kGap16,
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: Icon(Icons.lock_outline, color: colorScheme.primary),
+              title: const Text(
+                "Change Password",
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => _showChangePasswordDialog(context, ref),
+            ),
           ],
         ),
       ),
     );
   }
+}
+
+void _showChangePasswordDialog(BuildContext context, WidgetRef ref) {
+  final passwordController = TextEditingController();
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text("Change Password"),
+      content: TextField(
+        controller: passwordController,
+        obscureText: true,
+        decoration: const InputDecoration(
+          labelText: "New Password",
+          border: OutlineInputBorder(),
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text("Cancel"),
+        ),
+        FilledButton(
+          onPressed: () async {
+            if (passwordController.text.length >= 6) {
+              Navigator.pop(context); // 1. Closes the dialog box
+
+              await ref
+                  .read(editProfileViewModelProvider.notifier)
+                  .updatePassword(passwordController.text);
+
+              if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Password updated successfully!"),
+                  ),
+                );
+
+                // 2. ADD THIS: Closes the whole "Edit Profile" screen so they don't feel stuck!
+                Navigator.pop(context);
+              }
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Password must be at least 6 characters."),
+                ),
+              );
+            }
+          },
+          child: const Text("Update"),
+        ),
+      ],
+    ),
+  );
 }
