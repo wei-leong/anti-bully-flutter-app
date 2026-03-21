@@ -1,7 +1,7 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/report/model/report_model.dart';
 import 'package:apu_assignment/features/report/presentation/viewmodel/admin_report_viewmodel.dart';
-import 'package:apu_assignment/features/report/presentation/widgets/admin_incident_list_tile.dart';
+import 'package:apu_assignment/features/report/presentation/widgets/incident_list_tile.dart';
 import 'package:apu_assignment/features/report/presentation/widgets/select_counselor_list_tile.dart';
 import 'package:apu_assignment/features/users/counselor_list/data/counselor_list_provider.dart';
 import 'package:flutter/material.dart';
@@ -43,23 +43,23 @@ class _AdminReportDetailScreenState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Text("Incident Overview"),
-            AdminIncidentListTile(
+            IncidentListTile(
               title: "Category",
               description:
                   "${widget.report.reportType.name[0].toUpperCase()}${widget.report.reportType.name.substring(1)} Bullying",
               icon: Icons.category,
             ),
-            AdminIncidentListTile(
+            IncidentListTile(
               title: "Date/Time",
               description: formattedDate,
               icon: Icons.calendar_month,
             ),
-            AdminIncidentListTile(
+            IncidentListTile(
               title: "Location",
               description: widget.report.location,
               icon: Icons.map,
             ),
-            AdminIncidentListTile(
+            IncidentListTile(
               title: "Reporter",
               description: "Anonymous (Student)",
               icon: Icons.person,

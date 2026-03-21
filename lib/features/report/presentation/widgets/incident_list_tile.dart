@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class AdminIncidentListTile extends StatelessWidget {
+class IncidentListTile extends StatelessWidget {
   final String title;
   final String description;
   final IconData icon;
 
-  const AdminIncidentListTile({
+  const IncidentListTile({
     super.key,
     required this.title,
     required this.description,
