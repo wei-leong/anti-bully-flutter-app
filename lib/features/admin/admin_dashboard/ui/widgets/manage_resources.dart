@@ -1,7 +1,7 @@
 import 'package:apu_assignment/features/admin/admin_dashboard/ui/widgets/view_resources.dart';
+import 'package:apu_assignment/features/resources/data/resources_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:apu_assignment/features/conselor/resources/data/resources_provider.dart'; 
 
 class resourcesmanagement extends ConsumerWidget {
   const resourcesmanagement({super.key});

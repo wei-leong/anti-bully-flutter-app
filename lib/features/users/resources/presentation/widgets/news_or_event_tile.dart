@@ -1,6 +1,9 @@
-import 'package:apu_assignment/features/users/resources/data/resource_item.dart';
+import 'package:apu_assignment/core/theme/sizes.dart';
+import 'package:apu_assignment/features/Images/presentation/widget/image_widget.dart';
+import 'package:apu_assignment/features/resources/model/resources_model.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:apu_assignment/features/resources/presentation/widget/resources_details_widget.dart';
 
 class NewsOrEventTile extends StatelessWidget {
   const NewsOrEventTile({super.key, required this.resourceItem});
@@ -16,80 +19,107 @@ class NewsOrEventTile extends StatelessWidget {
     final hasImage =
         resourceItem.imageUrl != null && resourceItem.imageUrl!.isNotEmpty;
 
-    return Container(
-      // Card Container Styling
-      decoration: BoxDecoration(
-        color: colorScheme.surface, // Clean White/Black bg
+    return Card(
+      elevation: 0,
+      color: colorScheme.surface,
+      clipBehavior: Clip.hardEdge, // This keeps the ink splash inside the borders
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: colorScheme.outlineVariant),
+        side: BorderSide(color: colorScheme.outlineVariant),
       ),
-      padding: const EdgeInsets.all(12), // Inner padding for the whole card
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start, // Align to top
-        children: [
-          // Image Thumbnail for Article
-          if (hasImage) ...[
-            Container(
-              width: 100, // Fixed width for thumbnail
-              height: 70, // Fixed height
-              decoration: BoxDecoration(
-                color: colorScheme.surfaceContainerHighest, // Placeholder bg
-                borderRadius: BorderRadius.circular(8),
-                image: DecorationImage(
-                  image: NetworkImage(resourceItem.imageUrl!),
-                  fit: BoxFit.cover,
+      child: InkWell(
+        onTap: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled:
+                true, // Allows the sheet to be taller than half the screen
+            backgroundColor:
+                Colors.transparent, // Makes the rounded corners look nice
+            builder: (context) => FractionallySizedBox(
+              heightFactor:
+                  0.9, // Makes the sheet take up 90% of the screen height
+              child: ResourceDetails(resourceItem: resourceItem),
+            ),
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(kDefaultPadding),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start, // Align to top
+            children: [
+              // Image Thumbnail for Article
+              if (hasImage) ...[
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                    8,
+                  ), // Keeps the rounded corners!
+                  child: SizedBox(
+                    width: 100, // Fixed width for thumbnail
+                    height: 70, // Fixed height
+                    // Use the helper function here!
+                    child: buildResourceImage(resourceItem.imageUrl!),
+                  ),
+                ),
+                const Gap(16), // Spacing between image and text
+              ],
+              // Title
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment
+                      .center, // Center vertically relative to image
+                  children: [
+                    // Tag
+                    Text(
+                      resourceItem.type.toUpperCase(),
+                      style: textTheme.labelSmall?.copyWith(
+                        letterSpacing: 0.5,
+                        color: colorScheme.primary,
+                      ),
+                    ),
+          
+                    const Gap(8),
+          
+                    // Title
+                    Text(
+                      resourceItem.title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14, // Slightly larger for readability
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+          
+                    const Gap(8),
+          
+                    // Source / Date (Subtitle)
+                    Text(
+                      resourceItem.subtitle ??
+                          "${resourceItem.source} • ${resourceItem.durationOrSize}",
+                      style: textTheme.bodySmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                        fontSize: 12,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ),
               ),
-            ),
-            const Gap(16), // Spacing between image and text
-          ],
-          // Title
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment
-                  .center, // Center vertically relative to image
-              children: [
-                // Tag
-                Text(
-                  resourceItem.type.toUpperCase(),
-                  style: textTheme.labelSmall?.copyWith(
-                    letterSpacing: 0.5,
-                    color: colorScheme.primary
-                  ),
-                ),
-
-                const Gap(8),
-
-                // Title
-                Text(
-                  resourceItem.title,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14, // Slightly larger for readability
-                    color: colorScheme.onSurface,
-                  ),
-                ),
-
-                const Gap(8),
-
-                // Source / Date (Subtitle)
-                Text(
-                  resourceItem.subtitle ?? "${resourceItem.source} • ${resourceItem.durationOrSize}",
-                  style: textTheme.bodySmall?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                    fontSize: 12,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
+  }
+
+  Widget buildResourceImage(String imageUrl) {
+    if (imageUrl.startsWith('http')) {
+      return Image.network(imageUrl, fit: BoxFit.cover);
+    } else {
+      return Base64Image(base64Data: imageUrl, fit: BoxFit.cover);
+    }
   }
 }

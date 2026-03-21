@@ -95,18 +95,8 @@ class StaffManagementDetails extends ConsumerWidget {
   }
 
   void _handleUpdateUserStatus(BuildContext context, WidgetRef ref, String newStatus) async {
-    try {
       await ref.read(userRepositoryProvider).updateUserAccountStatus(user.uid, newStatus);
-
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Account ${user.name} has been $newStatus")),
-        );
-        Navigator.pop(context); 
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error: $e")));
-    }
+      Navigator.pop(context);
   }
 
   Widget _buildDetailRow(String label, String value, IconData icon) {

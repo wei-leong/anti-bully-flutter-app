@@ -3,7 +3,7 @@ import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/Images/presentation/view_model/image_view_model.dart';
 import 'package:apu_assignment/features/Images/presentation/widget/image_widget.dart';
 import 'package:apu_assignment/features/auth/data/auth_providers.dart';
-import 'package:apu_assignment/features/conselor/resources/presentation/screens/resources_screen.dart';
+import 'package:apu_assignment/features/resources/presentation/screens/resources_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:apu_assignment/features/conselor/post/data/post_provider.dart';

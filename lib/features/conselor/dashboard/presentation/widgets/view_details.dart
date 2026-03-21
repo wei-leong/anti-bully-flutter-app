@@ -3,6 +3,7 @@ import 'package:apu_assignment/features/report/model/report_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 
 class ViewDetails extends ConsumerWidget {
   final ReportModel report;
@@ -19,10 +20,24 @@ class ViewDetails extends ConsumerWidget {
     });
     final updateState = ref.watch(reportViewModelProvider);
 
+    final formattedDate = DateFormat(
+      'MMM dd, yyyy • HH:mm a',
+    ).format(report.incidentDate);
+
     // Status color
     final Color statusColor = report.reportStatus == ReportStatus.inProgress ? Colors.blue : 
                               report.reportStatus == ReportStatus.complete? Colors.green : report.reportStatus == ReportStatus.pending ? Colors.orange:Colors.white;
 
+    final String reportStatus;
+    switch (report.reportStatus){
+      case ReportStatus.pending:
+        reportStatus = "Pending";
+      case ReportStatus.inProgress:
+        reportStatus = "In Progress";
+      case ReportStatus.complete:
+        reportStatus = "Complete";
+    }
+    
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
@@ -69,11 +84,11 @@ class ViewDetails extends ConsumerWidget {
                   _buildInfoSection("Location", report.location, Icons.location_on, Colors.redAccent),
                   const Gap(20),
                   // TODO : Remember Here
-                  _buildInfoSection("Date&Time", report.incidentDate.toString(), Icons.lock_clock, Colors.pinkAccent),
+                  _buildInfoSection("Date&Time", formattedDate, Icons.lock_clock, Colors.pinkAccent),
                   const Gap(24),
-                  _buildInfoSection("Report Type", report.reportType.toString(), Icons.book, Colors.lightBlueAccent),
+                  _buildInfoSection("Report Type", "${report.reportType.name[0].toUpperCase()}${report.reportType.name.substring(1)} Bullying", Icons.book, Colors.lightBlueAccent),
                   const Gap(24),
-                  _buildInfoSection("Current Status", report.reportStatus.toString(), Icons.hourglass_bottom, statusColor),
+                  _buildInfoSection("Current Status", reportStatus, Icons.hourglass_bottom, statusColor),
                   const Gap(24),
                   const Text(
                     "Description",

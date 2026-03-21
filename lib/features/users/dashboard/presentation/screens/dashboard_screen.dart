@@ -1,16 +1,14 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/auth/data/auth_providers.dart';
-import 'package:apu_assignment/features/profile/presentation/screens/profile_screen.dart';
+import 'package:apu_assignment/features/resources/data/user_resources_provider.dart';
 import 'package:apu_assignment/features/users/counselor_list/presentation/screens/counselor_list_screen.dart';
 import 'package:apu_assignment/features/users/dashboard/presentation/widgets/report_status_tile.dart';
 import 'package:apu_assignment/features/report/data/report_providers.dart';
 import 'package:apu_assignment/features/report/presentation/screens/report_history_screen.dart';
 import 'package:apu_assignment/features/report/presentation/screens/report_incident_screen.dart';
-import 'package:apu_assignment/features/users/resources/data/resource_item.dart';
 import 'package:apu_assignment/features/users/resources/presentation/widgets/news_or_event_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gap/gap.dart';
 
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
@@ -22,82 +20,55 @@ class DashboardScreen extends ConsumerWidget {
     final currentUser = auth.currentUser;
     final userNameAsyncValue = ref.watch(userNameProvider(currentUser!.uid));
 
-    // --- MOCK DATA: NEWS ---
-    final List<ResourceItem> communityNews = [
-      ResourceItem(
-        title: "Kindness Week Workshop",
-        subtitle: "Join us this Friday in the main hall",
-        source: "Student Council",
-        type: "EVENT",
-        durationOrSize: "Fri, 10 AM",
-        imageUrl: "https://picsum.photos/seed/workshop/400/200",
-      ),
-      ResourceItem(
-        title: "5 Signs of Cyberbullying",
-        subtitle: "Learn how to spot the invisible signs",
-        source: "UNICEF",
-        type: "News",
-        durationOrSize: "5 min read",
-        imageUrl: "https://picsum.photos/seed/bullying/400/200",
-      ),
-      ResourceItem(
-        title: "5 Signs of Cyberbullying",
-        subtitle: "Learn how to spot the invisible signs",
-        source: "UNICEF",
-        type: "News",
-        durationOrSize: "5 min read",
-        imageUrl: "https://picsum.photos/seed/bullying/400/200",
-      ),
-    ];
-
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            // InkWell(
-            //   onTap: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => ProfileScreen()),
-            //     );
-            //   },
-            //   child: CircleAvatar(child: Icon(Icons.person)),
-            // ),
-            // const Gap(12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Welcome back",
-                  style: textTheme.bodySmall?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                  ),
-                ),
-                Text(
-                  userNameAsyncValue.when(
-                    data: (user) => user?.name ?? '',
-                    error: (error, stack) => "User",
-                    loading: () => "User",
-                  ),
-                  style: textTheme.titleMedium?.copyWith(
-                    color: colorScheme.onSurface,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.notifications_outlined),
-          ),
-        ],
+        title: Text("Home", style: TextStyle(fontWeight: FontWeight.bold),),
+        // title: Row(
+        //   mainAxisAlignment: MainAxisAlignment.start,
+        //   children: [
+        //     // InkWell(
+        //     //   onTap: () {
+        //     //     Navigator.push(
+        //     //       context,
+        //     //       MaterialPageRoute(builder: (context) => ProfileScreen()),
+        //     //     );
+        //     //   },
+        //     //   child: CircleAvatar(child: Icon(Icons.person)),
+        //     // ),
+        //     // const Gap(12),
+        //     Column(
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         Text(
+        //           "Welcome back",
+        //           style: textTheme.bodySmall?.copyWith(
+        //             color: colorScheme.onSurfaceVariant,
+        //           ),
+        //         ),
+        //         Text(
+        //           userNameAsyncValue.when(
+        //             data: (user) => user?.name ?? '',
+        //             error: (error, stack) => "User",
+        //             loading: () => "User",
+        //           ),
+        //           style: textTheme.titleMedium?.copyWith(
+        //             color: colorScheme.onSurface,
+        //             fontWeight: FontWeight.bold,
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   ],
+        // ),
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {},
+        //     icon: Icon(Icons.notifications_outlined),
+        //   ),
+        // ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -258,11 +229,31 @@ class DashboardScreen extends ConsumerWidget {
                 ),
               ),
               _buildSectionHeader(context, "Community News", true, () {}),
-              ...communityNews.map(
-                (newsItem) => Padding(
-                  padding: const EdgeInsets.only(bottom: 12.0),
-                  child: NewsOrEventTile(resourceItem: newsItem),
-                ),
+              ref.watch(liveResourcesStreamProvider).when(
+                data: (resources) {
+                  // Filter to ONLY show news or events, and grab the latest 3
+                  final communityNews = resources.where(
+                    (item) => item.type.toLowerCase() == 'news' || item.type.toLowerCase() == 'events'
+                  ).take(3).toList();
+
+                  if (communityNews.isEmpty) {
+                    return const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      child: Text("No community news available at the moment."),
+                    );
+                  }
+
+                  return Column(
+                    children: communityNews.map(
+                      (newsItem) => Padding(
+                        padding: const EdgeInsets.only(bottom: 12.0),
+                        child: NewsOrEventTile(resourceItem: newsItem),
+                      ),
+                    ).toList(),
+                  );
+                },
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (error, stack) => Text('Error loading news: $error'),
               ),
             ],
           ),

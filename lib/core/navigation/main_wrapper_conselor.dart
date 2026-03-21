@@ -2,7 +2,7 @@ import 'package:apu_assignment/features/auth/data/auth_providers.dart';
 import 'package:apu_assignment/features/chat/presentation/screens/chat_list_screens.dart';
 import 'package:apu_assignment/features/conselor/dashboard/presentation/screens/dashboard.dart';
 import 'package:apu_assignment/features/profile/presentation/screens/profile_screen.dart';
-import 'package:apu_assignment/features/conselor/resources/presentation/screens/resources_screen.dart';
+import 'package:apu_assignment/features/resources/presentation/screens/resources_screen.dart';
 import 'package:apu_assignment/features/conselor/post/presentation/screens/post_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

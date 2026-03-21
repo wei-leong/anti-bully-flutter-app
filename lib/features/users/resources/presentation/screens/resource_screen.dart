@@ -1,62 +1,26 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
-import 'package:apu_assignment/features/users/resources/data/resource_item.dart';
+import 'package:apu_assignment/features/resources/data/user_resources_provider.dart';
+import 'package:apu_assignment/features/resources/model/resources_model.dart';
 import 'package:apu_assignment/features/users/resources/presentation/widgets/article_tile.dart';
 import 'package:apu_assignment/features/users/resources/presentation/widgets/video_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ResourceScreen extends StatefulWidget {
+class ResourceScreen extends ConsumerStatefulWidget {
   const ResourceScreen({super.key});
 
   @override
-  State<ResourceScreen> createState() => _ResourceScreenState();
+  ConsumerState<ResourceScreen> createState() => _ResourceScreenState();
 }
 
-class _ResourceScreenState extends State<ResourceScreen> {
+class _ResourceScreenState extends ConsumerState<ResourceScreen> {
   String _selectedFilters = "Articles";
   final List<String> _filters = ["Articles", "Videos", "News", "Events"];
-
-  // Mock Data
-  // TODO : Remove after finishing Part 1
-  final List<ResourceItem> _allResources = [
-    ResourceItem(
-      title: "How to Prevent Bullying",
-      source: "UNICEF",
-      type: "articles",
-      durationOrSize: "5 min",
-      imageUrl: 'https://img.freepik.com/free-psd/world-day-bullying-prevention-template-design_23-2151371506.jpg?semt=ais_hybrid&w=740&q=80'
-    ),
-    ResourceItem(
-      title: "What is Cyberbullying?",
-      source: "StopBullying.gov",
-      type: "articles",
-      durationOrSize: "3 min",
-    ),
-    ResourceItem(
-      title: "Be a Buddy, Not a Bully",
-      source: "Edu Series",
-      type: "videos",
-      durationOrSize: "03:45",
-    ),
-    ResourceItem(
-      title: "The Price of Shame",
-      source: "TedTalk",
-      type: "videos",
-      durationOrSize: "22:10",
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    List<ResourceItem> displayedItems;
-
-    displayedItems = _allResources
-        .where(
-          (item) =>
-              item.type.toLowerCase() ==
-              _selectedFilters.toLowerCase(),
-        )
-        .toList();
+    final resourcesAsync = ref.watch(liveResourcesStreamProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -95,24 +59,46 @@ class _ResourceScreenState extends State<ResourceScreen> {
             ),
             // Content Area
             Expanded(
-              child: ListView.builder(
-                // padding: const EdgeInsets.all(kDefaultPadding),
-                itemCount: displayedItems.length,
-                itemBuilder: (context, index) {
-                  final item = displayedItems[index];
-                  // Choose widget based on type
-                  if (item.type == "videos") {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: VideoCard(resourceItem: item),
-                    );
-                  } else {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 12.0),
-                      child: ArticleTile(resourceItem: item),
+              child: resourcesAsync.when(
+                data: (allResources) {
+                  // Filter the live data based on the selected chip
+                  final displayedItems = allResources
+                      .where((item) => item.type.toLowerCase() == _selectedFilters.toLowerCase())
+                      .toList();
+
+                  // Show a friendly message if a category is empty
+                  if (displayedItems.isEmpty) {
+                    return Center(
+                      child: Text(
+                        "No ${_selectedFilters.toLowerCase()} available right now.",
+                        style: TextStyle(color: colorScheme.onSurfaceVariant),
+                      ),
                     );
                   }
+
+                  return ListView.builder(
+                    itemCount: displayedItems.length,
+                    itemBuilder: (context, index) {
+                      final item = displayedItems[index];
+                      
+                      // Choose widget based on type
+                      // Make sure to use .toLowerCase() for safety!
+                      if (item.type.toLowerCase() == "videos") {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: VideoCard(resourceItem: item),
+                        );
+                      } else {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 12.0),
+                          child: ArticleTile(resourceItem: item),
+                        );
+                      }
+                    },
+                  );
                 },
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (error, stack) => Center(child: Text("Failed to load resources: $error")),
               ),
             ),
           ],

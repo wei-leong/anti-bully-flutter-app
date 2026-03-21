@@ -14,7 +14,7 @@ class staffmanagement extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Staff Approval", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text("Staff Management", style: TextStyle(fontWeight: FontWeight.bold)),
       ),
       body: pendingUsersAsync.when(
         data: (users) {
@@ -36,7 +36,7 @@ class staffmanagement extends ConsumerWidget {
                 subtitle: Text(user.email),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {
-                  // 💡 点击弹出你写的详情审批面板
+                  // Show details
                   showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,

@@ -1,10 +1,9 @@
 import 'dart:typed_data';
 import 'package:apu_assignment/features/Images/data/image_provider.dart';
+import 'package:apu_assignment/features/resources/data/resources_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart'; // 💡 引入 Riverpod
+import 'package:flutter_riverpod/flutter_riverpod.dart'; 
 import 'package:gap/gap.dart';
-// 💡 请确保导入了你的 ResourceViewModel 和 Provider
-// import 'package:apu_assignment/features/conselor/resources/presentation/viewmodels/resource_viewmodel.dart';
 
 class ResourceDetails extends ConsumerWidget { // 💡 改为 ConsumerWidget
   final dynamic resourceItem;
@@ -109,30 +108,19 @@ class ResourceDetails extends ConsumerWidget { // 💡 改为 ConsumerWidget
     );
   }
 
-  // 💡 处理状态更新的逻辑
   void _handleUpdateStatus(BuildContext context, WidgetRef ref, String newStatus) async {
-    try {
-      // 提示：确保你的 ResourceItem 模型里有 id 字段
-      // 这里的 type 同时也对应了 Firestore 的 collection 名字
+      // 💡 获取必要参数
       final collectionName = resourceItem.type.toLowerCase(); 
-      
-      // 调用你的 ViewModel 执行更新
-      // ref.read(resourceViewModelProvider.notifier).updateStatus(
-      //   id: resourceItem.id, 
-      //   collection: collectionName,
-      //   status: newStatus
-      // );
+      final documentId = resourceItem.id; // 确保你的 ResourceItem 模型里有 id 字段
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Resource $newStatus successfully")),
+      await ref.read(resourcesRepositoryProvider).updateResourceStatus(
+        collectionName, 
+        documentId, 
+        newStatus
       );
-      Navigator.pop(context); // 关闭详情页
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error: $e")),
-      );
-    }
-  }
+    Navigator.pop(context); 
+}
+  
 
   // --- 以下保持你原有的 Helper 方法不变 ---
 
