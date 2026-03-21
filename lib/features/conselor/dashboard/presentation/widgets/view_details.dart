@@ -3,6 +3,7 @@ import 'package:apu_assignment/features/report/model/report_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 
 class ViewDetails extends ConsumerWidget {
   final ReportModel report;
@@ -18,6 +19,10 @@ class ViewDetails extends ConsumerWidget {
       );
     });
     final updateState = ref.watch(reportViewModelProvider);
+
+    final formattedDate = DateFormat(
+      'MMM dd, yyyy • HH:mm a',
+    ).format(report.incidentDate);
 
     // Status color
     final Color statusColor = report.reportStatus == ReportStatus.inProgress ? Colors.blue : 
@@ -79,6 +84,8 @@ class ViewDetails extends ConsumerWidget {
                   _buildInfoSection("Location", report.location, Icons.location_on, Colors.redAccent),
                   const Gap(20),
                   // TODO : Remember Here
+                  _buildInfoSection("Date&Time", formattedDate, Icons.lock_clock, Colors.pinkAccent),
+                  const Gap(24),
                   _buildInfoSection("Report Type", "${report.reportType.name[0].toUpperCase()}${report.reportType.name.substring(1)} Bullying", Icons.book, Colors.lightBlueAccent),
                   const Gap(24),
                   _buildInfoSection("Current Status", reportStatus, Icons.hourglass_bottom, statusColor),

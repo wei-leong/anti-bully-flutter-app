@@ -37,9 +37,9 @@ class ReportCard extends StatelessWidget {
         break;
     }
 
-    //Status color - Inprogress, end and pending 3 level
-    Color statusColor = status == "In-progress" ? Colors.blue : 
-                        status == "End" ? Colors.green : Colors.orange;
+    //Status color - Inprogress, complete and pending(default) 3 level
+    Color statusColor = status == "inProgress" ? Colors.blue : 
+                        status == "complete" ? Colors.green : Colors.orange;
 
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
