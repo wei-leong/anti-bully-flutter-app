@@ -1,4 +1,4 @@
-import 'package:apu_assignment/features/conselor/resources/model/resources_model.dart';
+import 'package:apu_assignment/features/resources/model/resources_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
 

@@ -13,4 +13,20 @@ class ProfileRepository {
       throw Exception('Failed to Save User Data: $e');
     }
   }
+
+  Future<void> updatePassword(String newPassword) async {
+    try {
+      await profileServices.changePassword(newPassword);
+    } catch (e) {
+      throw Exception('Failed to Update Password: $e');
+    }
+  }
+
+  // Future<void> deleteAccount(String uid) async {
+  //   try {
+  //     await profileServices.deleteAccount(uid);
+  //   } catch (e) {
+  //     throw Exception('Failed to delete account: $e');
+  //   }
+  // }
 }

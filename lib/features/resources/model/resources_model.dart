@@ -23,7 +23,7 @@ class ResourceItem {
       source: json['author'] ?? json['source'] ?? '', 
       type: json['type'] ?? '',
       durationOrSize: json['displayDate'] ?? json['duration_of_learn_(ep:_5_min/_2_hours)'] ?? '',
-      imageUrl: json['image_url'] ?? json['imageUrl'],
+      imageUrl: json['image'] ?? json['image_url'] ?? json['imageUrl'],
       content: json, 
     );
   }
