@@ -1,4 +1,4 @@
-import 'package:apu_assignment/features/users/resources/data/resource_item.dart';
+import 'package:apu_assignment/features/conselor/resources/model/resources_model.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
