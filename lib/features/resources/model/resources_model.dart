@@ -1,4 +1,5 @@
 class ResourceItem {
+  final String id;
   final String title;
   final String? subtitle;
   final String source;
@@ -8,6 +9,7 @@ class ResourceItem {
   final Map<String, dynamic>? content; 
 
   ResourceItem({
+    required this.id,
     required this.title,
     this.subtitle,
     required this.source,
@@ -17,14 +19,15 @@ class ResourceItem {
     this.content,
   });
 
-  factory ResourceItem.fromFirestore(Map<String, dynamic> json) {
+  factory ResourceItem.fromFirestore(Map<String, dynamic> data, String id) {
     return ResourceItem(
-      title: json['title'] ?? '',
-      source: json['author'] ?? json['source'] ?? '', 
-      type: json['type'] ?? '',
-      durationOrSize: json['displayDate'] ?? json['duration_of_learn_(ep:_5_min/_2_hours)'] ?? '',
-      imageUrl: json['image'] ?? json['image_url'] ?? json['imageUrl'],
-      content: json, 
+      id: id,
+      title: data['title'] ?? '',
+      source: data['author'] ?? data['source'] ?? '', 
+      type: data['type'] ?? '',
+      durationOrSize: data['displayDate'] ?? data['duration_of_learn_(ep:_5_min/_2_hours)'] ?? '',
+      imageUrl: data['image'] ?? data['image_url'] ?? data['imageUrl'],
+      content: data, 
     );
   }
 }

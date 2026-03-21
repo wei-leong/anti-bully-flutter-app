@@ -15,4 +15,8 @@ class UserServices {
     DocumentSnapshot doc = await _db.collection('user').doc(uid).get();
     return doc.exists;
   }
+
+   Future<void> updateUserAccountStatus(String uid, String status) async {
+    await _db.collection('user').doc(uid).update({'accountStatus': status});
+  }
 }
