@@ -1,7 +1,6 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/auth/data/auth_providers.dart';
 import 'package:apu_assignment/features/resources/data/user_resources_provider.dart';
-import 'package:apu_assignment/features/resources/model/resources_model.dart';
 import 'package:apu_assignment/features/users/counselor_list/presentation/screens/counselor_list_screen.dart';
 import 'package:apu_assignment/features/users/dashboard/presentation/widgets/report_status_tile.dart';
 import 'package:apu_assignment/features/report/data/report_providers.dart';
@@ -26,49 +25,50 @@ class DashboardScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            // InkWell(
-            //   onTap: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => ProfileScreen()),
-            //     );
-            //   },
-            //   child: CircleAvatar(child: Icon(Icons.person)),
-            // ),
-            // const Gap(12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Welcome back",
-                  style: textTheme.bodySmall?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                  ),
-                ),
-                Text(
-                  userNameAsyncValue.when(
-                    data: (user) => user?.name ?? '',
-                    error: (error, stack) => "User",
-                    loading: () => "User",
-                  ),
-                  style: textTheme.titleMedium?.copyWith(
-                    color: colorScheme.onSurface,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.notifications_outlined),
-          ),
-        ],
+        title: Text("Home", style: TextStyle(fontWeight: FontWeight.bold),),
+        // title: Row(
+        //   mainAxisAlignment: MainAxisAlignment.start,
+        //   children: [
+        //     // InkWell(
+        //     //   onTap: () {
+        //     //     Navigator.push(
+        //     //       context,
+        //     //       MaterialPageRoute(builder: (context) => ProfileScreen()),
+        //     //     );
+        //     //   },
+        //     //   child: CircleAvatar(child: Icon(Icons.person)),
+        //     // ),
+        //     // const Gap(12),
+        //     Column(
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         Text(
+        //           "Welcome back",
+        //           style: textTheme.bodySmall?.copyWith(
+        //             color: colorScheme.onSurfaceVariant,
+        //           ),
+        //         ),
+        //         Text(
+        //           userNameAsyncValue.when(
+        //             data: (user) => user?.name ?? '',
+        //             error: (error, stack) => "User",
+        //             loading: () => "User",
+        //           ),
+        //           style: textTheme.titleMedium?.copyWith(
+        //             color: colorScheme.onSurface,
+        //             fontWeight: FontWeight.bold,
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   ],
+        // ),
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {},
+        //     icon: Icon(Icons.notifications_outlined),
+        //   ),
+        // ],
       ),
       body: SingleChildScrollView(
         child: Padding(
