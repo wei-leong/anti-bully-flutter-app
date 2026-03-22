@@ -3,16 +3,12 @@ import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/Images/presentation/view_model/image_view_model.dart';
 import 'package:apu_assignment/features/Images/presentation/widget/image_widget.dart';
 import 'package:apu_assignment/features/auth/data/auth_providers.dart';
-import 'package:apu_assignment/features/resources/presentation/screens/resources_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:apu_assignment/features/conselor/post/data/post_provider.dart';
 import 'package:apu_assignment/features/conselor/post/model/post_model.dart';
 import 'package:apu_assignment/features/conselor/post/presentation/viewmodel/post_viewmodel.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:apu_assignment/features/conselor/post/presentation/widget/post_type.dart';
-import 'package:apu_assignment/features/conselor/post/presentation/viewmodel/post_viewmodel.dart';
 
 class PostScreen extends ConsumerStatefulWidget {
   const PostScreen({super.key});
@@ -64,9 +60,13 @@ class _PostScreenState extends ConsumerState<PostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final auth = ref.read(firebaseAuthProvider);
+    final auth = ref.watch(firebaseAuthProvider);
     final currentUser = auth.currentUser;
-    final userNameAsyncValue = ref.read(userNameProvider(currentUser!.uid));
+    // If user logout stop stream process
+    if (currentUser == null) {
+    return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+    final userNameAsyncValue = ref.watch(userNameProvider(currentUser.uid));
     final currentName = userNameAsyncValue.when(
     data: (user) => user?.name ?? '',
     error: (error, stack) => "Counselor",
@@ -78,18 +78,6 @@ class _PostScreenState extends ConsumerState<PostScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        // Quick Button
-        leading: IconButton(
-        icon: const Icon(Icons.close),
-        onPressed: () {
-          _textController.clear(); 
-          Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const MainWrapperConselor()),
-          (route) => false, 
-        );
-        },
-      ),
         centerTitle: true,
         title: PostType( 
           selectedType: _selecttype,
@@ -125,12 +113,14 @@ class _PostScreenState extends ConsumerState<PostScreen> {
 
                 final success = await ref.read(postViewModelProvider.notifier).createPost(contents, _selecttype,currentName);
                 if (success && mounted){
-                  _textController.clear();
-                  Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const MainWrapperConselor()),
-                  (route) => false, 
-                );
+                  _textController.clear(); 
+                  controller.forEach((key, ctrl) {
+                    ctrl.clear();
+                  });
+                  initField();
+                  if (Navigator.canPop(context)) {
+                    Navigator.pop(context);
+                  }
                 }else if (mounted){
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Update Failed, Try Again"))
