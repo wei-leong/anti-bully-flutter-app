@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:apu_assignment/features/Images/data/image_provider.dart';
 import 'package:apu_assignment/features/resources/model/resources_model.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -7,14 +10,28 @@ class NewsOrEventTile extends StatelessWidget {
 
   final ResourceItem resourceItem;
 
+  Uint8List? get _imageBytes {
+    final content = resourceItem.content;
+    if (content == null) return null;
+
+    final String? base64String = content['image'];
+    if (base64String == null || base64String.isEmpty) return null;
+
+    try {
+      return ImagesProvider.decodeBase64(base64String);
+    } catch (e) {
+      return null;
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final bytes = _imageBytes;
 
     // Check if we have an image
-    final hasImage =
-        resourceItem.imageUrl != null && resourceItem.imageUrl!.isNotEmpty;
+    final hasImage = bytes != null;
 
     return Container(
       // Card Container Styling
@@ -36,7 +53,7 @@ class NewsOrEventTile extends StatelessWidget {
                 color: colorScheme.surfaceContainerHighest, // Placeholder bg
                 borderRadius: BorderRadius.circular(8),
                 image: DecorationImage(
-                  image: NetworkImage(resourceItem.imageUrl!),
+                  image: MemoryImage(bytes),
                   fit: BoxFit.cover,
                 ),
               ),
