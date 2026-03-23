@@ -104,17 +104,17 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   );
                 },
               ),
-              ProfileMenuTile(
-                title: "Notifications",
-                icon: Icons.notifications,
-                onTap: () {}, // Switch handles the tap usually
-                trailing: Switch(
-                  value: _notificationsEnabled,
-                  // activeColor: const Color(0xFF0D8ACD),
-                  onChanged: (val) =>
-                      setState(() => _notificationsEnabled = val),
-                ),
-              ),
+              // ProfileMenuTile(
+              //   title: "Notifications",
+              //   icon: Icons.notifications,
+              //   onTap: () {}, // Switch handles the tap usually
+              //   trailing: Switch(
+              //     value: _notificationsEnabled,
+              //     // activeColor: const Color(0xFF0D8ACD),
+              //     onChanged: (val) =>
+              //         setState(() => _notificationsEnabled = val),
+              //   ),
+              // ),
               ProfileMenuTile(
                 title: "Help & Support",
                 icon: Icons.help_outline,

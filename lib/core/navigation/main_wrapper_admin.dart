@@ -26,7 +26,7 @@ class _MainWrapperAdminState extends ConsumerState<MainWrapperAdmin> {
       const AdminDashboardScreen(), // Home (Admin Dashboard)
       const resourcesmanagement(),
       const staffmanagement(), 
-      ChatListScreens(userUid: currentUserUid),
+      ChatListScreens(userUid: currentUserUid,isCounselor: false),
       const ProfileScreen(), // Profile (Settings)
     ];
 

@@ -1,29 +1,58 @@
+import 'package:apu_assignment/features/auth/data/auth_providers.dart';
 import 'package:apu_assignment/features/chat/presentation/screens/chat_list_screens.dart';
 import 'package:apu_assignment/features/profile/presentation/screens/profile_screen.dart';
 import 'package:apu_assignment/features/resources/presentation/screens/resources_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class QuickAccess extends StatelessWidget {
-const QuickAccess({super.key});
+class QuickAccess extends ConsumerWidget {
+  const QuickAccess({super.key});
   @override
-  Widget build(BuildContext context){
-  return  GridView.count(
-              crossAxisCount: 2,          
-              shrinkWrap: true,           
-              physics: const NeverScrollableScrollPhysics(), //Fixed
-              mainAxisSpacing: 10,        
-              crossAxisSpacing: 10,     
-              childAspectRatio: 1.5,     
-              children: [
-                _buildQuickAccessBox(context, "Messages", Icons.message, Colors.green, const ChatListScreens(userUid: '',)), // TODO : Si Wei Change this
-                _buildQuickAccessBox(context, "Resources", Icons.book, Colors.purple, const ResourceScreen()),
-                _buildQuickAccessBox(context, "Profile", Icons.person, Colors.orange, const ProfileScreen()),
-              ],
-            );
-         }
+  Widget build(BuildContext context, WidgetRef ref) {
+    final firebaseAuth = ref.watch(firebaseAuthProvider);
+    final currentUserUid = firebaseAuth.currentUser?.uid ?? '';
 
-  Widget _buildQuickAccessBox(BuildContext context, String title, IconData icon, Color color, Widget targetPage) {
-    return InkWell( 
+    return GridView.count(
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(), //Fixed
+      mainAxisSpacing: 10,
+      crossAxisSpacing: 10,
+      childAspectRatio: 1.5,
+      children: [
+        _buildQuickAccessBox(
+          context,
+          "Messages",
+          Icons.message,
+          Colors.green,
+          ChatListScreens(userUid: currentUserUid, isCounselor: true),
+        ), // TODO : Si Wei Change this
+        _buildQuickAccessBox(
+          context,
+          "Resources",
+          Icons.book,
+          Colors.purple,
+          const ResourceScreen(),
+        ),
+        _buildQuickAccessBox(
+          context,
+          "Profile",
+          Icons.person,
+          Colors.orange,
+          const ProfileScreen(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildQuickAccessBox(
+    BuildContext context,
+    String title,
+    IconData icon,
+    Color color,
+    Widget targetPage,
+  ) {
+    return InkWell(
       onTap: () {
         Navigator.push(
           context,
@@ -31,27 +60,27 @@ const QuickAccess({super.key});
         );
       },
       borderRadius: BorderRadius.circular(16),
-    child: Container(
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: color.withOpacity(0.3)),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: color, size: 32),
-          Text(
-            title,
-            style: TextStyle(
-              color: color,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+      child: Container(
+        decoration: BoxDecoration(
+          color: color.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: color.withOpacity(0.3)),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: color, size: 32),
+            Text(
+              title,
+              style: TextStyle(
+                color: color,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    )
     );
   }
-  }
+}
