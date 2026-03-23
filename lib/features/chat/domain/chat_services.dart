@@ -21,6 +21,8 @@ class ChatServices {
       'participants': [senderUid, receiverUid],
       'lastMessage': rawData['message'],
       'lastMessageTime': rawData['timeStamp'],
+      'lastSenderId': senderUid, 
+      'isRead': false,
     }, SetOptions(merge: true));
 
     // Save Message in Sub-collection
@@ -29,6 +31,12 @@ class ChatServices {
         .doc(chatRoomId)
         .collection('messages')
         .add(rawData);
+  }
+
+  Future<void> markRoomAsRead(String chatRoomId) async {
+    await _db.collection('chats').doc(chatRoomId).update({
+      'isRead': true,
+    });
   }
 
   // Get Active Chat for the ChatListScreen()
