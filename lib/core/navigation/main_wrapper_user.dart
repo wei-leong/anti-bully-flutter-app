@@ -26,7 +26,7 @@ class _MainWrapperUserState extends ConsumerState<MainWrapperUser> {
     final List<Widget> _screens = [
       const DashboardScreen(), // Home Page
       const ResourceScreen(), // Resources Page
-      ChatListScreens(userUid: currentUserUid), // Chat Page
+      ChatListScreens(userUid: currentUserUid, isCounselor: false), // Chat Page
       const ProfileScreen(), // Profile Page
     ];
 

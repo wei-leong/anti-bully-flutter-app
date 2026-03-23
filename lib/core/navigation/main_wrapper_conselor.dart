@@ -27,7 +27,7 @@ class _MainWrapperUserState extends ConsumerState<MainWrapperConselor> {
       const Dashboard(), // TODO: Home Page
       const ResourceScreen(), // Resources Page
       const PostScreen(),
-      ChatListScreens(userUid: currentUserUid), // Chat Page
+      ChatListScreens(userUid: currentUserUid,isCounselor: true), // Chat Page
       const ProfileScreen(), // Profile Page
     ];
 
