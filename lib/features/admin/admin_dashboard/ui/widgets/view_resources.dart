@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'; 
 import 'package:gap/gap.dart';
 
-class ResourceDetails extends ConsumerWidget { // 💡 改为 ConsumerWidget
+class ResourceDetails extends ConsumerWidget { 
   final dynamic resourceItem;
 
   const ResourceDetails({super.key, required this.resourceItem});
@@ -68,10 +68,9 @@ class ResourceDetails extends ConsumerWidget { // 💡 改为 ConsumerWidget
 
                   const Gap(30),
 
-                  // 💡 底部审批按钮
                   Row(
                     children: [
-                      // Reject 按钮
+                      // Button 1
                       Expanded(
                         child: OutlinedButton.icon(
                           onPressed: () => _handleUpdateStatus(context, ref, 'rejected'),
@@ -84,7 +83,7 @@ class ResourceDetails extends ConsumerWidget { // 💡 改为 ConsumerWidget
                         ),
                       ),
                       const Gap(16),
-                      // Approve 按钮
+                      // Button 2
                       Expanded(
                         child: FilledButton.icon(
                           onPressed: () => _handleUpdateStatus(context, ref, 'approved'),
@@ -108,10 +107,11 @@ class ResourceDetails extends ConsumerWidget { // 💡 改为 ConsumerWidget
     );
   }
 
+  // Use to updated resources status
   void _handleUpdateStatus(BuildContext context, WidgetRef ref, String newStatus) async {
-      // 💡 获取必要参数
+      // Get resources id from collection (event, articles, news and videos)
       final collectionName = resourceItem.type.toLowerCase(); 
-      final documentId = resourceItem.id; // 确保你的 ResourceItem 模型里有 id 字段
+      final documentId = resourceItem.id; 
 
       await ref.read(resourcesRepositoryProvider).updateResourceStatus(
         collectionName, 
@@ -122,11 +122,10 @@ class ResourceDetails extends ConsumerWidget { // 💡 改为 ConsumerWidget
 }
   
 
-  // --- 以下保持你原有的 Helper 方法不变 ---
+  // Build content by each type of resources
 
   List<Widget> buildTypeContent(BuildContext context, String type) {
     final normalizedType = type.toLowerCase();
-    // 注意：这里需要根据你的 ImagesProvider 逻辑确保能正确拿到 bytes
     final Uint8List? imageBytes = ImagesProvider.decodeBase64(resourceItem.content['image']);
 
     switch (normalizedType) {
@@ -169,7 +168,6 @@ class ResourceDetails extends ConsumerWidget { // 💡 改为 ConsumerWidget
 
       case 'news':
       case 'events':
-        // 这里逻辑比较相似，可以参考你之前的代码继续填充
         return [
           if (imageBytes != null) _buildImageContainer(imageBytes),
           _buildInfoRow("Location", resourceItem.content['location'] ?? "N/A", Icons.location_on),

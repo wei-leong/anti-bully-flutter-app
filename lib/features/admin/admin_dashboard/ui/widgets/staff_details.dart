@@ -50,6 +50,7 @@ class StaffManagementDetails extends ConsumerWidget {
                   Chip(label: Text(user.role.name.toUpperCase())),
                   const Gap(32),
 
+                  // Show some user details
                   _buildDetailRow("Email", user.email, Icons.email_outlined),
                   const Gap(16),
                   _buildDetailRow("Applied On", user.createdAt.toString().split(' ')[0], Icons.calendar_today_outlined),
@@ -58,7 +59,7 @@ class StaffManagementDetails extends ConsumerWidget {
 
                   Row(
                     children: [
-                      // Reject 按钮
+                      // Button 1
                       Expanded(
                         child: OutlinedButton(
                           onPressed: () => _handleUpdateUserStatus(context, ref, 'rejected'),
@@ -71,7 +72,7 @@ class StaffManagementDetails extends ConsumerWidget {
                         ),
                       ),
                       const Gap(16),
-                      // Approve 按钮
+                      // Button 2
                       Expanded(
                         child: FilledButton(
                           onPressed: () => _handleUpdateUserStatus(context, ref, 'approved'),
@@ -94,11 +95,13 @@ class StaffManagementDetails extends ConsumerWidget {
     );
   }
 
+  // Use to updated user account status
   void _handleUpdateUserStatus(BuildContext context, WidgetRef ref, String newStatus) async {
       await ref.read(userRepositoryProvider).updateUserAccountStatus(user.uid, newStatus);
       Navigator.pop(context);
   }
 
+  // Use to build the context 
   Widget _buildDetailRow(String label, String value, IconData icon) {
     return Row(
       children: [

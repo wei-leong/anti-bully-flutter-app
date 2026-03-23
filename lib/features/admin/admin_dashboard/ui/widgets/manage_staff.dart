@@ -3,7 +3,6 @@ import 'package:apu_assignment/features/auth/data/auth_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 class staffmanagement extends ConsumerWidget {
   const staffmanagement({super.key});
 

@@ -1,0 +1,191 @@
+[33mfc79070[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mIris[m[33m, [m[1;31morigin/Iris[m[33m)[m Fix conselor cannot log out when post somethings
+[33m07cb12b[m Fix counselor after posting cant not log out
+[33m5cd7b3c[m Merge branch 'main' into Iris
+[33mb590cd1[m Done SW admin work
+[33m0c6211d[m Add admin staff management page and resources management page
+[33m6458604[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge pull request #25 from wei-leong/fixSW
+[33m614318b[m feat: make the AppBar clean
+[33m0e58851[m Merge pull request #24 from wei-leong/fixSW
+[33me1c8cc0[m feat: add show detail page on news, event and article
+[33mfd82e1b[m feat: add video playing feature
+[33m7ecf8dd[m build(deps): add url_launcher to project
+[33m90103bd[m fix: modify code from resource_screen to show resources from firebase
+[33m364fda0[m feat: update article_tile to show images
+[33m4b9cbfc[m feat: update news_or_event_tile to show images
+[33me757f6e[m Merge pull request #23 from wei-leong/Iris
+[33mab715c5[m Add date ui in view details
+[33md530e6d[m refactor: update import
+[33md304e25[m refactor: move resources folder outside
+[33m3bec713[m fix: remove own resource_item.dart model file to use counselor's model file
+[33mf30e939[m Merge branch 'main' of https://github.com/wei-leong/apu-mobile-app into fixSW
+[33m7145581[m fix: modify view details bottom widget
+[33me0d81aa[m refactor:remove unused import
+[33m31e996e[m feat: modify change password feature
+[33mf8bb5de[m Merge pull request #22 from wei-leong/fixSW
+[33mb79dfe8[m feat: add update password
+[33m9840d16[m[33m ([m[1;31morigin/fixSW[m[33m)[m fix: solve ReportModel import issue
+[33md8b1b20[m Merge pull request #21 from wei-leong/wl
+[33m47731ea[m feat: finish system overview section
+[33mb77aea8[m feat: use new design on ReportDetail
+[33mc7c4b45[m feat: add UserReportDetailScreen to ReportStatusTile widget
+[33mc45074a[m refactor: rename file from admin_incident_list_tile to incident_list_tile
+[33m84e0aa2[m Merge pull request #20 from wei-leong/Iris
+[33ma118376[m Change counselor dashboard details
+[33m6ae6fb9[m Merge pull request #19 from wei-leong/Iris
+[33mc4149a2[m Add youtube player flutter to show the video and content
+[33m6b05ea4[m fix: remove SOS button
+[33m86688d7[m Merge pull request #18 from wei-leong/wl
+[33m63123e2[m fix: remove the photo button at chat detail screen
+[33m3d67079[m feat: add Chat features to Admin page
+[33m771f8c7[m fix: show only approved counselor at the Counselor List
+[33mbd293dd[m Merge pull request #17 from wei-leong/wl
+[33ma8aa913[m feat: done account status
+[33m67d3db6[m feat: add svg for the counselor pending page
+[33mf1a589d[m feat: update viewmodel to assign account status based on UserRole
+[33m03f00be[m feat: add account status to user_model
+[33m30c3868[m Change the mock data from resource to the mode about connect with database to get resources item
+[33m5d7ab91[m Merge pull request #16 from wei-leong/wl
+[33m702c79d[m feat: update the select counselor checklist UI at SelectCounselorListTile
+[33mddbb613[m feat: remove See All button at Pending Reports section in Admin Dashboard
+[33mbd73f9e[m fix: solve unassign report not updating issue in Admin Dashboard
+[33ma36f4f4[m feat: add assign counselor feature to Report Detail Screen
+[33mf570072[m refactor: remove unused import
+[33m3290c37[m feat: add AdminReportDetail to Admin Dashboards EscalationTile widget
+[33mb291947[m feat: add getUnassignedReports to report_providers to use it at Admin Dashboard
+[33m5403bc3[m feat: add getUnassignedReports to project
+[33m1b25eb9[m feat: add view model for admin reporting feature
+[33m83f48d2[m feat: add assignCounselor method to reportService and reportRepository
+[33m6606dce[m refactor: update import
+[33m0cf8ebc[m refactor: move report folder outside user folder since admin and counselor will be using it
+[33m655562f[m feat: add assignCounselorId to report model
+[33m08a03d1[m Fully complete post backend logic and connect to firestore
+[33m3af942c[m fix: change Profile Image to Default Image placeholder
+[33mc76a3ff[m fix(UI): update UI for Incident Type Chip
+[33me89b3c6[m refactor: remove unused import to project
+[33m8b97cd3[m feat: add Help and Support to Profile Page
+[33mbadb48c[m Add get username logic in post to save the currentname into firestore
+[33mbb87536[m Merge pull request #15 from wei-leong/Iris
+[33m5600828[m Add Post Logic and Save it to firestore
+[33me5baa7d[m Merge pull request #14 from wei-leong/wl
+[33mafeba87[m feat: done Edit Profile feature
+[33md202923[m feat: add format date to message bubble
+[33mfe27606[m feat: add format date to chat list screen
+[33mf825a3a[m fix: sort the report based on incident date
+[33mf924d0b[m feat: modify UI in Report Incident Page
+[33mc321640[m feat: add swipe gesture to delete report
+[33mdca4eca[m feat: add delete report method to repository, services and viewmodel
+[33m80fefd3[m build(deps): add flutter_slidable to project
+[33m3193c8d[m feat: add ReportHistoryScreen to project
+[33m2b6a2c1[m fix: solve My Report section wasn't updating after submitting a report
+[33mce1f16a[m fix: add max lines on chat list to prevent overflowing
+[33m72d085d[m fix: modify margin and padding in MessageBubble
+[33m4daf201[m feat: add padding for styling puporses for the ChatTileWidget
+[33mc72867a[m fix: show user name instead of user uid at ChatListScreen
+[33m29a4637[m fix: remove mock name from dashboard page and pull name from Firebase
+[33mc9b0f12[m feat: finish chat feature
+[33m46bbeda[m fix: modify UI screen file to use new ChatListScreens() method with parameter
+[33m722b65e[m feat: modify providers and repository to add getChatRooms from chat service
+[33mc17eac7[m feat: add ChatRoomModel
+[33m79aceae[m feat: modify sendMessage method and add getChatRooms method
+[33mf799c8d[m feat: add counselor list feature to user dashboard
+[33m65b3314[m feat: modify chat details screens and chat list screens
+[33m3154e67[m refactor: create message bubble widget at message_bubble.dart
+[33m8f57f8b[m fix: solve dependencies issue for flutter_local_notifications
+[33m712a171[m feat: modify chat_providers and add chat viewmodel
+[33m18af08b[m feat: add FCM to main.dart
+[33m0117df1[m feat: add flutter package to project
+[33mc10aae7[m feat: add providers, model, repository and services for chat feature
+[33m8e3932f[m Merge pull request #13 from wei-leong/wl
+[33m41ae134[m Merge branch 'main' of https://github.com/wei-leong/apu-mobile-app into wl
+[33m6f9dcce[m feat: complete show report history function
+[33ma8c1197[m feat: add providers to get report data
+[33mc303aab[m build(deps): add intl package for Date Formating
+[33me8b5fee[m feat: add code to report_services and report_repository to get reports made by user
+[33m63dce5f[m fix: add uid to report model to save uid
+[33mb5907e2[m feat: add time text form field to accept time input
+[33m7585129[m feat: connect repository and service to front end with viewmodel
+[33m21da402[m feat: add model (repository, services, model, provides) to report features
+[33m5aa9920[m feat: add report incident screen
+[33ma07f3d0[m Add post type category
+[33m8b7cbc7[m feat: add IncidentTypeChip to for report incident page
+[33m31ba5a6[m Fix conselor/post logic
+[33ma1d9221[m Merge pull request #12 from wei-leong/Iris
+[33mf69e2ca[m change resources/viewmodels function stateprovider to notifierprovider
+[33ma5e089c[m Merge pull request #11 from wei-leong/Iris
+[33mee7c95f[m Change counsoler resources folder to MVVM format
+[33mfab4149[m Change post folder that follow by MVVM
+[33ma77909f[m Change architecture when building dashboard folder
+[33m1fe624c[m feat: add Edit Profile screen and split the Profile Image into widget
+[33ma07935e[m Merge pull request #10 from wei-leong/wl
+[33m1ef5ab1[m refactor: refactor theme selection into MVVM
+[33m921a873[m feat: add theme selection feature
+[33m653c215[m refactor: refactor all authentication flow into MVVM
+[33md1749ae[m refactor: add comment at the top of login screen and signup screen to specify that it was just for wireframe purposes
+[33md6899a6[m refactor: add user_services.dart for SOC with following strick MVVM architecture
+[33m80634cc[m Add cases report viewer page
+[33m84e14b9[m Add Quick Access and Cases Report in counsoler dashboard
+[33m5be503a[m Add Report management in counselor dashboard
+[33m59dd670[m Merge pull request #9 from wei-leong/wl
+[33m5248a40[m Merge branch 'main' into wl
+[33m81d2ec0[m build: update pubspec.lock
+[33mc23ef57[m feat: add mock counselor page to project
+[33mb381526[m fix: solve complete profile issue when lauching app every time and can't logout issue
+[33mba18529[m feat: add choose role and add name after sign up logic
+[33m04fb5b5[m feat: add role selection after signup
+[33m8b48342[m build(deps): add riverpod for state management
+[33mcb39849[m feat: add onboarding experience to project
+[33mdc9071b[m build(deps): add smooth_page_indicator for onboarding experience
+[33mdc55d7e[m feat: add padding for onboarding experience
+[33me96efb8[m fix: remove background color on svg
+[33m64cfbcc[m feat: add onboard_screen svg images to project
+[33m4ae44d9[m build(deps): add shared_preferences for basic persistent storage
+[33m5c8f3f6[m build(deps): add flutter_svg package for modifying svg image
+[33mdcf1130[m Merge pull request #7 from wei-leong/wl
+[33mb8bd0fc[m Merge branch 'main' into wl
+[33me4d2f33[m Merge pull request #6 from wei-leong/Iris
+[33md87c1c3[m Add counselor dashboard
+[33mde99bc3[m feat: add logout process
+[33mc7e8ef8[m feat: add vertical padding to signup and signin screen OutlinedButton
+[33ma8bc309[m feat: remove unused theme file and separate code from main.dart for code managementm
+[33m2506c3f[m feat: configure firebase to project
+[33m8bbd054[m Merge pull request #5 from wei-leong/wl
+[33m4acb770[m Merge branch 'main' into wl
+[33m2d92793[m feat: add admin Wrapper with BottomNavBar and Admin Dashboard page
+[33mb1f7de6[m feat: add bottom navigation bar wrapper for admin role
+[33m5574e9b[m fix: change role name on signup screen
+[33m299ed48[m Add Post_page
+[33m9da30c9[m Merge pull request #4 from wei-leong/Iris
+[33m37800cf[m Merge branch 'main' into Iris
+[33m729b3d6[m Add event poster_page
+[33mab7397e[m feat: add AuthGate for future authentication use
+[33m5adbb32[m feat: add related firebase package to project
+[33m37f2da8[m refactor: move screens folder to presentation/screens
+[33m978d579[m feat: add theme that matches app logo
+[33m98a5c72[m Merge pull request #3 from wei-leong/wl
+[33m5077029[m feat: add Dashboard page
+[33m88382b7[m Add post page for conselor
+[33m254c664[m Add conselor version resources page and main_wrapper
+[33m44cdf45[m feat: add Dashboard screen and add News and Article Tile Widget
+[33m1438b4c[m refactor: move folder
+[33m0ce83dc[m feat: finished Resource Screen
+[33m4564178[m[33m ([m[1;32mmain[m[33m)[m Merge pull request #2 from wei-leong/wl
+[33m4e02ba2[m[33m ([m[1;31morigin/wl[m[33m)[m feat: add resources page
+[33mb75d718[m Merge pull request #1 from wei-leong/wl
+[33mce6494c[m feat: add notes to main_wrapper_user.dart
+[33m7a7bba1[m feat: add chat widgets and screens
+[33m1dc995a[m refactor: remove unused import from ProfileMenuTile.dart
+[33m130e73c[m feat: add profile page
+[33m14e6870[m build(deps): add gap package
+[33mf9546bd[m feat: add BottomNavigationBar to User
+[33m1ab3e80[m feat: add minimalist theme for wireframe
+[33mfad84a0[m chore: show SignUp Page when the app loaded
+[33mf594145[m fix(auth): decouple password and confirm password visibility states
+[33mb1f1ac6[m feat(auth): add Password Input Text Field condition to check if the length is over 8
+[33m39a35ae[m feat(auth): add SegmentedButton to SignUp Screen to input role
+[33md4f28e8[m feat(auth): add MaterialPageRoute to direct user to LoginPage from SignUp Page
+[33m1ed3b7e[m feat(auth): implement signup screen with M3 layout and validation
+[33m6b0cae0[m feat(auth): implement signup screen with M3 layout and validation
+[33mcca02a6[m chore(core): add global spacing and padding constants
+[33m0f2a3d6[m feat(ui): implement bottom navigation bar and add to main.dart to display Home Screen
+[33m3ece74b[m feat(core): add theme and utility helpers with google_fonts
+[33m73ddbf7[m chore: initialize project
