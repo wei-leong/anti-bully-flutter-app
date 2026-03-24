@@ -1,11 +1,9 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/resources/data/user_resources_provider.dart';
-import 'package:apu_assignment/features/resources/model/resources_model.dart';
 import 'package:apu_assignment/features/users/resources/presentation/widgets/article_tile.dart';
 import 'package:apu_assignment/features/users/resources/presentation/widgets/video_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 class ResourceScreen extends ConsumerStatefulWidget {
   const ResourceScreen({super.key});
 

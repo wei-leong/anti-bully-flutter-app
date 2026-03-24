@@ -1,6 +1,7 @@
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/chat/data/chat_providers.dart';
 import 'package:apu_assignment/features/chat/presentation/widgets/chat_tile_widget.dart';
+import 'package:apu_assignment/features/conselor/user_list/presentation/screens/user_list_screens.dart';
 import 'package:apu_assignment/features/users/counselor_list/presentation/screens/counselor_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -63,7 +64,15 @@ class ChatListScreens extends ConsumerWidget {
           ),
         ],
       ),
-      floatingActionButton: isCounselor ? null : FloatingActionButton(
+      floatingActionButton: isCounselor ? FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => UserListScreen()),
+          );
+        },
+        child: Icon(Icons.add_comment),
+      ) : FloatingActionButton(
         onPressed: () {
           Navigator.push(
             context,

@@ -15,46 +15,48 @@ class ReportHistoryScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text("Reports History"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(kDefaultPadding),
-        child: Column(
-          children: [
-            reportsAsyncValue.when(
-              data: (reports) {
-                if (reports.isEmpty) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: kDefaultPadding,
-                    ),
-                    child: Center(
-                      child: Text(
-                        "You haven't submitted any reports yet.",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(kDefaultPadding),
+          child: Column(
+            children: [
+              reportsAsyncValue.when(
+                data: (reports) {
+                  if (reports.isEmpty) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: kDefaultPadding,
                       ),
-                    ),
+                      child: Center(
+                        child: Text(
+                          "You haven't submitted any reports yet.",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    );
+                  }
+                  return ListView.builder(
+                    shrinkWrap: true, // Crucial when inside a SingleChildScrollView
+                    physics:
+                        const NeverScrollableScrollPhysics(), // Disables inner scrolling
+                    itemCount: reports.length,
+                    itemBuilder: (context, index) {
+                      // Pass the fetched model into your beautifully styled widget!
+                      return ReportStatusTile(report: reports[index]);
+                    },
                   );
-                }
-                return ListView.builder(
-                  shrinkWrap: true, // Crucial when inside a SingleChildScrollView
-                  physics:
-                      const NeverScrollableScrollPhysics(), // Disables inner scrolling
-                  itemCount: reports.length,
-                  itemBuilder: (context, index) {
-                    // Pass the fetched model into your beautifully styled widget!
-                    return ReportStatusTile(report: reports[index]);
-                  },
-                );
-              },
-              error: (error, stack) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: kDefaultPadding),
-                child: Center(child: Text('Error loading reports: $error')),
+                },
+                error: (error, stack) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: kDefaultPadding),
+                  child: Center(child: Text('Error loading reports: $error')),
+                ),
+                loading: () => const Padding(
+                  padding: EdgeInsets.symmetric(vertical: kDefaultPadding),
+                  child: Center(child: CircularProgressIndicator()),
+                ),
               ),
-              loading: () => const Padding(
-                padding: EdgeInsets.symmetric(vertical: kDefaultPadding),
-                child: Center(child: CircularProgressIndicator()),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

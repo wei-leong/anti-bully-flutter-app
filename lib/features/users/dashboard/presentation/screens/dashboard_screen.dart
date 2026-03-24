@@ -1,3 +1,4 @@
+import 'package:apu_assignment/core/navigation/main_wrapper_user.dart';
 import 'package:apu_assignment/core/theme/sizes.dart';
 import 'package:apu_assignment/features/auth/data/auth_providers.dart';
 import 'package:apu_assignment/features/resources/data/user_resources_provider.dart';
@@ -26,49 +27,6 @@ class DashboardScreen extends ConsumerWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text("Home", style: TextStyle(fontWeight: FontWeight.bold),),
-        // title: Row(
-        //   mainAxisAlignment: MainAxisAlignment.start,
-        //   children: [
-        //     // InkWell(
-        //     //   onTap: () {
-        //     //     Navigator.push(
-        //     //       context,
-        //     //       MaterialPageRoute(builder: (context) => ProfileScreen()),
-        //     //     );
-        //     //   },
-        //     //   child: CircleAvatar(child: Icon(Icons.person)),
-        //     // ),
-        //     // const Gap(12),
-        //     Column(
-        //       crossAxisAlignment: CrossAxisAlignment.start,
-        //       children: [
-        //         Text(
-        //           "Welcome back",
-        //           style: textTheme.bodySmall?.copyWith(
-        //             color: colorScheme.onSurfaceVariant,
-        //           ),
-        //         ),
-        //         Text(
-        //           userNameAsyncValue.when(
-        //             data: (user) => user?.name ?? '',
-        //             error: (error, stack) => "User",
-        //             loading: () => "User",
-        //           ),
-        //           style: textTheme.titleMedium?.copyWith(
-        //             color: colorScheme.onSurface,
-        //             fontWeight: FontWeight.bold,
-        //           ),
-        //         ),
-        //       ],
-        //     ),
-        //   ],
-        // ),
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {},
-        //     icon: Icon(Icons.notifications_outlined),
-        //   ),
-        // ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -228,7 +186,9 @@ class DashboardScreen extends ConsumerWidget {
                   child: Center(child: CircularProgressIndicator()),
                 ),
               ),
-              _buildSectionHeader(context, "Community News", true, () {}),
+              _buildSectionHeader(context, "Community News", true, () {
+                ref.read(userBottomNavIndexProvider.notifier).state = 1;
+              }),
               ref.watch(liveResourcesStreamProvider).when(
                 data: (resources) {
                   // Filter to ONLY show news or events, and grab the latest 3

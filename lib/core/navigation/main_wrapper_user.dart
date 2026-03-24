@@ -3,27 +3,25 @@ import 'package:apu_assignment/features/chat/presentation/screens/chat_list_scre
 import 'package:apu_assignment/features/profile/presentation/screens/profile_screen.dart';
 import 'package:apu_assignment/features/users/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:apu_assignment/features/users/resources/presentation/screens/resource_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
-class MainWrapperUser extends ConsumerStatefulWidget {
+// Global Provider to Control Bottom Nav Index
+final userBottomNavIndexProvider = StateProvider<int>((ref) => 0);
+
+class MainWrapperUser extends ConsumerWidget {
   const MainWrapperUser({super.key});
 
   @override
-  ConsumerState<MainWrapperUser> createState() => _MainWrapperUserState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    int currentIndex = ref.watch(userBottomNavIndexProvider);
 
-class _MainWrapperUserState extends ConsumerState<MainWrapperUser> {
-  int _currentIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
     final double textFontSize = 14;
     final firebaseAuth = ref.watch(firebaseAuthProvider);
     final currentUserUid = firebaseAuth.currentUser?.uid ?? '';
 
-    final List<Widget> _screens = [
+    final List<Widget> screens = [
       const DashboardScreen(), // Home Page
       const ResourceScreen(), // Resources Page
       ChatListScreens(userUid: currentUserUid, isCounselor: false), // Chat Page
@@ -31,13 +29,11 @@ class _MainWrapperUserState extends ConsumerState<MainWrapperUser> {
     ];
 
     return Scaffold(
-      body: _screens[_currentIndex],
+      body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
+        currentIndex: currentIndex,
         onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
+          ref.read(userBottomNavIndexProvider.notifier).state = index;
         },
         type: BottomNavigationBarType.fixed,
         selectedFontSize: textFontSize,

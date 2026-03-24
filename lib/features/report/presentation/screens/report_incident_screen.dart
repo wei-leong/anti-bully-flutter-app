@@ -106,6 +106,8 @@ class _ReportIncidentScreenState extends ConsumerState<ReportIncidentScreen> {
         _selectedTime!.minute,
       );
 
+      final reportUrgent = selectedType == ReportType.physical ? ReportUrgentLevel.high : ReportUrgentLevel.med;
+
       ref
           .read(reportIncidentViewModelProvider.notifier)
           .submitReport(
@@ -113,6 +115,7 @@ class _ReportIncidentScreenState extends ConsumerState<ReportIncidentScreen> {
             description: _descriptionController.text,
             reportType: selectedType,
             incidentDate: finalIncidentDateTime,
+            reportUrgent: reportUrgent
           );
 
       Navigator.pop(context);

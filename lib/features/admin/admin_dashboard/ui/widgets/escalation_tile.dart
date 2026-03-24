@@ -18,7 +18,7 @@ class EscalationTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final isCritical = severity == "CRITICAL";
+    final isCritical = severity == "HIGH";
 
     return Container(
       margin: const EdgeInsets.only(bottom: kDefaultPadding),
@@ -109,24 +109,6 @@ class EscalationTile extends StatelessWidget {
                   ],
                 ),
               ),
-
-              // Action Button (Only if Critical)
-              if (isCritical)
-                TextButton(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    minimumSize: const Size(0, 36),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  child: Text(
-                    "Investigate",
-                    style: TextStyle(
-                      color: colorScheme.error,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
             ],
           ),
         ],
