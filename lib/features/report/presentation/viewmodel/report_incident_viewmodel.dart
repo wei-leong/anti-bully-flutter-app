@@ -19,6 +19,7 @@ class ReportIncidentViewModel extends AsyncNotifier<void> {
     required String description,
     required ReportType reportType,
     required DateTime incidentDate,
+    required ReportUrgentLevel reportUrgent,
   }) async {
     state = const AsyncLoading();
 
