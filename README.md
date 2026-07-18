@@ -12,15 +12,6 @@ The Anti-Bully Flutter App is a comprehensive, multi-role mobile platform design
 
 Built with scalability in mind, the application features distinct dashboards and navigation flows dynamically rendered based on the user's role (Admin, Counselor, or Student/User).
 
-<div align="center">
-  <!-- TODO: Replace with your actual app screenshots -->
-  <img src="https://via.placeholder.com/250x500.png?text=User+Dashboard" alt="User Dashboard" width="200"/>
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="https://via.placeholder.com/250x500.png?text=Chat+Interface" alt="Chat Interface" width="200"/>
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="https://via.placeholder.com/250x500.png?text=Incident+Report" alt="Incident Reporting" width="200"/>
-</div>
-
 ---
 
 ## 🏗️ Architecture & Design
